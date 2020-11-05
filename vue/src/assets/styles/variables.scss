@@ -1,0 +1,46 @@
+@import "@/assets/styles/mediaQueries.scss";
+
+/* COLORS */
+
+$primaryColor: #0b3d39;
+$secondaryColor: #ff485a;
+$tertiaryColor: #64e6d3;
+$postingSectionColor: #ddd9c5;
+
+$moonBgColor: #0000;
+$bgColor: #fff;
+
+$textColorBright: #6d8b88;
+$textColor: #0b3d39;
+$headlineColor: $primaryColor;
+
+/* SHADOWS */
+
+$boxShadow: 3px 6px 26px rgba(0, 0, 0, 0.18);
+
+/* BORDERS */
+
+$border: none;
+$borderRadius: 10px;
+
+/* TEXT */
+
+$textFontSize: 1em;
+$h1FontSize: 3.43em;
+$h2FontSize: 2.5em;
+$h3FontSize: 1.5em;
+$logoFontSize: 1.37em;
+$teaserTextFontSize: 0.75em;
+
+
+$textLineHeight: 2;
+
+/* FONTS */
+
+$headlineFont: "Kufam";
+$headlineFontWeightBlack: 900;
+$headlineFOntWeightBold: bold;
+
+$textFont: "Raleway";
+$textFontWeight: 600;
+$textFontWeightRegular: normal;

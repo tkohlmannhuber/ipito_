@@ -1,0 +1,121 @@
+@import '@/assets/styles/variables.scss';
+@import '@/assets/styles/mediaQueries.scss';
+
+*{
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 14px;
+    @include media(">=xs") {
+        font-size: 16px;
+    }
+
+    @include media(">=lg") {
+        font-size: 18px;
+    }
+
+
+
+}
+
+body {
+    padding:0;
+    margin:0;
+    font-family: $textFont;
+    color: $textColor;
+
+}
+
+h1 {
+    font-family: $headlineFont;
+    text-transform: uppercase;
+    color: $headlineColor;
+    font-size : $h1FontSize;
+    font-weight: $headlineFontWeightBlack;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    font-family: $headlineFont;
+    text-transform: uppercase;
+    color: $headlineColor;
+    font-size : $h2FontSize;
+    font-weight: $headlineFontWeightBlack;
+    margin: 0;
+    padding: 0;
+
+}
+
+h3 {
+    font-family: $headlineFont;
+    text-transform: uppercase;
+    color: $headlineColor;
+    font-weight: $headlineFontWeightBlack;
+    font-size: $h3FontSize;
+    margin: 0;
+    padding: 0;
+
+}
+
+p{
+    font-weight: $textFontWeight;
+    line-height: $textLineHeight;
+    margin: 0;
+    padding: 0;
+}
+
+
+button{
+    font-size: $textFontSize;
+}
+
+ol,
+ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li{
+    font-family: $textFont;
+
+}
+
+a:link,
+a:visited{
+    text-decoration: none;
+}
+
+
+.content-wrapper{
+    padding: 2em;
+}
+
+@include media('>=xs'){
+    .content-wrapper{
+        padding: 4.68em;
+    }
+    
+}
+.footer-wrapper{
+    padding: 2em;
+}
+
+@include media('>=xs'){
+    .footer-wrapper{
+        padding: 2em;
+    }
+    
+}
+
+.red{
+    color: $secondaryColor;
+}
+
+
+
+
+
+@import './forms.scss';
