@@ -31,7 +31,6 @@ export default {
 .slider_controll_container {
     margin-bottom: 4em;
     z-index: 2;
-    max-width: 20em;
     display: flex;
     justify-content: space-between;
     align-items: center;

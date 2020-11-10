@@ -3,7 +3,7 @@
     <h2>Top Posts <span class="red"> of </span> Europe</h2>
     <PostList />
     <SliderControll text="swipe"/>
-    
+    <ReadPost />
   </section>
 </template>
 
@@ -11,12 +11,14 @@
 
 import PostList from '../Partials/PostList';
 import SliderControll from '../Partials/SliderControll';
+import ReadPost from '../Partials/ReadPost';
 
 export default {
   name: 'europepostsection',
   components: {
     PostList,
     SliderControll,
+    ReadPost
   }
 }
 </script>
@@ -28,11 +30,12 @@ export default {
   @import '@/assets/styles/mediaQueries.scss';
 
   .eu_post_container{
-    width: 100vw;
     padding: 2.5em 0;
     text-align: center;
     background-image: url('../../assets/images/bg-light-beige.png'); 
     position: relative;
+    display: flex; 
+    flex-direction: column;
 
     &:before{
       content: '';

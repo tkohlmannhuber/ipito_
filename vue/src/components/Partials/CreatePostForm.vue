@@ -8,10 +8,6 @@
             <label for="postspot">Spot:</label>
             <input type="text" id="postspot" />
         </div>
-        <div class="post-input-flex">
-            <label for="tags">Tags:</label>
-            <input type="text" id="tags" />
-        </div>
         <div class="post-input-flex textarea-flex">
             <label for="postheadline">Text:</label>
             <textarea name="text" id="text" cols="40" rows="5"></textarea>

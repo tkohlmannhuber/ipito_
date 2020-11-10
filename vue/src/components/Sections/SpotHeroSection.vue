@@ -8,24 +8,24 @@
                 <span>Wind: </span>
                 <span>Water:</span>
             </div>
-            <div class="favorite-btn-flex">
+            <!-- <div class="favorite-btn-flex">
                 <CircleBtn />
                 <span>Add to favorite</span>
-            </div>
+            </div> -->
         </div>
     </section>
 </template>
 
 <script>
 import Headline from "../Partials/Headline";
-import CircleBtn from "../Partials/CircleBtn";
+// import CircleBtn from "../Partials/CircleBtn";
 // import axios from "axios";
 
 export default {
     name: "spotherosection",
     components: {
         Headline,
-        CircleBtn,
+        // CircleBtn,
     },
 
     data() {
@@ -100,7 +100,7 @@ export default {
         content: "";
         position: absolute;
         width: 100%;
-        height: 100%;
+        height: 99%;
         top: 0;
         left: 0;
         z-index: -1;
@@ -139,12 +139,4 @@ export default {
         }
     }
 }
-// &::before{
-//     content: '';
-//     position: absolute;
-//     width: 100vw;
-//     height: 100vh;
-//     background-image: url('../../assets/images/hero-overlay.svg');
-//     z-index : 1;
-// }
 </style>

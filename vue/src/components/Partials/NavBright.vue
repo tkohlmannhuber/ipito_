@@ -5,7 +5,7 @@
             <div class="sub-mobile-menu-flex">
                 <router-link
                     class="sub-mobile-menu-item"
-                    :to="{ name: 'Spot', params: { id: 'mundaka-spain' } }"
+                    :to="{ name: 'Spot', params: { id: 'mundaka' } }"
                     >Mundaka</router-link
                 >
                 <router-link
