@@ -40,7 +40,7 @@
                 </button>
                 <span class="post_spot"> {{ post.spot }} </span>
             </div>
-            <button>Read <span class="red">the </span>Post</button>
+            <button class="read-btn">Read <span class="red">the </span>Post</button>
         </div>
     </div>
 </template>
@@ -181,7 +181,7 @@ export default {
         }
     }
 
-    button {
+    .read-btn {
         background: none;
         border: none;
         padding-top: 2em;
