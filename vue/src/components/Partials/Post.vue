@@ -38,7 +38,7 @@
                         width="100"
                     />
                 </button>
-                <span class="post_spot"> Ericeira </span>
+                <span class="post_spot"> {{ post.spot }} </span>
             </div>
             <button>Read <span class="red">the </span>Post</button>
         </div>
@@ -56,12 +56,14 @@ export default {
                     userFirstName: "Jordan",
                     avatarImagePath: "@/assets/images/avatar/avatar.jpg",
                     postImagePath: "@/assets/images/post_img/post_1.jpg",
+                    spot: "Ericeira",
                 },
                 {
                     likes: 215,
                     userFirstName: "Rick",
                     avatarImagePath: "@/assets/images/avatar/avatar1.jpg",
                     postImagePath: "@/assets/images/post_img/post_2.jpg",
+                    spot: "Nazare",
                 },
 
                 {
@@ -69,6 +71,7 @@ export default {
                     userFirstName: "Emma",
                     avatarImagePath: "@/assets/images/avatar/avatar2.jpg",
                     postImagePath: "@/assets/images/post_img/post_3.jpg",
+                    spot: "Manduka",
                 },
             ],
         };
@@ -189,6 +192,24 @@ export default {
         color: $textColor;
         outline: none;
         cursor: pointer;
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            background-image: url("../../assets/images/arrow_next.svg");
+            background-repeat: no-repeat;
+            width: 3em;
+            height: 100%;
+            transform: translateX(1em);
+            transition: all 0.5s;
+        }
+
+        &:hover {
+            &::after {
+                transform: translateX(2em);
+            }
+        }
     }
 }
 </style>
