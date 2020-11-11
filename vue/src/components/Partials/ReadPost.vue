@@ -12,7 +12,7 @@
             <div class="avatar_flex">
                 <span>Jordan</span>
                 <img
-                    src="@/assets/images/avatar.jpg"
+                    src="@/assets/images/avatar/avatar.jpg"
                     alt="User Bild"
                     width="200"
                 />

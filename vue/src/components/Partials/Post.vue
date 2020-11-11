@@ -1,6 +1,10 @@
 <template>
     <div>
-        <div class="single_post_container">
+        <div
+            v-for="post in posts"
+            :key="post.likes"
+            class="single_post_container"
+        >
             <div class="post_top_flex">
                 <div class="like_flex">
                     <img
@@ -8,10 +12,10 @@
                         alt="Shaka hand"
                         width="100"
                     />
-                    <span>435</span>
+                    <span>{{ post.likes }}</span>
                 </div>
                 <div class="avatar_flex">
-                    <span>Jordan</span>
+                    <span>{{ post.userFirstName }}</span>
                     <img
                         src="@/assets/images/avatar/avatar.jpg"
                         alt="User Bild"
@@ -54,23 +58,17 @@ export default {
                     postImagePath: "@/assets/images/post_img/post_1.jpg",
                 },
                 {
-                    likes: 343,
-                    userFirstName: "Jordan",
-                    avatarImagePath: "@/assets/images/avatar/avatar.jpg",
-                    postImagePath: "@/assets/images/post_img/post_1.jpg",
+                    likes: 215,
+                    userFirstName: "Rick",
+                    avatarImagePath: "@/assets/images/avatar/avatar1.jpg",
+                    postImagePath: "@/assets/images/post_img/post_2.jpg",
                 },
 
                 {
-                    likes: 343,
-                    userFirstName: "Jordan",
-                    avatarImagePath: "@/assets/images/avatar/avatar.jpg",
-                    postImagePath: "@/assets/images/post_img/post_1.jpg",
-                },
-                {
-                    likes: 343,
-                    userFirstName: "Jordan",
-                    avatarImagePath: "@/assets/images/avatar/avatar.jpg",
-                    postImagePath: "@/assets/images/post_img/post_1.jpg",
+                    likes: 430,
+                    userFirstName: "Emma",
+                    avatarImagePath: "@/assets/images/avatar/avatar2.jpg",
+                    postImagePath: "@/assets/images/post_img/post_3.jpg",
                 },
             ],
         };
@@ -89,6 +87,7 @@ export default {
     background-image: url("../../assets/images/greenstart-bg.png");
     box-shadow: $boxShadow;
     max-width: 19em;
+    border-radius: $borderRadius;
 
     .post_top_flex {
         display: flex;
@@ -187,6 +186,7 @@ export default {
         font-family: $headlineFont;
         font-weight: $headlineFontWeightBlack;
         text-transform: uppercase;
+        color: $textColor;
         outline: none;
         cursor: pointer;
     }

@@ -6,8 +6,8 @@
         <div class="auth-start-flex" v-if="showChoose">
             <h3>Join <span class="red">the</span> community</h3>
             <p>Stay always up to date!</p>
-            <TextBtn text="Login here" @click="displayForm('loginform')" />
-            <TextBtn text="Sign in here" @click="displayForm('signinform')" />
+            <TextBtn text="Login here" @click.native="displayForm('loginform')" />
+            <TextBtn text="Sign in here" @click.native="displayForm('signinform')" />
         </div>
         <component :is="cmp"></component>
     </div>
@@ -109,11 +109,4 @@ export default {
     }
 }
 
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.5s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-    opacity: 0;
-}
 </style>

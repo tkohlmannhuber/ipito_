@@ -68,6 +68,11 @@
             :to="{ name: 'Login' }"
             >Login</router-link
         >
+        <router-link
+            class="mobile-menu-item extern-link"
+            :to="{ name: 'user' }"
+            >Username</router-link
+        >
         <div class="social-list" v-if="mobileView">
             <a href="#">
                 <i class="scial_icon fab fa-instagram fa-lg"></i>
