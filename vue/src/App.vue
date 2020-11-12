@@ -1,7 +1,7 @@
 <template>
     <div id="app">
       <div>
-
+        
         <TopHeaderBright />
 
         <SocialBar v-if="!showCompsOnMobile" />

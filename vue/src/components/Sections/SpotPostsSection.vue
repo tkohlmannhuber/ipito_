@@ -2,7 +2,6 @@
   <section class="spot-post-container">
     <Headline2 :title="this.$route.params.id"/>
     <PostList />
-    <SliderControll text="Swipe"/>
     
   </section>
 </template>
@@ -10,14 +9,12 @@
 <script>
 
 import PostList from '../Partials/PostList';
-import SliderControll from '../Partials/SliderControll';
 import Headline2 from '../Partials/Headline2';
 
 export default {
   name: 'europepostsection',
   components: {
     PostList,
-    SliderControll,
     Headline2,
   },
   data:() => {

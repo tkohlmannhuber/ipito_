@@ -1,76 +1,138 @@
 <template>
     <div>
-        <div
-            v-for="post in posts"
-            :key="post.likes"
-            class="single_post_container"
-        >
-            <div class="post_top_flex">
-                <div class="like_flex">
-                    <img
-                        src="@/assets/images/icons/shaka.svg"
-                        alt="Shaka hand"
-                        width="100"
-                    />
-                    <span>{{ post.likes }}</span>
-                </div>
-                <div class="avatar_flex">
-                    <span>{{ post.userFirstName }}</span>
-                    <img
-                        src="@/assets/images/avatar/avatar.jpg"
-                        alt="User Bild"
-                        width="200"
-                    />
+        <VueSlickCarousel v-bind="settings" ref="carousel">
+            <div v-for="post in posts" :key="post.likes" class="slide-post-container">
+                <div class="single_post_container">
+                    <div class="post_top_flex">
+                        <div class="like_flex">
+                            <img
+                                src="@/assets/images/icons/shaka.svg"
+                                alt="Shaka hand"
+                                width="100"
+                            />
+                            <span>{{ post.likes }}</span>
+                        </div>
+                        <div class="avatar_flex">
+                            <span>{{ post.userFirstName }}</span>
+                            <img
+                                :src="post.avatarImagePath"
+                                alt="User Bild"
+                                width="200"
+                            />
+                        </div>
+                    </div>
+                    <div class="img_flex">
+                        <div class="img_container">
+                            <img
+                                :src="post.postImagePath"
+                                alt="Surfer"
+                                width="200"
+                            />
+                        </div>
+                        <button class="like_btn">
+                            <img
+                                src="@/assets/images/icons/shaka.svg"
+                                alt="shaka hand"
+                                width="100"
+                            />
+                        </button>
+                        <span class="post_spot"> {{ post.spot }} </span>
+                    </div>
+                    <button class="read-btn" @click="setCurrentPost()">
+                        Read <span class="red">the </span>Post
+                    </button>
                 </div>
             </div>
-            <div class="img_flex">
-                <div class="img_container">
-                    <img
-                        src="@/assets/images/post_img.jpg"
-                        alt="Surfer"
-                        width="200"
-                    />
-                </div>
-                <button class="like_btn">
-                    <img
-                        src="@/assets/images/icons/shaka.svg"
-                        alt="shaka hand"
-                        width="100"
-                    />
-                </button>
-                <span class="post_spot"> {{ post.spot }} </span>
-            </div>
-            <button class="read-btn">Read <span class="red">the </span>Post</button>
+        </VueSlickCarousel>
+        <div class="slider_controll_container">
+            <SliderBtnPrev @click.native="showPrev" class="slider-btn"/>
+            <span class="slider-text">next</span>
+            <SliderBtnNext @click.native="showNext" class="slider-btn"/>
         </div>
+
+        <ReadPost v-if="currentPost" v-bind="currentPost" />
     </div>
 </template>
 
 <script>
+import VueSlickCarousel from "vue-slick-carousel";
+import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
+import "vue-slick-carousel/dist/vue-slick-carousel.css";
+import SliderBtnPrev from "../Partials/SliderBtnPrev";
+import SliderBtnNext from "../Partials/SliderBtnNext";
+
 export default {
     name: "post",
+    components: {
+        VueSlickCarousel,
+        SliderBtnPrev,
+        SliderBtnNext,
+    },
+
+    methods: {
+        setCurrentPost: (currentPost) => {
+            this.currentPost = currentPost;
+        },
+        showNext() {
+            this.$refs.carousel.next();
+        },
+        showPrev() {
+            this.$refs.carousel.prev();
+        },
+    },
+
     data: () => {
         return {
+            currentPost: null,
+
+            settings: {
+                "slidesToShow": 3,
+                "speed": 500
+            },
+
             posts: [
                 {
                     likes: 343,
                     userFirstName: "Jordan",
-                    avatarImagePath: "@/assets/images/avatar/avatar.jpg",
-                    postImagePath: "@/assets/images/post_img/post_1.jpg",
+                    avatarImagePath: require("../../assets/images/avatar/avatar.jpg"),
+                    postImagePath: require("../../assets/images/post_img/post_1.jpg"),
                     spot: "Ericeira",
                 },
                 {
                     likes: 215,
                     userFirstName: "Rick",
-                    avatarImagePath: "@/assets/images/avatar/avatar1.jpg",
-                    postImagePath: "@/assets/images/post_img/post_2.jpg",
+                    avatarImagePath: require("../../assets/images/avatar/avatar4.jpg"),
+                    postImagePath: require("../../assets/images/post_img/post_2.jpg"),
                     spot: "Nazare",
                 },
 
                 {
                     likes: 430,
                     userFirstName: "Emma",
-                    avatarImagePath: "@/assets/images/avatar/avatar2.jpg",
-                    postImagePath: "@/assets/images/post_img/post_3.jpg",
+                    avatarImagePath: require("../../assets/images/avatar/avatar2.jpg"),
+                    postImagePath: require("../../assets/images/post_img/post_3.jpg"),
+                    spot: "Manduka",
+                },
+                {
+                    likes: 343,
+                    userFirstName: "Jordan",
+                    avatarImagePath: require("../../assets/images/avatar/avatar.jpg"),
+                    postImagePath: require("../../assets/images/post_img/post_1.jpg"),
+                    spot: "Ericeira",
+                },
+                {
+                    likes: 215,
+                    userFirstName: "Rick",
+                    avatarImagePath: require("../../assets/images/avatar/avatar3.jpg"),
+                    postImagePath: require("../../assets/images/post_img/post_2.jpg"),
+                    spot: "Nazare",
+                },
+
+                {
+                    likes: 430,
+                    userFirstName: "Emma",
+                    avatarImagePath: require("../../assets/images/avatar/avatar2.jpg"),
+                    postImagePath: require("../../assets/images/post_img/post_3.jpg"),
                     spot: "Manduka",
                 },
             ],
@@ -85,12 +147,42 @@ export default {
 @import "@/assets/styles/app.scss";
 @import "@/assets/styles/mediaQueries.scss";
 
+.slider_controll_container {
+    margin-top: 2em;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @include media(">=md") {
+        margin-bottom: 2.5em;
+    }
+
+
+    .slider-text {
+        font-size: $h3FontSize;
+        font-weight: $headlineFontWeightBlack;
+        font-family: $headlineFont;
+        color: $headlineColor;
+        text-transform: uppercase;
+        margin: 0 3em;
+    }
+}
+
+.slide-post-container{
+    display: flex !important; // ich weis das das sehr schlecht ist aba das display inline block kommt von der library und wird dort inline gestyled! 
+    justify-content: center;
+    outline: none;
+}
+
+
 .single_post_container {
     padding: 2em;
     background-image: url("../../assets/images/greenstart-bg.png");
     box-shadow: $boxShadow;
     max-width: 19em;
     border-radius: $borderRadius;
+    margin: 2em 0;
 
     .post_top_flex {
         display: flex;
@@ -142,6 +234,7 @@ export default {
             img {
                 object-fit: cover;
                 width: 100%;
+                height: 100%;
             }
         }
 

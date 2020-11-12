@@ -23,7 +23,6 @@ export default {
 
 .post_list_container {
     .post_list {
-        display: flex;
         padding: 4em 0;
         gap: 5em;
         align-items: center;

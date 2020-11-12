@@ -2,23 +2,17 @@
   <section class="eu_post_container">
     <h2>Top Posts <span class="red"> of </span> Europe</h2>
     <PostList />
-    <SliderControll text="swipe"/>
-    <ReadPost />
   </section>
 </template>
 
 <script>
 
 import PostList from '../Partials/PostList';
-import SliderControll from '../Partials/SliderControll';
-import ReadPost from '../Partials/ReadPost';
 
 export default {
   name: 'europepostsection',
   components: {
     PostList,
-    SliderControll,
-    ReadPost
   }
 }
 </script>
