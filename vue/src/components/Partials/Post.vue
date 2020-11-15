@@ -1,8 +1,13 @@
 <template>
     <div>
         <VueSlickCarousel v-bind="settings" ref="carousel">
-            <div v-for="post in posts" :key="post.likes" class="slide-post-container">
-                <div class="single_post_container">
+            <div
+                v-for="post in posts"
+                :key="post.likes"
+                class="slide-post-container"
+                
+            >
+                <div class="single_post_container" v-if="currentRoute == post.spot || homeRoute == '/#/' ">
                     <div class="post_top_flex">
                         <div class="like_flex">
                             <img
@@ -45,9 +50,9 @@
             </div>
         </VueSlickCarousel>
         <div class="slider_controll_container">
-            <SliderBtnPrev @click.native="showPrev" class="slider-btn"/>
+            <SliderBtnPrev @click.native="showPrev" class="slider-btn" />
             <span class="slider-text">next</span>
-            <SliderBtnNext @click.native="showNext" class="slider-btn"/>
+            <SliderBtnNext @click.native="showNext" class="slider-btn" />
         </div>
 
         <ReadPost v-if="currentPost" v-bind="currentPost" />
@@ -78,16 +83,64 @@ export default {
         },
         showPrev() {
             this.$refs.carousel.prev();
+        }, 
+
+        getCurrentRoute(currentRoute){
+            this.currentRoute = currentRoute;
         },
+
+        getHomeRoute(homeRoute){
+            this.homeRoute = homeRoute;
+        }
+        
+        
     },
+
+    mounted () {
+        this.currentRoute = this.$route.params.id
+    },
+    created () {
+        this.homeRoute = this.$route
+    },
+
+    
 
     data: () => {
         return {
             currentPost: null,
+            currentRoute : null,
+            homeRoute : null,
 
             settings: {
-                "slidesToShow": 3,
-                "speed": 500
+                slidesToShow: 4,
+                speed: 500,
+                responsive: [
+                    {
+                        breakpoint: 1440,
+                        settings: {
+                            slidesToShow: 4,
+                        },
+                    },
+
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 2,
+                        },
+                    },
+                    {
+                        breakpoint: 600,
+                        settings: {
+                            slidesToShow: 2,
+                        },
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 1,
+                        },
+                    },
+                ],
             },
 
             posts: [
@@ -96,14 +149,14 @@ export default {
                     userFirstName: "Jordan",
                     avatarImagePath: require("../../assets/images/avatar/avatar.jpg"),
                     postImagePath: require("../../assets/images/post_img/post_1.jpg"),
-                    spot: "Ericeira",
+                    spot: "ericeira",
                 },
                 {
                     likes: 215,
                     userFirstName: "Rick",
                     avatarImagePath: require("../../assets/images/avatar/avatar4.jpg"),
                     postImagePath: require("../../assets/images/post_img/post_2.jpg"),
-                    spot: "Nazare",
+                    spot: "nazare",
                 },
 
                 {
@@ -111,21 +164,21 @@ export default {
                     userFirstName: "Emma",
                     avatarImagePath: require("../../assets/images/avatar/avatar2.jpg"),
                     postImagePath: require("../../assets/images/post_img/post_3.jpg"),
-                    spot: "Manduka",
+                    spot: "mundaka",
                 },
                 {
                     likes: 343,
                     userFirstName: "Jordan",
                     avatarImagePath: require("../../assets/images/avatar/avatar.jpg"),
                     postImagePath: require("../../assets/images/post_img/post_1.jpg"),
-                    spot: "Ericeira",
+                    spot: "ericeira",
                 },
                 {
                     likes: 215,
                     userFirstName: "Rick",
                     avatarImagePath: require("../../assets/images/avatar/avatar3.jpg"),
                     postImagePath: require("../../assets/images/post_img/post_2.jpg"),
-                    spot: "Nazare",
+                    spot: "nazare",
                 },
 
                 {
@@ -133,7 +186,7 @@ export default {
                     userFirstName: "Emma",
                     avatarImagePath: require("../../assets/images/avatar/avatar2.jpg"),
                     postImagePath: require("../../assets/images/post_img/post_3.jpg"),
-                    spot: "Manduka",
+                    spot: "manduka",
                 },
             ],
         };
@@ -158,7 +211,6 @@ export default {
         margin-bottom: 2.5em;
     }
 
-
     .slider-text {
         font-size: $h3FontSize;
         font-weight: $headlineFontWeightBlack;
@@ -169,12 +221,11 @@ export default {
     }
 }
 
-.slide-post-container{
-    display: flex !important; // ich weis das das sehr schlecht ist aba das display inline block kommt von der library und wird dort inline gestyled! 
+.slide-post-container {
+    display: flex !important; // ich weis das das sehr schlecht ist aba das display inline block kommt von der library und wird dort inline gestyled!
     justify-content: center;
     outline: none;
 }
-
 
 .single_post_container {
     padding: 2em;
