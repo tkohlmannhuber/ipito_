@@ -7,7 +7,7 @@
                 class="slide-post-container"
                 
             >
-                <div class="single_post_container" v-if="currentRoute == post.spot || homeRoute == '/#/' ">
+                <div class="single_post_container">
                     <div class="post_top_flex">
                         <div class="like_flex">
                             <img

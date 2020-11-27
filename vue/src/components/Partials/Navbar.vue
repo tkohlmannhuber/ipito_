@@ -4,11 +4,10 @@
             <Logo />
         </router-link>
 
-        <NavBright :class="{ open: showNav }" />
+        <NavBright :class="{ open: showNav }"/>
 
-        <button :class="{ close_btn: !showNav }" @click="(showNav = !showNav)"></button>
+        <button :class="{ close_btn: !showNav }" @click="toggleNav()"></button>
 
-        <!-- <CircleBtn @click.native="(showNav = !showNav)" /> -->
     </nav>
 </template>
 
@@ -20,7 +19,6 @@ import NavBright from "../Partials/NavBright";
 export default {
     name: "navbar",
     components: {
-        // CircleBtn,
         Logo,
         NavBright,
     },
@@ -29,6 +27,12 @@ export default {
             showNav: true,
         };
     },
+
+    methods: {
+        toggleNav() {
+            this.showNav = !this.showNav;
+        }
+    }
 };
 </script>
 

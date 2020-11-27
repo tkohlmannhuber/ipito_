@@ -4,6 +4,7 @@
         <div class="mobile-menu-item-flex">
             <div class="sub-mobile-menu-flex">
                 <router-link
+                    @click="method()"
                     class="sub-mobile-menu-item"
                     :to="{ name: 'Spot', params: { id: 'mundaka' } }"
                     >Mundaka</router-link
@@ -93,11 +94,18 @@ export default {
         };
     },
 
+    props: {
+        method: {type : Function},
+
+    },
+
     methods: {
         handleView() {
             this.mobileView = window.innerWidth <= 990;
         },
+
     },
+
     created() {
         this.handleView();
     },

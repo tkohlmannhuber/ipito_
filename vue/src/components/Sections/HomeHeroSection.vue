@@ -61,6 +61,8 @@ export default {
         background-image: url("../../assets/images/back_cut.png");
         background-size: cover;
         height: 100vh;
+        margin-bottom: 0em;
+
 
         &::before {
             content: "";
@@ -81,7 +83,7 @@ export default {
             z-index: -1;
             overflow: hidden;
 
-            @include media(">max-width"){
+            @include media(">max-width") {
                 transform: translate(90em, 15em);
             }
         }
@@ -95,8 +97,8 @@ export default {
         margin-top: 8em;
         max-width: 70ch;
 
-        @include media(">=md"){
-          margin-top: 5em;
+        @include media(">=md") {
+            margin-top: 5em;
         }
     }
 }
