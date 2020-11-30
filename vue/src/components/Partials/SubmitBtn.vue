@@ -1,5 +1,5 @@
 <template>
-    <button type="submit">
+    <button type="submit" @click.prevent="method">
         {{ text }}
     </button>
 </template>
@@ -9,6 +9,9 @@ export default {
     name: "submitbtn",
     props: {
         text: String,
+        method: {
+            type: Function,
+        }
     },
 };
 </script>

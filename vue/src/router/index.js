@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Moon from "../views/Moon.vue";
 import Login from "../views/Login.vue";
 import Spot from "../views/Spot.vue";
+import AdminDashboard from "../views/AdminDashboard.vue";
 
 Vue.use(VueRouter)
 
@@ -35,6 +36,13 @@ const routes = [
     name: "Login",
     component: Login,
   },
+
+  {
+    path: "/admin",
+    name: "Admin",
+    component: AdminDashboard,
+  },
+
 
 ];
 const router = new VueRouter({
