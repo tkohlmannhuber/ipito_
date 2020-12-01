@@ -45,7 +45,7 @@ export default {
 			axios
                 .post("http://ipito_api.local/api/login", this.login)
                 .then(() => {
-					this.$router.push({ name: "Admin" });
+					this.$router.push({ name: "Account" });
 					console.log('logged in')
                 })
                 .catch((error) => {
@@ -65,7 +65,16 @@ export default {
 @import "@/assets/styles/mediaQueries.scss";
 
 .login-form-container {
-    width: 30ch;
+    background-image: url("../../assets/images/greenstart-bg.png");
+    padding: 2.5em;
+    border-radius: $borderRadius;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    @include media(">=md"){
+        padding: 3.5em;
+    }
 
     .input-flex {
         margin: 1em 0;

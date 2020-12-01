@@ -1,21 +1,17 @@
 <template>
-    <div class="auth-start-flex">
-        <h3>Join <span class="red">the</span> community</h3>
-        <p>Stay always up to date!</p>
-        <TextBtn text="Login here" />
-        <TextBtn text="Sign in here" />
+    <div>
+        <SigninTemplate />
     </div>
 </template>
 
 <script>
-
-import TextBtn from "../Partials/TextBtn";
+import SigninTemplate from "../components/Templates/SigninTemplate.vue";
 
 export default {
-    name: "chooselogin",
+    name: "login",
     components: {
-      TextBtn,
-    }
+        SigninTemplate,
+    },
 };
 </script>
 

@@ -71,8 +71,13 @@
         >
         <router-link
             class="mobile-menu-item extern-link"
-            :to="{ name: 'user' }"
-            >Username</router-link
+            :to="{ name: 'Signin' }"
+            >Sign In</router-link
+        >
+        <router-link
+            class="mobile-menu-item extern-link"
+            :to="{ name: 'Account' }"
+            >Thomas</router-link
         >
         <div class="social-list" v-if="mobileView">
             <a href="#">

@@ -1,17 +1,17 @@
 <template>
   <div class="login-template">
-    <LoginForm />
+    <SignInForm />
   </div>
 </template>
 
 <script>
 
-import LoginForm from "../Partials/LoginForm";
+import SignInForm from "../Partials/SignInForm";
 
 export default {
   name: 'logintemplate',
   components:{
-      LoginForm,
+      SignInForm,
   } 
 }
 </script>
