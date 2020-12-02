@@ -4,35 +4,80 @@
         <form action="#">
             <div class="input-flex">
                 <label for="signin_username">Username:</label>
-                <input type="text" id="signin_username" />
+                <input
+                    type="text"
+                    id="signin_username"
+                    v-model="newUser.username"
+                    name="sigin_username"
+                />
             </div>
             <div class="input-flex">
                 <label for="signin_email">Email:</label>
-                <input type="email" id="signin_email" />
+                <input
+                    type="email"
+                    id="signin_email"
+                    v-model="newUser.email"
+                    name="signin_email"
+                />
             </div>
             <div class="input-flex">
                 <label for="signin_password">Password:</label>
-                <input type="text" id="signin_password" />
+                <input
+                    type="password"
+                    id="signin_password"
+                    v-model="newUser.password"
+                    name="signin_password"
+                />
             </div>
             <div class="input-flex">
-                <label for="signin_password_rp">Repeat Password:</label>
-                <input type="text" id="signin_password_rp" />
+                <label for="signin_password_rp">Confirm Password:</label>
+                <input
+                    type="password"
+                    id="signin_password_rp"
+                    v-model="newUser.password_confirmation"
+                    name="signin_password_rp"
+                />
             </div>
-            <SubmitBtn text="Login" />
+            <SubmitBtn text="Login" :method="saveUser" />
         </form>
     </div>
 </template>
 
 <script>
-
-import SubmitBtn from "../Partials/SubmitBtn"
-
+import SubmitBtn from "../Partials/SubmitBtn";
+import axios from "axios";
 
 export default {
     name: "",
     components: {
-      SubmitBtn,
-    }
+        SubmitBtn,
+    },
+
+    data: () => {
+        return {
+            newUser: {
+                username: "",
+                email: "",
+                password: "",
+                password_confirmation: "",
+            },
+
+            errors: [],
+        };
+    },
+
+    methods: {
+        saveUser() {
+            axios
+                .post("http://ipito_api.local/api/register", this.newUser)
+                .then(() => {
+                    console.log("saved");
+                })
+                .catch((error) => {
+                    this.errors = error.response.data.errors;
+                });
+        },
+    },
 };
 </script>
 
@@ -43,9 +88,16 @@ export default {
 @import "@/assets/styles/mediaQueries.scss";
 
 .signin-form-container {
-    width: 30ch;
-    margin-bottom: 3em;
+    background-image: url("../../assets/images/greenstart-bg.png");
+    padding: 2.5em;
+    border-radius: $borderRadius;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
+    @include media(">=md") {
+        padding: 3.5em;
+    }
     .input-flex {
         margin: 1em 0;
         label {

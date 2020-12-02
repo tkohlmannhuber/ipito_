@@ -4,11 +4,9 @@
             <Logo />
         </router-link>
 
-        <NavBright :class="{ open: showNav }" />
+        <NavBright :class="{ open: showNav }" :method="closeNav" />
 
-        <button :class="{ close_btn: !showNav }" @click="(showNav = !showNav)"></button>
-
-        <!-- <CircleBtn @click.native="(showNav = !showNav)" /> -->
+        <button :class="{ close_btn: !showNav }" @click="toggleNav()"></button>
     </nav>
 </template>
 
@@ -20,14 +18,23 @@ import NavBright from "../Partials/NavBright";
 export default {
     name: "navbar",
     components: {
-        // CircleBtn,
         Logo,
         NavBright,
     },
+
     data: () => {
         return {
             showNav: true,
         };
+    },
+
+    methods: {
+        toggleNav() {
+            this.showNav = !this.showNav;
+        },
+        closeNav() {
+            this.showNav = true;
+        },
     },
 };
 </script>
@@ -64,24 +71,23 @@ button {
     z-index: 1;
     position: relative;
 
-    &::after{
-        content: '';
-        width: .1em;
+    &::after {
+        content: "";
+        width: 0.1em;
         height: 1.2em;
         position: absolute;
         background: $primaryColor;
         border-radius: 1em;
     }
-    &::before{
-        content: '';
-        width: .1em;
+    &::before {
+        content: "";
+        width: 0.1em;
         height: 1.2em;
         position: absolute;
         background: $primaryColor;
         border-radius: 1em;
         transform: rotate(90deg);
     }
-
 
     @include media(">=xs") {
         width: 3em;
@@ -94,8 +100,7 @@ button {
     }
 }
 
-.close_btn{
+.close_btn {
     transform: rotate(45deg);
 }
-
 </style>

@@ -4,6 +4,7 @@
         <div class="mobile-menu-item-flex">
             <div class="sub-mobile-menu-flex">
                 <router-link
+                    v-on:click="method()"
                     class="sub-mobile-menu-item"
                     :to="{ name: 'Spot', params: { id: 'mundaka' } }"
                     >Mundaka</router-link
@@ -70,8 +71,13 @@
         >
         <router-link
             class="mobile-menu-item extern-link"
-            :to="{ name: 'user' }"
-            >Username</router-link
+            :to="{ name: 'Signin' }"
+            >Sign In</router-link
+        >
+        <router-link
+            class="mobile-menu-item extern-link"
+            :to="{ name: 'Account' }"
+            >Thomas</router-link
         >
         <div class="social-list" v-if="mobileView">
             <a href="#">
@@ -93,11 +99,19 @@ export default {
         };
     },
 
+    props: {
+        method: {type : Function},
+
+    },
+
     methods: {
         handleView() {
             this.mobileView = window.innerWidth <= 990;
         },
+
+
     },
+
     created() {
         this.handleView();
     },

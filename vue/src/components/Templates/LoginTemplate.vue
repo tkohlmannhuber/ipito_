@@ -1,17 +1,17 @@
 <template>
   <div class="login-template">
-    <Auth />
+    <LoginForm />
   </div>
 </template>
 
 <script>
 
-import Auth from "../Partials/Auth";
+import LoginForm from "../Partials/LoginForm";
 
 export default {
   name: 'logintemplate',
   components:{
-      Auth,
+      LoginForm,
   } 
 }
 </script>
