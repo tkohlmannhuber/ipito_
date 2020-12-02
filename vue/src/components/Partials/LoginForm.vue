@@ -1,7 +1,7 @@
 <template>
     <div class="login-form-container">
         <h3>Login</h3>
-        <form action="#">
+        <form action="#" @submit.prevent="submit">
             <div class="input-flex">
                 <label for="login_email">Email:</label>
                 <input
@@ -15,19 +15,21 @@
                 <label for="login_password">Password:</label>
                 <input type="password" id="login_password" name="login_password" v-model="login.password" />
             </div>
-            <SubmitBtn text="Login" :method="loginUser" />
+            <!-- <SubmitBtn text="Login" :method="loginUser" /> -->
+            <button type="submit">Login</button>
         </form>
     </div>
 </template>
 
 <script>
-import SubmitBtn from "../Partials/SubmitBtn";
-import axios from 'axios';
+// import SubmitBtn from "../Partials/SubmitBtn";
+// import axios from 'axios';
+import { mapActions } from 'vuex'
 
 export default {
     name: "loginform",
     components: {
-        SubmitBtn,
+        // SubmitBtn,
     },
 
     data: () => {
@@ -40,21 +42,32 @@ export default {
         };
 	},
 
-	methods:{
-		loginUser(){
-			axios
-                .post("http://ipito_api.local/api/login", this.login)
-                .then(() => {
-					this.$router.push({ name: "Account" });
-					console.log('logged in')
-                })
-                .catch((error) => {
-                    this.errors = error.response.data.errors;
-				});
+	// methods:{
+	// 	loginUser(){
+	// 		axios
+    //             .post("http://ipito_api.local/api/login", this.login)
+    //             .then(() => {
+	// 				this.$router.push({ name: "Account" });
+	// 				console.log('logged in')
+    //             })
+    //             .catch((error) => {
+    //                 this.errors = error.response.data.errors;
+	// 			});
 			
-        },
+    //     },
 
-	}
+    // }
+    methods: {
+      ...mapActions({
+        signIn: 'auth/signIn'
+      }),
+
+      async submit () {
+        await this.signIn(this.login)
+
+        this.$router.replace({ name: 'Home' })
+      }
+    }
 };
 </script>
 

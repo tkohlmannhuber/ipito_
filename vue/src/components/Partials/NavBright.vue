@@ -4,7 +4,7 @@
         <div class="mobile-menu-item-flex">
             <div class="sub-mobile-menu-flex">
                 <router-link
-                    @click="method()"
+                    v-on:click="method()"
                     class="sub-mobile-menu-item"
                     :to="{ name: 'Spot', params: { id: 'mundaka' } }"
                     >Mundaka</router-link
@@ -108,6 +108,7 @@ export default {
         handleView() {
             this.mobileView = window.innerWidth <= 990;
         },
+
 
     },
 

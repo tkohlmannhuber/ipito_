@@ -30,20 +30,20 @@ export default {
 
   actions: {
     async signIn ({ dispatch }, credentials) {
-        await axios.get('/sanctum/csrf-cookie')
-        await axios.post('/login', credentials)
+        await axios.get('http://ipito_api.local/sanctum/csrf-cookie')
+        await axios.post('http://ipito_api.local/api/login', credentials)
   
         return dispatch('me')
       },
   
       async signOut ({ dispatch }) {
-        await axios.post('/logout')
+        await axios.post('http://ipito_api.local/api/logout')
   
         return dispatch('me')
       },
   
       me ({ commit }) {
-        return axios.get('/api/user').then((response) => {
+        return axios.get('http://ipito_api.local/api/user').then((response) => {
           commit('SET_AUTHENTICATED', true)
           commit('SET_USER', response.data)
         }).catch(() => {
