@@ -1,19 +1,32 @@
 <template>
     <div class="login-form-container">
-        <h3>Login</h3>
-        <form action="#" @submit.prevent="submit">
+        <h3 v-if="!authStates[0].success">Login</h3>
+        <div v-if="authStates[0].success">
+            <h3>Login was successfull!</h3>
+        </div>
+        <form action="#" v-if="!authStates[0].authenticated" @submit.prevent="submit">
             <div class="input-flex">
                 <label for="login_email">Email:</label>
                 <input
                     type="email"
                     id="login_email"
                     name="login_email"
-                    v-model="login.email"
+                    v-model="loginForm.email"
                 />
             </div>
             <div class="input-flex">
                 <label for="login_password">Password:</label>
-                <input type="password" id="login_password" name="login_password" v-model="login.password" />
+                <input
+                    type="password"
+                    id="login_password"
+                    name="login_password"
+                    v-model="loginForm.password"
+                />
+            </div>
+            <div v-if="authStates[0].errors" class="error-container">
+                <p class="error-msg">
+                    Email and Password do not match! Try Again!
+                </p>
             </div>
             <!-- <SubmitBtn text="Login" :method="loginUser" /> -->
             <button type="submit">Login</button>
@@ -23,8 +36,8 @@
 
 <script>
 // import SubmitBtn from "../Partials/SubmitBtn";
-// import axios from 'axios';
-import { mapActions } from 'vuex'
+// import axios from "axios";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
     name: "loginform",
@@ -34,41 +47,50 @@ export default {
 
     data: () => {
         return {
-            login: {
+            loginForm: {
                 email: "",
                 password: "",
-			},
-			errors: []
+            },
         };
-	},
+    },
+    computed: mapGetters(["authStates"]), 
 
-	// methods:{
-	// 	loginUser(){
-	// 		axios
+    methods: {
+        ...mapActions(["login"]),
+
+        async submit () {
+        await this.login(this.loginForm)
+        }
+    },
+
+    // methods: {
+    //     loginUser() {
+    //         axios
     //             .post("http://ipito_api.local/api/login", this.login)
-    //             .then(() => {
-	// 				this.$router.push({ name: "Account" });
-	// 				console.log('logged in')
+    //             .then((res) => {
+    //                 // this.$router.push({ name: "Account" });
+    //                 this.login.email = res.data.email;
+    //                 this.login.username = res.data.username;
+    //                 this.authenticated = true;
+    //                 this.success = true;
     //             })
-    //             .catch((error) => {
-    //                 this.errors = error.response.data.errors;
-	// 			});
-			
+    //             .catch(() => {
+    //                 this.errors = true;
+    //             });
     //     },
 
-    // }
-    methods: {
-      ...mapActions({
-        signIn: 'auth/signIn'
-      }),
+    // methods: {
+    //   ...mapActions({
+    //     login: 'auth/login'
+    //   }),
 
-      async submit () {
-        await this.signIn(this.login)
+    //   async submit () {
+    //     await this.login(this.login)
 
-        this.$router.replace({ name: 'Home' })
-      }
-    }
-};
+    //     this.$router.replace({ name: 'Home' })
+    //   }
+    // },
+}
 </script>
 
 <style lang="scss" src="@/assets/styles/app.scss"></style>
@@ -85,7 +107,7 @@ export default {
     flex-direction: column;
     align-items: flex-start;
 
-    @include media(">=md"){
+    @include media(">=md") {
         padding: 3.5em;
     }
 
@@ -102,6 +124,9 @@ export default {
             padding: 0.5em;
             margin: 0.5em 0;
         }
+    }
+    .error-container {
+        margin-bottom: 1em;
     }
 }
 </style>

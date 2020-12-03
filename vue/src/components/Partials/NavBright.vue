@@ -64,20 +64,25 @@
         <router-link class="mobile-menu-item extern-link" :to="{ name: 'Moon' }"
             >Moon</router-link
         >
-        <router-link
+        <router-link v-if="!authStates[0].authenticated"
             class="mobile-menu-item extern-link"
             :to="{ name: 'Login' }"
             >Login</router-link
         >
-        <router-link
+        <router-link v-if="!authStates[0].authenticated"
             class="mobile-menu-item extern-link"
             :to="{ name: 'Signin' }"
             >Sign In</router-link
         >
-        <router-link
+        <router-link v-if="authStates[0].authenticated"
             class="mobile-menu-item extern-link"
             :to="{ name: 'Account' }"
-            >Thomas</router-link
+            >{{authStates[0].user.username}}</router-link
+        >
+        <button v-if="authStates[0].authenticated"
+            class="mobile-menu-item extern-link"
+            @click="logout()"
+            >logout</button
         >
         <div class="social-list" v-if="mobileView">
             <a href="#">
@@ -91,8 +96,13 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
     name: "navbright",
+
+    computed: mapGetters(["authStates"]), 
+
     data: () => {
         return {
             mobileView: true,
@@ -100,17 +110,21 @@ export default {
     },
 
     props: {
-        method: {type : Function},
-
+        method: { type: Function },
     },
 
     methods: {
         handleView() {
             this.mobileView = window.innerWidth <= 990;
         },
+        ...mapActions(["logout"]),
 
-
+        async logout () {
+        await this.logout()
+        },
+       
     },
+
 
     created() {
         this.handleView();
