@@ -5,10 +5,22 @@
 </template>
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 export default {
     name: "logintemplate",
     components: {},
+
+    methods: {
+        getLoggedInUser(){
+            axios.get("http://api.ipito.local/api/user").then((res) => {
+                console.log(res.data);
+            })
+        }
+    },
+
+    created(){
+        this.getLoggedInUser();
+    }
 
 };
 </script>

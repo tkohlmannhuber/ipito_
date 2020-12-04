@@ -212,6 +212,10 @@ export default {
         font-family: $headlineFont;
         font-size: $h3FontSize;
         text-transform: uppercase;
+        border: none; 
+        background: none;
+        margin: 0;
+        padding: 0;
     }
 }
 </style>

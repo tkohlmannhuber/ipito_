@@ -4,7 +4,11 @@
         <div v-if="authStates[0].success">
             <h3>Login was successfull!</h3>
         </div>
-        <form action="#" v-if="!authStates[0].authenticated" @submit.prevent="submit">
+        <form
+            action="#"
+            v-if="!authStates[0].authenticated"
+            @submit.prevent="submit"
+        >
             <div class="input-flex">
                 <label for="login_email">Email:</label>
                 <input
@@ -36,7 +40,7 @@
 
 <script>
 // import SubmitBtn from "../Partials/SubmitBtn";
-// import axios from "axios";
+import axios from "axios";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
@@ -53,20 +57,30 @@ export default {
             },
         };
     },
-    computed: mapGetters(["authStates"]), 
+    computed: mapGetters(["authStates"]),
 
     methods: {
         ...mapActions(["login"]),
 
-        async submit () {
-        await this.login(this.loginForm)
-        }
+        async submit() {
+            await this.login(this.loginForm);
+        },
+
+        getCsrf() {
+            axios.get("http://api.ipito.local/sanctum/csrf-cookie").then((response) => {
+                console.log(response);
+            });
+        },
     },
+
+    created(){
+        this.getCsrf();
+    }
 
     // methods: {
     //     loginUser() {
     //         axios
-    //             .post("http://ipito_api.local/api/login", this.login)
+    //             .post("http://api.ipito.local/api/login", this.login)
     //             .then((res) => {
     //                 // this.$router.push({ name: "Account" });
     //                 this.login.email = res.data.email;
@@ -90,7 +104,7 @@ export default {
     //     this.$router.replace({ name: 'Home' })
     //   }
     // },
-}
+};
 </script>
 
 <style lang="scss" src="@/assets/styles/app.scss"></style>

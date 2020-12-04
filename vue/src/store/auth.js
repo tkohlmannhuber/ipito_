@@ -35,7 +35,7 @@ export default {
 
     actions: {
         async login({ commit }, credentials) {
-            await axios.post("http://ipito_api.local/api/login", credentials).then((res) => {
+            await axios.post("http://api.ipito.local/api/login", credentials).then((res) => {
               commit('SET_AUTHENTICATED', true)
               commit('SET_USER', res.data)
               commit('SET_SUCCESS', true)            
@@ -46,7 +46,7 @@ export default {
             });
         },
         async logout({ commit }) {
-          await axios.get("http://ipito_api.local/api/logout").then(() => {
+          await axios.get("http://api.ipito.local/api/logout").then(() => {
             commit('SET_AUTHENTICATED', false)
             commit('SET_USER', null)
             commit('SET_SUCCESS', false)            
@@ -60,7 +60,7 @@ export default {
 };
 
 // const response = await axios
-// .post("http://ipito_api.local/api/login", this.login)
+// .post("http://api.ipito.local/api/login", this.login)
 // .then((res) => {
 //     // this.$router.push({ name: "Account" });
 //     this.allStates[0].user.username = res.data.username;
