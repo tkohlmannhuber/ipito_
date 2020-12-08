@@ -1,6 +1,6 @@
 <template>
     <div class="dashboard-template">
-		hallo
+		
 	</div>
 </template>
 
@@ -30,4 +30,12 @@ export default {
 @import "@/assets/styles/variables.scss";
 @import "@/assets/styles/app.scss";
 @import "@/assets/styles/mediaQueries.scss";
+
+.dashboard-template{
+    background-image: url("../../assets/images/greenstart-bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+}
 </style>

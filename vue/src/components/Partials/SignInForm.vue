@@ -1,7 +1,8 @@
 <template>
     <div class="signin-form-container">
-        <h3>Sign In</h3>
-        <form action="#">
+        <h3 v-if="!succesSignin">Sign In</h3>
+        <h3 v-if="succesSignin">Congrats! Sign In was successfull!</h3>
+        <form action="#" v-if="!succesSignin">
             <div class="input-flex">
                 <label for="signin_username">Username:</label>
                 <input
@@ -38,19 +39,32 @@
                     name="signin_password_rp"
                 />
             </div>
-            <SubmitBtn text="Login" :method="saveUser" />
+            <div>
+                <p v-if="errors">{{ errors.username }}</p>
+                <p v-if="errors">{{ errors.email }}</p>
+                <p v-if="errors">{{ errors.password }}</p>
+            </div>
+            <Loader v-if="loader" />
+            <SubmitBtn
+                v-if="showSubmit"
+                text="Login"
+                :method="saveUser"
+                @click.native="showLoader()"
+            />
         </form>
     </div>
 </template>
 
 <script>
 import SubmitBtn from "../Partials/SubmitBtn";
+import Loader from "../Partials/Loader";
 import axios from "axios";
 
 export default {
     name: "",
     components: {
         SubmitBtn,
+        Loader,
     },
 
     data: () => {
@@ -63,6 +77,12 @@ export default {
             },
 
             errors: [],
+
+            succesSignin: false,
+
+            showSubmit: true,
+
+            loader: false,
         };
     },
 
@@ -71,11 +91,21 @@ export default {
             axios
                 .post("http://api.ipito.local/api/register", this.newUser)
                 .then(() => {
-                    console.log("saved");
+                    this.succesSignin = true;
+                    this.loader = false;
+                    this.showSubmit = true;
                 })
-                .catch((error) => {
-                    this.errors = error.response.data.errors;
+                .catch((err) => {
+                    this.errors = err.response.data.errors;
+                    console.log(this.errors);
+                    this.loader = false;
+                    this.showSubmit = true;
                 });
+        },
+
+        showLoader() {
+            this.loader = true;
+            this.showSubmit = false;
         },
     },
 };

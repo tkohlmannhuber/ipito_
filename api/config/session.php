@@ -155,7 +155,6 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN', null),
     'domain' => '.ipito.local',
 
     /*

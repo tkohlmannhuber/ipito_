@@ -151,6 +151,12 @@ export default {
     transition: all 0.5s ease;
     box-shadow: $boxShadow;
 
+    @include media(">=xs") {
+        width: 50vw;
+    }
+    @include media(">=sm") {
+        width: 30vw;
+    }
     @include media(">=md") {
         width: 20vw;
     }

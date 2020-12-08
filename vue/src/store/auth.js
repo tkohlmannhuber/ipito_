@@ -9,7 +9,10 @@ export default {
               user: null,
               errors: null,
               success: null,
+              showSubmit: true,
+              loader: false,
             },
+
         ],
     },
 
@@ -21,7 +24,7 @@ export default {
       SET_AUTHENTICATED (state, value) {
         state.allStates[0].authenticated = value
       },
-      SET_USER (state, value) {
+      SET_USERTOKEN (state, value) {
         state.allStates[0].user = value
       },
       SET_ERROR (state, value) {
@@ -29,6 +32,12 @@ export default {
       },
       SET_SUCCESS (state, value) {
         state.allStates[0].success = value
+      },
+      SET_SHOWSUBMIT (state, value) {
+        state.allStates[0].showSubmit = value
+      },
+      SET_LOADER (state, value) {
+        state.allStates[0].loader = value
       }
 
     },
@@ -37,12 +46,17 @@ export default {
         async login({ commit }, credentials) {
             await axios.post("http://api.ipito.local/api/login", credentials).then((res) => {
               commit('SET_AUTHENTICATED', true)
-              commit('SET_USER', res.data)
+              commit('SET_USERTOKEN', res.data)
               commit('SET_SUCCESS', true)            
               commit('SET_ERROR', false)            
+              commit('SET_LOADER', false)            
+              commit('SET_SHOWSUBMIT', true)            
 
             }).catch(() => {
-              commit('SET_ERROR', true)            
+              commit('SET_ERROR', true) 
+              commit('SET_LOADER', false)            
+              commit('SET_SHOWSUBMIT', true)            
+           
             });
         },
         async logout({ commit }) {

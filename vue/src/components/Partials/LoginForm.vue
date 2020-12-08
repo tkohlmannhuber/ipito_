@@ -32,21 +32,28 @@
                     Email and Password do not match! Try Again!
                 </p>
             </div>
+            <Loader v-if="loader" />
+
             <!-- <SubmitBtn text="Login" :method="loginUser" /> -->
-            <button type="submit">Login</button>
+            <button type="submit" v-if="showSubmit">
+                Login
+            </button>
         </form>
     </div>
 </template>
 
 <script>
+import Loader from "../Partials/Loader";
+
 // import SubmitBtn from "../Partials/SubmitBtn";
-import axios from "axios";
+// import axios from "axios";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
     name: "loginform",
     components: {
         // SubmitBtn,
+        Loader,
     },
 
     data: () => {
@@ -55,6 +62,8 @@ export default {
                 email: "",
                 password: "",
             },
+            showSubmit: true,
+            loader: false,
         };
     },
     computed: mapGetters(["authStates"]),
@@ -63,19 +72,27 @@ export default {
         ...mapActions(["login"]),
 
         async submit() {
+            this.showLoader();
             await this.login(this.loginForm);
         },
 
-        getCsrf() {
-            axios.get("http://api.ipito.local/sanctum/csrf-cookie").then((response) => {
-                console.log(response);
-            });
+        // getCsrf() {
+        //     axios
+        //         .get("http://api.ipito.local/sanctum/csrf-cookie")
+        //         .then((response) => {
+        //             console.log(response);
+        //         });
+        // },
+
+        showLoader() {
+            this.loader = true;
+            this.showSubmit = false;
         },
     },
 
-    created(){
+    created() {
         this.getCsrf();
-    }
+    },
 
     // methods: {
     //     loginUser() {

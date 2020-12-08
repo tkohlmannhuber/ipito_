@@ -21,7 +21,10 @@ class AuthController extends Controller
         ]);
 
         if ( Auth::attempt($request->only('email', 'password'))) {
-            return response()->json(Auth::user(), 200);
+
+            $tokenObj = Auth::user()->createToken('auth');
+
+            return response()->json($tokenObj->plainTextToken);
         }
 
         throw ValidationException::withMessages([
@@ -46,8 +49,8 @@ class AuthController extends Controller
 
     }
 
-    public function logout(){
+    // public function logout(){
 
-        auth()->logout();
-    }
+    //     auth()->logout();
+    // }
 }
