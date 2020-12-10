@@ -1,5 +1,5 @@
-module.exports = {
-    devServer: {
-      host: 'ipito.local'
-    }
-  }
+// module.exports = {
+//     devServer: {
+//       host: 'ipito.local'
+//     }
+//   }

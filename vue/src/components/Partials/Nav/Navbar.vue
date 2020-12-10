@@ -4,7 +4,7 @@
             <Logo />
         </router-link>
 
-        <NavBright :class="{ open: showNav }" :method="closeNav" />
+        <NavList :class="{ open: showNav }" :method="closeNav" />
 
         <button :class="{ close_btn: !showNav }" @click="toggleNav()"></button>
     </nav>
@@ -12,14 +12,14 @@
 
 <script>
 // import CircleBtn from "../Partials/CircleBtn";
-import Logo from "../Partials/Logo";
-import NavBright from "../Partials/NavBright";
+import Logo from "../../Partials/Logo";
+import NavList from "../../Partials/Nav/NavList";
 
 export default {
     name: "navbar",
     components: {
         Logo,
-        NavBright,
+        NavList,
     },
 
     data: () => {

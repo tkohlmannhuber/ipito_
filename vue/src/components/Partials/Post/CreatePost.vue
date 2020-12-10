@@ -6,7 +6,11 @@
                     src="@/assets/images/icons/upload_icon.svg"
                     alt="Drag and Drop Icon"
                 />
-                <input class="file-input" type="file" @change="onImageSelected">
+                <input
+                    class="file-input"
+                    type="file"
+                    @change="onImageSelected"
+                />
                 <span class="drop-zone-text">Drag and Drop A Pic</span>
             </div>
         </div>
@@ -16,11 +20,17 @@
         <div class="post-input-container">
             <div class="post-input-flex">
                 <label for="postheadline">Headline:</label>
-                <input required type="text" id="postheadline" v-model="newPost.title" />
+                <input
+                    required
+                    type="text"
+                    id="postheadline"
+                    v-model="newPost.title"
+                />
             </div>
             <div class="post-input-flex textarea-flex">
                 <label for="postheadline">Text:</label>
-                <textarea required
+                <textarea
+                    required
                     name="text"
                     id="text"
                     cols="40"
@@ -39,15 +49,13 @@
 </template>
 
 <script>
-// import CreatePostDragAndDrop from "./CreatePostDragAndDrop";
-// import CreatePostForm from "./CreatePostForm";
 import postDataServiceLaravel from "@/services/postDataServiceLaravel";
+import userDataService from "@/services/userDataService";
+
 
 export default {
     name: "createpost",
     components: {
-        // CreatePostDragAndDrop,
-        // CreatePostForm,
     },
     data: () => {
         return {
@@ -56,17 +64,18 @@ export default {
                 content: "",
                 spot: "",
                 image: null,
+                userId: "",
             },
             posts: [],
         };
     },
     methods: {
-        onImageSelected(event){
+        onImageSelected(event) {
             this.newPost.image = event.target.files[0];
         },
         getSpot() {
             const postSpot = this.$route.params.id;
-            
+
             this.newPost.spot = postSpot;
         },
         createPost: function(e) {
@@ -89,8 +98,11 @@ export default {
 
     mounted() {
         this.getSpot();
-        console.log(this.newPost.spot)
-    }
+
+        userDataService.me().then((userData) => {
+            this.newPost.userId = userData.id;
+        });
+    },
 };
 </script>
 
@@ -102,7 +114,7 @@ export default {
 
 .create-post-container {
     padding: 2em;
-    background-image: url("../../assets/images/greenstart-bg.png");
+    background-image: url("../../../assets/images/greenstart-bg.png");
     border-radius: $borderRadius;
     box-shadow: $boxShadow;
     display: flex;
@@ -128,8 +140,8 @@ export default {
         border: 4px dashed $tertiaryColor;
         border-radius: $borderRadius;
         position: relative;
-        
-        .file-input{
+
+        .file-input {
             z-index: 1;
         }
 

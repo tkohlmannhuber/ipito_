@@ -7,16 +7,19 @@
         />
         <ForecastSection />
         <CenterTextSection
+            v-if="userData"
             :title="impressionsText.title"
             :text="impressionsText.text"
         />
-        <CreatePostSection />
+        <CreatePostSection v-if="userData" />
         <SpotPostsSection />
         <Footer />
     </div>
 </template>
 
 <script>
+import userDataService from "@/services/userDataService";
+
 import SpotHeroSection from "../Sections/SpotHeroSection";
 import CenterTextSection from "../Sections/CenterTextSection";
 import ForecastSection from "../Sections/ForecastSection";
@@ -46,7 +49,13 @@ export default {
                 text:
                     "Got some good impressions of this spot? Take some time and create an Article or just look for other cool posts!",
             },
+            userData: null,
         };
+    },
+    created() {
+        userDataService.me().then((userData) => {
+            this.userData = userData;
+        });
     },
 };
 </script>

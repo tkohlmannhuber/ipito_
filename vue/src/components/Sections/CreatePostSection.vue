@@ -6,7 +6,7 @@
 
 <script>
 
-import CreatePost from "../Partials/CreatePost";
+import CreatePost from "../Partials/Post/CreatePost";
 
 export default {
   name: 'createpostsection',

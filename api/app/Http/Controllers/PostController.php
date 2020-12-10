@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -35,6 +35,7 @@ class PostController extends Controller
         $Post->title = $request->get('title');
         $Post->spot = $request->get('spot');
         $Post->content = $request->get('content');
+        $Post->user_id = $request->get('userId');
 
         if ($image = $request->file('image')) {
             $name = Str::random(16) . '.' . $image->getClientOriginalExtension();

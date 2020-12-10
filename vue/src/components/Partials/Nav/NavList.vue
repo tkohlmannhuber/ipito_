@@ -1,89 +1,52 @@
 <template>
     <div class="mobile-menu-list">
-        <span class="mobile-menu-item">Spain</span>
-        <div class="mobile-menu-item-flex">
-            <div class="sub-mobile-menu-flex">
-                <router-link
-                    v-on:click="method()"
-                    class="sub-mobile-menu-item"
-                    :to="{ name: 'Spot', params: { id: 'mundaka' } }"
-                    >Mundaka</router-link
-                >
-                <router-link
-                    class="sub-mobile-menu-item"
-                    :to="{ name: 'Spot', params: { id: 'razo' } }"
-                    >Razo</router-link
-                >
-                <router-link
-                    class="sub-mobile-menu-item"
-                    :to="{ name: 'Spot', params: { id: 'Nemiña' } }"
-                    >Nemiña</router-link
-                >
-            </div>
-        </div>
-        <span class="mobile-menu-item">France</span>
-        <div class="mobile-menu-item-flex">
-            <div class="sub-mobile-menu-flex">
-                <router-link
-                    class="sub-mobile-menu-item"
-                    :to="{ name: 'Spot', params: { id: 'baie-des-trépassés' } }"
-                    >Baie des Trépassés</router-link
-                >
-                <router-link
-                    class="sub-mobile-menu-item"
-                    :to="{ name: 'Spot', params: { id: 'les-conches' } }"
-                    >Les Conches</router-link
-                >
-                <router-link
-                    class="sub-mobile-menu-item"
-                    :to="{ name: 'Spot', params: { id: 'côte-sauvage' } }"
-                    >Côte-sauvage</router-link
-                >
-            </div>
-        </div>
-        <span class="mobile-menu-item">Portugal</span>
-        <div class="mobile-menu-item-flex">
-            <div class="sub-mobile-menu-flex">
-                <router-link
-                    class="sub-mobile-menu-item"
-                    :to="{ name: 'Spot', params: { id: 'ericeira' } }"
-                    >Ericeira</router-link
-                >
-                <router-link
-                    class="sub-mobile-menu-item"
-                    :to="{ name: 'Spot', params: { id: 'nazare' } }"
-                    >Nazare</router-link
-                >
-                <router-link
-                    class="sub-mobile-menu-item"
-                    :to="{ name: 'Spot', params: { id: 'peniche' } }"
-                    >Peniche</router-link
-                >
+        <div v-for="country in countries" :key="country.country_title">
+            <span class="mobile-menu-item">{{ country.country_title }}</span>
+            <div class="mobile-menu-item-flex">
+                <div class="sub-mobile-menu-flex">
+                    <router-link
+                        v-for="spot in country.spots"
+                        :key="spot.spot_title"
+                        v-on:click="method()"
+                        class="sub-mobile-menu-item"
+                        :to="{
+                            name: 'Spot',
+                            params: { title: spot.spot_title, lat: spot.lat, lng: spot.lng, id: spot.id},
+                            
+                        }"
+                        >{{ spot.spot_title }}</router-link
+                    >
+                </div>
             </div>
         </div>
         <router-link class="mobile-menu-item extern-link" :to="{ name: 'Moon' }"
             >Moon</router-link
         >
-        <router-link v-if="!authStates[0].authenticated"
+        <router-link
+            v-if="!userData"
             class="mobile-menu-item extern-link"
             :to="{ name: 'Login' }"
             >Login</router-link
         >
-        <router-link v-if="!authStates[0].authenticated"
+        <router-link
+            v-if="!userData"
             class="mobile-menu-item extern-link"
             :to="{ name: 'Signin' }"
             >Sign In</router-link
         >
-        <router-link v-if="authStates[0].authenticated"
+        <router-link
+            v-if="userData"
             class="mobile-menu-item extern-link"
             :to="{ name: 'Account' }"
-            >{{authStates[0].user.username}}</router-link
+            >{{ userData.username }}</router-link
         >
-        <button v-if="authStates[0].authenticated"
+        <button
+            v-if="userData"
             class="mobile-menu-item extern-link"
             @click="logout()"
-            >logout</button
         >
+            logout
+        </button>
         <div class="social-list" v-if="mobileView">
             <a href="#">
                 <i class="scial_icon fab fa-instagram fa-lg"></i>
@@ -96,16 +59,18 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+// import { mapGetters, mapActions } from "vuex";
+import userDataService from "@/services/userDataService";
+import axios from "axios";
 
 export default {
-    name: "navbright",
-
-    computed: mapGetters(["authStates"]), 
+    name: "NavList",
 
     data: () => {
         return {
             mobileView: true,
+            userData: null,
+            countries: [],
         };
     },
 
@@ -117,17 +82,34 @@ export default {
         handleView() {
             this.mobileView = window.innerWidth <= 990;
         },
-        ...mapActions(["logout"]),
 
-        async logout () {
-        await this.logout()
+        logout() {
+            localStorage.removeItem("token");
+
+            // redirect auf die Startseite nach 3 Sekunden
+            setTimeout(() => {
+                // wenn der User mit vuex (im global store) verwaltet werden würde, wäre hier ein reload nicht notwendig
+                window.location.href = "/";
+            }, 3000);
         },
-       
     },
-
 
     created() {
         this.handleView();
+
+        userDataService.me().then((userData) => {
+            this.userData = userData;
+        });
+
+        axios
+            .get("http://api.ipito.local/api/countries")
+            .then((res) => {
+                console.log(res.data);
+                this.countries = res.data;
+            })
+            .catch(() => {
+                console.log("no data");
+            });
     },
 };
 </script>
@@ -218,7 +200,7 @@ export default {
         font-family: $headlineFont;
         font-size: $h3FontSize;
         text-transform: uppercase;
-        border: none; 
+        border: none;
         background: none;
         margin: 0;
         padding: 0;

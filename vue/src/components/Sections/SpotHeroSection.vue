@@ -1,9 +1,9 @@
 <template>
     <section class="hero-section">
         <div class="content-wrapper">
-            <Headline :title="this.$route.params.id" />
+            <Headline :title="this.$route.params.title" />
             <div class="hero-data-flex">
-                <span>Tide: {{ weatherData.type }}</span>
+                <span>Tide: </span>
                 <span>Swell: </span>
                 <span>Wind: </span>
                 <span>Water:</span>
@@ -27,51 +27,27 @@ export default {
         Headline,
         // CircleBtn,
     },
+    props: {
+        spot: Object,
+    },
 
     data() {
         return {
             weatherData: [],
+            spotLat: null ,
+            spotLng: null ,
         };
     },
 
     methods: {
-        //   getData() {
-        //     fetch(
-        //       `https://api.stormglass.io/v2/tide/extremes/point?lat=38.971726&lng=-9.418499&start=2019-03-15&end=2019-03-15`,
-        //       {
-        //         headers: {
-        //           Authorization:
-        //             "708765e4-e2f8-11ea-be2e-0242ac130002-70876698-e2f8-11ea-be2e-0242ac130002",
-        //         },
-        //       }
-        //     )
-        //       .then((response) => response.json())
-        //       .then((jsonData) => {
-        //         this.weatherData = jsonData.meta;
-        //         console.log(this.weatherData);
-        //       });
-        //   },
-        // },
-        //     getData() {
-        //         axios
-        //             .get(
-        //                 "https://api.stormglass.io/v2/tide/extremes/point?lat=48.210033&lng=-16.363449&start=2020-10-28&end=2020-10-29",
-        //                 {
-        //                     headers: {
-        //                         Authorization:
-        //                             "708765e4-e2f8-11ea-be2e-0242ac130002-70876698-e2f8-11ea-be2e-0242ac130002",
-        //                     },
-        //                 }
-        //             )
-        //             .then((res) => {
-        //                 this.weatherData = res.data.data;
-        //                 console.log(this.weatherData);
-        //             });
-        //     },
-        // },
-        // created() {
-        //     this.getData();
     },
+
+    updated(){
+        this.spotLat = this.$route.params.lat;
+        this.spotLng = this.$route.params.lng;
+        console.log(this.spotLat);
+        console.log(this.spotLng);
+    }
 };
 </script>
 

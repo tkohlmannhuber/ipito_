@@ -28,9 +28,10 @@ const routes = [
   },
 
   {
-    path: "/spot/:id",
+    path: "/spot/:title",
     name: "Spot",
     component: Spot,
+    props: true,
   },
 
   {

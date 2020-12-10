@@ -89,11 +89,14 @@ export default {
     methods: {
         saveUser() {
             axios
-                .post("http://api.ipito.local/api/register", this.newUser)
+                .post("http://api.ipito.local/api/user/register", this.newUser)
                 .then(() => {
                     this.succesSignin = true;
                     this.loader = false;
                     this.showSubmit = true;
+                    setTimeout(() => {
+                    window.location.href = "/";
+                    }, 3000);
                 })
                 .catch((err) => {
                     this.errors = err.response.data.errors;

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
@@ -23,7 +23,13 @@ Route::resources([
     'posts' => \App\Http\Controllers\PostController::class,
 ]);
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('user/register', [AuthController::class, 'register']);
+Route::post('user/login', [AuthController::class, 'login']);
 
+Route::middleware('auth:sanctum')->get('/user/me', '\App\Http\Controllers\AuthController@me');
 
+Route::middleware('auth:sanctum')->get('/supersecret', '\App\Http\Controllers\SecretController@secretRoute');
+
+Route::resources([
+    'countries' => \App\Http\Controllers\CountryController::class,
+]);

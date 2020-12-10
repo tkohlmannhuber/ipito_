@@ -1,6 +1,6 @@
 <template>
   <section class="spot-post-container">
-    <Headline2 :title="this.$route.params.id"/>
+    <Headline2 :title="this.$route.params.title"/>
     <PostList />
     
   </section>

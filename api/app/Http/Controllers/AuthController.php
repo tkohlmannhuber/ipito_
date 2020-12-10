@@ -20,37 +20,56 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        if ( Auth::attempt($request->only('email', 'password'))) {
+        if (Auth::attempt($request->only('email', 'password'))) {
 
             $tokenObj = Auth::user()->createToken('auth');
 
-            return response()->json($tokenObj->plainTextToken);
+            return response()->json([
+                'token' => $tokenObj->plainTextToken,
+                'user' => Auth::user(),
+            ]);
         }
 
         throw ValidationException::withMessages([
-            'email' =>['Email or Password are incorect.']
+            'email' => ['Email or Password are incorect.']
         ]);
-
     }
 
     public function register(Request $request)
     {
-        $request->validate([
-            'username' => ['required'],
-            'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'min:6', 'confirmed'],
+        // validate data
+        $this->validate($request, [
+            'username' => 'required',
+            'email' => 'required|email',
+            'password' => 'required'
         ]);
 
-        User::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        // create new user account
+        $User = new User();
+        $User->username = $request->get('username');
+        $User->email = $request->get('email');
+        $User->password = Hash::make($request->get('password'));
+        // $User->email_verified_at = Carbon::now(); // leave this blank in the future and sendout email to verify account
+        $User->save();
 
+        // return newly created user data
+        return response()->json($User);
     }
+
+    /**
+     * Returns the logged in users data
+     */
+    public function me()
+    {
+        return response()->json([
+            'user' => Auth::user(),
+        ]);
+    }
+}
+
+
 
     // public function logout(){
 
     //     auth()->logout();
     // }
-}

@@ -1,13 +1,13 @@
 <template>
     <div class="login-form-container">
-        <h3 v-if="!authStates[0].success">Login</h3>
-        <div v-if="authStates[0].success">
+        <h3 v-if="!success">Login</h3>
+        <div v-if="success">
             <h3>Login was successfull!</h3>
         </div>
         <form
             action="#"
-            v-if="!authStates[0].authenticated"
-            @submit.prevent="submit"
+            v-if="!success"
+            
         >
             <div class="input-flex">
                 <label for="login_email">Email:</label>
@@ -15,7 +15,7 @@
                     type="email"
                     id="login_email"
                     name="login_email"
-                    v-model="loginForm.email"
+                    v-model="credentials.email"
                 />
             </div>
             <div class="input-flex">
@@ -24,103 +24,80 @@
                     type="password"
                     id="login_password"
                     name="login_password"
-                    v-model="loginForm.password"
+                    v-model="credentials.password"
                 />
             </div>
-            <div v-if="authStates[0].errors" class="error-container">
+            <div v-if="error" class="error-container">
                 <p class="error-msg">
-                    Email and Password do not match! Try Again!
+                    {{error}}
                 </p>
             </div>
-            <Loader v-if="loader" />
+            <Loader v-if="loading" />
 
-            <!-- <SubmitBtn text="Login" :method="loginUser" /> -->
-            <button type="submit" v-if="showSubmit">
-                Login
-            </button>
+            <SubmitBtn text="Login" :method="loginUser" v-if="!loading" />
         </form>
     </div>
 </template>
 
 <script>
 import Loader from "../Partials/Loader";
-
-// import SubmitBtn from "../Partials/SubmitBtn";
-// import axios from "axios";
-import { mapActions, mapGetters } from "vuex";
+import userDataService from "@/services/userDataService";
+import SubmitBtn from "../Partials/SubmitBtn";
 
 export default {
     name: "loginform",
     components: {
-        // SubmitBtn,
+        SubmitBtn,
         Loader,
     },
+    data: () => ({
+        // daten
+        credentials: {},
 
-    data: () => {
-        return {
-            loginForm: {
-                email: "",
-                password: "",
-            },
-            showSubmit: true,
-            loader: false,
-        };
-    },
-    computed: mapGetters(["authStates"]),
+        // hilfsvariablen 
+        loading: false,
+        error: null,
+        token: null,
+        success: false,
+        editMode: false,
+    }),
+
 
     methods: {
-        ...mapActions(["login"]),
+        loginUser: function(e) {
+            // das "Standardverhalten" von form-submit verhindern (sonst würde die Seite neu laden)
+            e.preventDefault();
 
-        async submit() {
-            this.showLoader();
-            await this.login(this.loginForm);
-        },
+            // den Button deaktivieren, während gespeichert wird (um doppelte Erstellungen zu verhindern)
+            this.loading = true;
 
-        // getCsrf() {
-        //     axios
-        //         .get("http://api.ipito.local/sanctum/csrf-cookie")
-        //         .then((response) => {
-        //             console.log(response);
-        //         });
-        // },
+            // Nun wird der Laravel Speicher Endpunkt aufgerufen
+            userDataService
+                .login(this.credentials)
+                .then((loginData) => {
+                    this.success = true;
+                    this.token = loginData.token;
 
-        showLoader() {
-            this.loader = true;
-            this.showSubmit = false;
+                    // Speicher den token, so dass wir ihn später jederzeit holen können
+                    localStorage.setItem("token", loginData.token);
+
+                    // den Bearbeitungsmodus wieder deaktivieren
+                    this.loading = false;
+
+                    // redirect auf die Startseite nach 3 Sekunden
+                    setTimeout(() => {
+                        // wenn der User mit vuex (im global store) verwaltet werden würde, wäre hier ein reload nicht notwendig
+                        window.location.href = "/";
+                    }, 3000);
+                })
+                .catch(async (error) => {
+                    alert("FEHLER: " + error.response.data.message);
+
+                    // den Bearbeitungsmodus wieder deaktivieren
+                    this.loading = false;
+                });
         },
     },
-
-    created() {
-        this.getCsrf();
-    },
-
-    // methods: {
-    //     loginUser() {
-    //         axios
-    //             .post("http://api.ipito.local/api/login", this.login)
-    //             .then((res) => {
-    //                 // this.$router.push({ name: "Account" });
-    //                 this.login.email = res.data.email;
-    //                 this.login.username = res.data.username;
-    //                 this.authenticated = true;
-    //                 this.success = true;
-    //             })
-    //             .catch(() => {
-    //                 this.errors = true;
-    //             });
-    //     },
-
-    // methods: {
-    //   ...mapActions({
-    //     login: 'auth/login'
-    //   }),
-
-    //   async submit () {
-    //     await this.login(this.login)
-
-    //     this.$router.replace({ name: 'Home' })
-    //   }
-    // },
 };
 </script>
 

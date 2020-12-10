@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Navbar from "../Partials/Navbar";
+import Navbar from "../Partials/Nav/Navbar";
 
 export default {
     name: "topheaderbright",

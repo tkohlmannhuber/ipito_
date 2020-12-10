@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSpotsTable extends Migration
+class CreateCountriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,11 @@ class CreateSpotsTable extends Migration
      */
     public function up()
     {
-        Schema::create('spots', function (Blueprint $table) {
+        Schema::create('countries', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('country_id');
-            // $table->foreign('country_id')->references('id')->on('countries');
-            $table->string('spot_title')->unique();
-            $table->string('lat');
-            $table->string('lng');
+            $table->string('country_title');
             $table->timestamps();
         });
-
     }
 
     /**
@@ -32,6 +27,6 @@ class CreateSpotsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('spots');
+        Schema::dropIfExists('countries');
     }
 }
