@@ -4,7 +4,7 @@
             <Headline :title="this.$route.params.title" />
             <div class="hero-data-flex">
                 <span>Tide: </span>
-                <span>Swell: </span>
+                <span>Swell:</span>
                 <span>Wind: </span>
                 <span>Water:</span>
             </div>
@@ -19,7 +19,7 @@
 <script>
 import Headline from "../Partials/Headline";
 // import CircleBtn from "../Partials/CircleBtn";
-// import axios from "axios";
+import axios from "axios";
 
 export default {
     name: "spotherosection",
@@ -33,21 +33,50 @@ export default {
 
     data() {
         return {
-            weatherData: [],
-            spotLat: null ,
-            spotLng: null ,
+            weatherData: null,
+            spotLat: null,
+            spotLng: null,
+            tide: null,
+            swell: null,
+            wind: null,
+            water: null,
         };
     },
 
-    methods: {
-    },
+    methods: {},
 
-    updated(){
+    updated() {
         this.spotLat = this.$route.params.lat;
         this.spotLng = this.$route.params.lng;
         console.log(this.spotLat);
         console.log(this.spotLng);
-    }
+
+        let lat = this.spotLat;
+        let lng = this.spotLng;
+        const params = "waterTemperature,windSpeed,swellHeight";
+
+        let utcDate = new Date();
+        let startTime = Math.floor(utcDate.getTime() / 1000);
+
+        axios
+            .get(
+                `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=${params}&start=${startTime}&end=${startTime}`,
+                {
+                    headers: {
+                        Authorization:
+                            "7383fd56-0a18-11eb-b19c-0242ac130002-7383fe0a-0a18-11eb-b19c-0242ac130002",
+                    },
+                }
+            )
+            .then((response) => {
+                console.log(response)
+                this.weatherData = response.data.hours[0];
+                console.log(this.weatherData);
+            })
+            .catch(() => {
+                console.log('error');
+            });
+    },
 };
 </script>
 
