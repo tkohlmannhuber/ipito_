@@ -1,17 +1,23 @@
 <template>
-    <div>
-        <AdminDashboardTemplate />
+    <div class="user-post-section-container">
     </div>
 </template>
 
 <script>
-import AdminDashboardTemplate from "../components/Templates/AdminDashboardTemplate.vue";
 
 export default {
-    name: "login",
+    name: "userdatasection",
     components: {
-        AdminDashboardTemplate,
+        
     },
+    data: () => {
+        return {
+            userData: "",
+            isEditMode: false,
+        };
+    },
+
+    methods: {},
 };
 </script>
 
@@ -20,4 +26,5 @@ export default {
 @import "@/assets/styles/variables.scss";
 @import "@/assets/styles/app.scss";
 @import "@/assets/styles/mediaQueries.scss";
+
 </style>

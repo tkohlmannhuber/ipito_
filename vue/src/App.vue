@@ -1,11 +1,11 @@
 <template>
     <div id="app">
-      <div>
-        
-        <TopHeaderBright />
+        <div>
+            <TopHeaderBright v-if="!dashboardRoute" />
+            <DashboardHeader v-if="dashboardRoute" />
 
-        <SocialBar v-if="!showCompsOnMobile" />
-      </div>
+            <SocialBar v-if="!showCompsOnMobile" />
+        </div>
         <router-view></router-view>
     </div>
 </template>
@@ -13,18 +13,30 @@
 <script>
 import SocialBar from "./components/Partials/SocialBar";
 import TopHeaderBright from "./components/Layout/TopHeaderBright";
+import DashboardHeader from "./components/Layout/DashboardHeader";
 
 export default {
     name: "app",
     components: {
         SocialBar,
         TopHeaderBright,
+        DashboardHeader,
     },
 
     data: () => {
         return {
             showCompsOnMobile: true,
+            dashboardRoute: false,
         };
+    },
+    watch: {
+        $route() {
+            if (this.$route.path === "/account" ) {
+                this.dashboardRoute = true;
+            } else {
+                this.dashboardRoute = false;
+            }
+        },
     },
 
     methods: {
@@ -36,6 +48,7 @@ export default {
     created() {
         this.handleMobileComps();
     },
+    updated() {},
 };
 </script>
 

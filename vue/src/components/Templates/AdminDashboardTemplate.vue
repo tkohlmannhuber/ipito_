@@ -8,7 +8,7 @@
 import userDataService from "@/services/userDataService";
 
 export default {
-    name: "logintemplate",
+    name: "AdminDashboardTemplate",
     components: {},
     data: () => {
         return {

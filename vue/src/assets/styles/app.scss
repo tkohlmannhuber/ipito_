@@ -95,6 +95,10 @@ a:visited{
     padding: 2em;
 }
 
+.dashboard-wrapper{
+    padding: 2em 2em 2em 15em;
+}
+
 @include media('>=xs'){
     .content-wrapper{
         padding: 4.68em;

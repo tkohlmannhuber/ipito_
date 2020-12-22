@@ -19,7 +19,7 @@
 <script>
 import Headline from "../Partials/Headline";
 // import CircleBtn from "../Partials/CircleBtn";
-import axios from "axios";
+// import axios from "axios";
 
 export default {
     name: "spotherosection",
@@ -45,38 +45,38 @@ export default {
 
     methods: {},
 
-    updated() {
-        this.spotLat = this.$route.params.lat;
-        this.spotLng = this.$route.params.lng;
-        console.log(this.spotLat);
-        console.log(this.spotLng);
+    // updated() {
+    //     this.spotLat = this.$route.params.lat;
+    //     this.spotLng = this.$route.params.lng;
+    //     // console.log(this.spotLat);
+    //     // console.log(this.spotLng);
 
-        let lat = this.spotLat;
-        let lng = this.spotLng;
-        const params = "waterTemperature,windSpeed,swellHeight";
+    //     let lat = this.spotLat;
+    //     let lng = this.spotLng;
+    //     const params = "waterTemperature,windSpeed,swellHeight";
 
-        let utcDate = new Date();
-        let startTime = Math.floor(utcDate.getTime() / 1000);
+    //     let utcDate = new Date();
+    //     let startTime = Math.floor(utcDate.getTime() / 1000);
 
-        axios
-            .get(
-                `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=${params}&start=${startTime}&end=${startTime}`,
-                {
-                    headers: {
-                        Authorization:
-                            "7383fd56-0a18-11eb-b19c-0242ac130002-7383fe0a-0a18-11eb-b19c-0242ac130002",
-                    },
-                }
-            )
-            .then((response) => {
-                console.log(response)
-                this.weatherData = response.data.hours[0];
-                console.log(this.weatherData);
-            })
-            .catch(() => {
-                console.log('error');
-            });
-    },
+    //     axios
+    //         .get(
+    //             `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=${params}&start=${startTime}&end=${startTime}`,
+    //             {
+    //                 headers: {
+    //                     Authorization:
+    //                         "7383fd56-0a18-11eb-b19c-0242ac130002-7383fe0a-0a18-11eb-b19c-0242ac130002",
+    //                 },
+    //             }
+    //         )
+    //         .then((response) => {
+    //             console.log(response)
+    //             this.weatherData = response.data.hours[0];
+    //             console.log(this.weatherData);
+    //         })
+    //         .catch(() => {
+    //             console.log('error');
+    //         });
+    // },
 };
 </script>
 
@@ -89,7 +89,6 @@ export default {
 // background-image: url('../../assets/images/bg-light-blue.png');
 .hero-section {
     display: flex;
-    max-width: 1920px;
     align-items: center;
     margin: 0 auto;
     background-size: cover;

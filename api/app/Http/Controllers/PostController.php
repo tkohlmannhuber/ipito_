@@ -19,7 +19,6 @@ class PostController extends Controller
         $AllPosts = Post::all();
 
         return response()->json($AllPosts);
-
     }
 
 
@@ -31,9 +30,30 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
+
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'image' => 'required',
+            'spotId' => 'required',
+            'userId' => 'required',
+        ]);
+
+        $validatedData['spot_id'] = $validatedData['spotId'];
+        $validatedData['user_id'] = $validatedData['userId'];
+
+
+
+        // $request->file('image')->store('images');
+        // Post::create($validatedData);
+        // return ['message' => 'Post Created'];
+
+
+
         $Post = new Post();
         $Post->title = $request->get('title');
-        $Post->spot = $request->get('spot');
+        $Post->spot_id = $request->get('spotId');
         $Post->content = $request->get('content');
         $Post->user_id = $request->get('userId');
 
@@ -42,6 +62,7 @@ class PostController extends Controller
             $image->storePubliclyAs('public/images', $name);
             $Post->image_path = $name;
         }
+
         $Post->save();
 
         // nimm alle bestehenden Posts (inkl. dem neuen Post) und gib sie zurück
@@ -62,7 +83,6 @@ class PostController extends Controller
         $Post = Post::findOrFail($id);
 
         return response()->json($Post);
-
     }
 
 

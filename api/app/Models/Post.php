@@ -18,4 +18,13 @@ class Post extends Model
     {
         return $this->belongsTo(Spot::class);
     }
+
+    protected $fillable = [
+        'title', 'spot_id', 'user_id',
+
+    ];
+
+    public function getImageUrlAttribute() {
+        return $this->image_path ? asset('storage/images/' . $this->image_path) : null;
+    }
 }

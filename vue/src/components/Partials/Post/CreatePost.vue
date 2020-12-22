@@ -1,72 +1,98 @@
 <template>
-    <form action="#" class="create-post-container" v-on:submit="createPost">
-        <div class="drop-zone">
-            <div class="drop-zone-text-container">
-                <img
-                    src="@/assets/images/icons/upload_icon.svg"
-                    alt="Drag and Drop Icon"
-                />
-                <input
-                    class="file-input"
-                    type="file"
-                    @change="onImageSelected"
-                />
-                <span class="drop-zone-text">Drag and Drop A Pic</span>
-            </div>
-        </div>
+    <div>
+        <h2 class="create-success" v-if="createSuccess">
+            Post Successfully Created!
+        </h2>
 
-        <h2>Create <span class="red">A</span> Post</h2>
+        <form
+            v-if="!createSuccess"
+            action="#"
+            class="create-post-container"
+            enctype="multipart/form-data"
+        >
+            <div class="drop-zone">
+                <div class="drop-zone-text-container">
+                    <img
+                        src="@/assets/images/icons/upload_icon.svg"
+                        alt="Drag and Drop Icon"
+                    />
+                    <input
+                        class="file-input"
+                        type="file"
+                        @change="onImageSelected"
+                    />
+                    <span class="drop-zone-text">Drag and Drop A Pic</span>
+                </div>
+            </div>
 
-        <div class="post-input-container">
-            <div class="post-input-flex">
-                <label for="postheadline">Headline:</label>
-                <input
-                    required
-                    type="text"
-                    id="postheadline"
-                    v-model="newPost.title"
-                />
+            <h2>Create <span class="red">A</span> Post</h2>
+
+            <div class="post-input-container">
+                <div class="post-input-flex">
+                    <label for="postheadline">Headline:</label>
+                    <input
+                        required
+                        type="text"
+                        id="postheadline"
+                        v-model="newPost.title"
+                    />
+                </div>
+                <div class="post-input-flex textarea-flex">
+                    <label for="postheadline">Text:</label>
+                    <textarea
+                        required
+                        name="text"
+                        id="text"
+                        cols="40"
+                        rows="5"
+                        v-model="newPost.content"
+                    ></textarea>
+                </div>
+                <Loader v-if="loader" />
+
+                <button
+                    type="submit"
+                    @click.prevent="savePost()"
+                    v-if="showSubmit"
+                >
+                    <img
+                        src="@/assets/images/icons/submit_icon.svg"
+                        alt="Paper Plane"
+                    />
+                </button>
             </div>
-            <div class="post-input-flex textarea-flex">
-                <label for="postheadline">Text:</label>
-                <textarea
-                    required
-                    name="text"
-                    id="text"
-                    cols="40"
-                    rows="5"
-                    v-model="newPost.content"
-                ></textarea>
-            </div>
-            <button type="submit" v-on:submit.prevent="onSubmit">
-                <img
-                    src="@/assets/images/icons/submit_icon.svg"
-                    alt="Paper Plane"
-                />
-            </button>
-        </div>
-    </form>
+        </form>
+    </div>
 </template>
 
 <script>
-import postDataServiceLaravel from "@/services/postDataServiceLaravel";
 import userDataService from "@/services/userDataService";
-
+import axios from "axios";
+import Loader from "../../Partials/Loader";
 
 export default {
     name: "createpost",
     components: {
+        Loader,
+    },
+    props: {
+        spot: Object,
     },
     data: () => {
         return {
             newPost: {
                 title: "",
                 content: "",
-                spot: "",
+                spotId: "",
                 image: null,
                 userId: "",
             },
             posts: [],
+
+            showSubmit: true,
+            createSuccess: false,
+
+            loader: false,
         };
     },
     methods: {
@@ -75,30 +101,49 @@ export default {
         },
         getSpot() {
             const postSpot = this.$route.params.id;
-
-            this.newPost.spot = postSpot;
+            this.newPost.spotId = postSpot;
         },
-        createPost: function(e) {
-            // das "Standardverhalten" von form-submit verhindern (sonst würde die Seite neu laden)
-            e.preventDefault();
 
-            // nun speichern wir hier die Funktion über unseren abstrahierten Service (postDataService)
-            postDataServiceLaravel.store(this.newPost).then((newPostList) => {
-                // nun, da wir das erfolgreiche Ergebnis von der API erhalten haben, aktualisieren wir unsere Komponenten Variable
-                this.posts = newPostList;
-            });
+        savePost() {
+            let formData = new FormData();
+            formData.append("image", this.newPost.image);
+            formData.append("title", this.newPost.title);
+            formData.append("content", this.newPost.content);
+            formData.append("spotId", this.newPost.spotId);
+            formData.append("userId", this.newPost.userId);
 
-            // Formulardaten auf leere zurücksetzen
-            this.newPost = {
-                title: "",
-                content: "",
-            };
+            this.loader = true;
+            this.showSubmit = false;
+            axios
+                .post("http://api.ipito.local/api/posts/store",formData)
+                .then((response) => {
+                    console.log(response);
+                    this.loader = false;
+                    this.showSubmit = true;
+                    this.createSuccess = true;
+                })
+                .catch(() => {
+                    this.loader = false;
+                    this.showSubmit = true;
+                });
         },
+    },
+
+    created() {
+        this.getSpot();
+        console.log(this.newPost);
     },
 
     mounted() {
         this.getSpot();
 
+        userDataService.me().then((userData) => {
+            this.newPost.userId = userData.id;
+        });
+    },
+    updated() {
+        this.getSpot();
+        console.log(this.newPost);
         userDataService.me().then((userData) => {
             this.newPost.userId = userData.id;
         });
@@ -242,5 +287,12 @@ export default {
             transform: rotate(-90deg);
         }
     }
+}
+.create-success {
+    transform: rotate(0deg);
+    padding: 2em;
+    background-image: url("../../../assets/images/greenstart-bg.png");
+    border-radius: $borderRadius;
+    box-shadow: $boxShadow;
 }
 </style>

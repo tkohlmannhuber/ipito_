@@ -1,16 +1,16 @@
 <template>
     <div>
-        <DashboardTemplate />
+        <UserDashboardTemplate />
     </div>
 </template>
 
 <script>
-import DashboardTemplate from "../components/Templates/DashboardTemplate.vue";
+import UserDashboardTemplate from "../components/Templates/UserDashboardTemplate.vue";
 
 export default {
     name: "login",
     components: {
-        DashboardTemplate,
+        UserDashboardTemplate,
     },
 };
 </script>
