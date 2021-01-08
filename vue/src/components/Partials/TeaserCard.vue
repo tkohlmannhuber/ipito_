@@ -12,23 +12,65 @@
                 <button class="wave-btn">
                     <img src="@/assets/images/icons/wave.svg" alt="wave icon" />
                 </button>
-                <div class="btn-text">3-4ft</div>
+                <div class="btn-text">{{ weatherData.swellHeight.icon }}ft</div>
             </div>
 
             <div class="info-item">
                 <button class="wave-btn">
                     <img src="@/assets/images/icons/temp.svg" alt="wave icon" />
                 </button>
-                <div class="btn-text">17° Water</div>
+                <div class="btn-text">{{ waterTemp }}° Water</div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
     name: "teasercard",
+    data: () => {
+        return {
+            weatherData: "",
+            waterTemp: '',
+        };
+    },
+
+    methods: {
+        getWeather() {
+            const params = "waterTemperature,windSpeed,swellHeight";
+            const lat = 38.988218;
+            const lng = -9.421071;
+
+            let utcDate = new Date();
+            let startTime = Math.floor(utcDate.getTime() / 1000);
+
+            axios
+                .get(
+                    `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=${params}&start=${startTime}&end=${startTime}`,
+                    {
+                        headers: {
+                            Authorization:
+                                "7383fd56-0a18-11eb-b19c-0242ac130002-7383fe0a-0a18-11eb-b19c-0242ac130002",
+                        },
+                    }
+                )
+                .then((response) => {
+                    this.weatherData = response.data.hours[0];
+                    let temp = this.weatherData.waterTemperature.sg;
+                    const waterTemp = Math.ceil(temp);
+                    this.waterTemp = waterTemp;
+                })
+                .catch(() => {
+                });
+        },
+    },
+    created(){
+        this.getWeather();
+    }
+
 };
+
 </script>
 
 <style lang="scss" src="@/assets/styles/app.scss"></style>
@@ -115,6 +157,4 @@ export default {
         margin-right: 2em;
     }
 }
-
-
 </style>

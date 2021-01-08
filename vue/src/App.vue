@@ -31,7 +31,7 @@ export default {
     },
     watch: {
         $route() {
-            if (this.$route.path === "/account" ) {
+            if (this.$route.path === "/account/dashboard" || this.$route.path === "/account/posts") {
                 this.dashboardRoute = true;
             } else {
                 this.dashboardRoute = false;

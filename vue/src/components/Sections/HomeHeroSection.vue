@@ -68,7 +68,7 @@ export default {
             content: "";
             position: absolute;
             width: 100%;
-            height: 100%;
+            height: 95%;
             background-image: url("../../assets/images/bg-light-blue.png");
             z-index: -1;
         }

@@ -54,7 +54,6 @@ export default {
     created() {
         userDataService.me().then((userData) => {
             this.userData = userData;
-            console.log(this.userData);
         });
     },
 };

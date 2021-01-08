@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAsBA,uBAAuB",
+    "sources": [
+        "mediaQueries.scss"
+    ],
+    "names": [],
+    "file": "mediaQueries.css"
+}

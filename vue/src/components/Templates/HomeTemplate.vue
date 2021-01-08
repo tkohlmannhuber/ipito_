@@ -1,7 +1,7 @@
 <template>
   <div class="test">
     <HomeHeroSection />
-    <CenterTextSection :title="homeCenterText.title" :text="homeCenterText.text" />
+    <CenterTextSection class="center-text" :title="homeCenterText.title" :text="homeCenterText.text" />
     <EuropePostsSection />
     <Footer />
   </div>
@@ -44,5 +44,12 @@ export default {
 
   .test{
     width: 100vw;
+
+
+    @include media('>=md'){
+      .center-text{
+        margin-bottom: 10em;
+      }
+    }
   }
 </style>

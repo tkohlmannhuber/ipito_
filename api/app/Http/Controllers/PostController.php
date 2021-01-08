@@ -16,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $AllPosts = Post::all();
+        $AllPosts = Post::with('User','Spot')->get();
 
         return response()->json($AllPosts);
     }
@@ -32,16 +32,14 @@ class PostController extends Controller
     {
 
 
-        $validatedData = $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'image' => 'required',
-            'spotId' => 'required',
-            'userId' => 'required',
-        ]);
+        // $validatedData = $request->validate([
+        //     'title' => 'required',
+        //     'content' => 'required',
+        //     'image' => 'required',
+        //     'spot_id' => 'required',
+        //     'user_id' => 'required',
+        // ]);
 
-        $validatedData['spot_id'] = $validatedData['spotId'];
-        $validatedData['user_id'] = $validatedData['userId'];
 
 
 
@@ -53,9 +51,9 @@ class PostController extends Controller
 
         $Post = new Post();
         $Post->title = $request->get('title');
-        $Post->spot_id = $request->get('spotId');
+        $Post->spot_id = $request->get('spot_id');
         $Post->content = $request->get('content');
-        $Post->user_id = $request->get('userId');
+        $Post->user_id = $request->get('user_id');
 
         if ($image = $request->file('image')) {
             $name = Str::random(16) . '.' . $image->getClientOriginalExtension();

@@ -1,38 +1,64 @@
 <template>
     <div class="dashboard-template dashboard-wrapper">
         <div class="dashboard-headline-flex">
-            <h1 class="dashboard-headline">User {{userData.username}}</h1>
-            <div class="user-img-constainer">
-                <img src="../../assets/images/avatar/avatar4.jpg" alt="user image">
+            <h1 class="dashboard-headline">
+                User <span class="red">{{ userData.username }}</span>
+            </h1>
+            <div class="user-img-constainer" v-if="userData.image_path != null">
+                <img
+                    class="user-image"
+                    :src="
+                        'http://api.ipito.local/storage/images/' +
+                            userData.image_path
+                    "
+                    alt="user image"
+                />
+            </div>
+            <div class="user-img-constainer" v-if="userData.image_path == null">
+                <img v-if="userData.image_path == null" src="@/assets/images/icons/user.svg" alt="user image" />
+                <img v-if="userData.image_path != null"
+                    :src="
+                        'http://api.ipito.local/storage/images/' +
+                            userData.image_path
+                    "
+                    alt="user image"
+                />
             </div>
         </div>
-        <UserDataSection />
-        <UserPostSection />
-	</div>
+        <UserDataSection v-if="!showPosts" />
+        <UserPostSection v-if="showPosts" />
+    </div>
 </template>
 
 <script>
 import userDataService from "@/services/userDataService";
-import UserDataSection from '../Sections/UserDataSection.vue';
-import UserPostSection from '../Sections/UserPostSection.vue';
+import UserDataSection from "../Sections/UserDataSection.vue";
+import UserPostSection from "../Sections/UserPostSection.vue";
 
 export default {
     name: "userdashboardtemplate",
-    components: {UserDataSection,
-    UserPostSection},
+    components: { UserDataSection, UserPostSection },
     data: () => {
         return {
-            userData: '',
+            userData: "",
             showPosts: false,
-        }
+        };
+    },
+    watch: {
+        $route() {
+            if (this.$route.path === "/account/posts") {
+                this.showPosts = true;
+            } else if (this.$route.path === "/account/dashboard") {
+                this.showPosts = false;
+            }
+        },
     },
 
-    created(){
+    created() {
         userDataService.me().then((userData) => {
-                this.userData = userData;
-                console.log(this.userData)
-            });
-}
+            this.userData = userData;
+        });
+    },
 };
 </script>
 
@@ -42,31 +68,39 @@ export default {
 @import "@/assets/styles/app.scss";
 @import "@/assets/styles/mediaQueries.scss";
 
-.dashboard-template{
-    background-image: url("../../assets/images/greenstart-bg.png");
-    background-repeat: no-repeat;
-    background-size: cover;
+.dashboard-template {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 3em;
-    .dashboard-headline-flex{
+    .dashboard-headline-flex {
         display: flex;
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        .user-img-constainer{
+        .user-img-constainer {
+            width: 4em;
+            height: 4em;
+            border-radius: 100%;
+            margin-left: 1em;
+            display: grid;
+            place-items: center;
+            background: $tertiaryColorLight;
+            box-shadow: $boxShadow;
+            overflow: hidden;
+
             img {
-                width: 4em;
-                height: 4em;
                 object-fit: cover;
-                border-radius: 100%;
-                margin-left: 1em;
+                width: 2em;
+            }
+            .user-image {
+                object-fit: cover;
+                width: 100%;
             }
         }
     }
-
 }
 </style>

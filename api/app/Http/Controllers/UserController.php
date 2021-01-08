@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 
@@ -77,16 +78,22 @@ class UserController extends Controller
         $this->validate($request, [
             'username' => 'required',
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
+            'image_path' => 'nullable'
         ]);
+
 
         $User = User::findOrFail(auth()->user()->id);
         $User->username = $request->get('username');
         $User->email = $request->get('email');
         $User->password = Hash::make($request->get('password'));
+        if ($image = $request->file('image_path')) {
+            $name = Str::random(16) . '.' . $image->getClientOriginalExtension();
+            $image->storePubliclyAs('public/images', $name);
+            $User->image_path = $name;
+        }
+
         $User->save();
-
-
     }
 
     /**

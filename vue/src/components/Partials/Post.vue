@@ -1,11 +1,10 @@
 <template>
     <div>
-        <VueSlickCarousel v-bind="settings" ref="carousel">
+        <VueSlickCarousel v-bind="settings" ref="carousel" v-if="gotPosts">
             <div
                 v-for="post in posts"
-                :key="post.likes"
+                :key="post.id"
                 class="slide-post-container"
-                
             >
                 <div class="single_post_container">
                     <div class="post_top_flex">
@@ -15,12 +14,15 @@
                                 alt="Shaka hand"
                                 width="100"
                             />
-                            <span>{{ post.likes }}</span>
+                            <span></span>
                         </div>
                         <div class="avatar_flex">
-                            <span>{{ post.userFirstName }}</span>
+                            <span>{{ post.user.username }}</span>
                             <img
-                                :src="post.avatarImagePath"
+                                :src="
+                                    'http://api.ipito.local/storage/images/' +
+                                        post.user.image_path
+                                "
                                 alt="User Bild"
                                 width="200"
                             />
@@ -29,7 +31,10 @@
                     <div class="img_flex">
                         <div class="img_container">
                             <img
-                                :src="post.postImagePath"
+                                :src="
+                                    'http://api.ipito.local/storage/images/' +
+                                        post.image_path
+                                "
                                 alt="Surfer"
                                 width="200"
                             />
@@ -41,7 +46,9 @@
                                 width="100"
                             />
                         </button>
-                        <span class="post_spot"> {{ post.spot }} </span>
+                        <span class="post_spot">
+                            {{ post.spot.spot_title }}
+                        </span>
                     </div>
                     <button class="read-btn" @click="setCurrentPost()">
                         Read <span class="red">the </span>Post
@@ -49,7 +56,7 @@
                 </div>
             </div>
         </VueSlickCarousel>
-        <div class="slider_controll_container">
+        <div class="slider_controll_container" v-if="gotPosts">
             <SliderBtnPrev @click.native="showPrev" class="slider-btn" />
             <span class="slider-text">next</span>
             <SliderBtnNext @click.native="showNext" class="slider-btn" />
@@ -65,6 +72,7 @@ import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 import "vue-slick-carousel/dist/vue-slick-carousel.css";
 import SliderBtnPrev from "../Partials/SliderBtnPrev";
 import SliderBtnNext from "../Partials/SliderBtnNext";
+import axios from "axios";
 
 export default {
     name: "post",
@@ -83,33 +91,39 @@ export default {
         },
         showPrev() {
             this.$refs.carousel.prev();
-        }, 
+        },
 
-        getCurrentRoute(currentRoute){
+        getCurrentRoute(currentRoute) {
             this.currentRoute = currentRoute;
         },
 
-        getHomeRoute(homeRoute){
+        getHomeRoute(homeRoute) {
             this.homeRoute = homeRoute;
-        }
-        
-        
+        },
+
+        getAllPosts() {
+            axios.get("http://api.ipito.local/api/posts/index").then((res) => {
+                this.posts = res.data;
+                this.gotPosts = true;
+            });
+        },
     },
 
-    mounted () {
-        this.currentRoute = this.$route.params.id
+    mounted() {
+        this.currentRoute = this.$route.params.id;
     },
-    created () {
-        this.homeRoute = this.$route
+    created() {
+        this.homeRoute = this.$route;
+        this.getAllPosts();
     },
-
-    
 
     data: () => {
         return {
             currentPost: null,
-            currentRoute : null,
-            homeRoute : null,
+            currentRoute: null,
+            homeRoute: null,
+            posts: [],
+            gotPosts: false,
 
             settings: {
                 slidesToShow: 4,
@@ -142,53 +156,6 @@ export default {
                     },
                 ],
             },
-
-            posts: [
-                {
-                    likes: 343,
-                    userFirstName: "Jordan",
-                    avatarImagePath: require("../../assets/images/avatar/avatar.jpg"),
-                    postImagePath: require("../../assets/images/post_img/post_1.jpg"),
-                    spot: "ericeira",
-                },
-                {
-                    likes: 215,
-                    userFirstName: "Rick",
-                    avatarImagePath: require("../../assets/images/avatar/avatar4.jpg"),
-                    postImagePath: require("../../assets/images/post_img/post_2.jpg"),
-                    spot: "nazare",
-                },
-
-                {
-                    likes: 430,
-                    userFirstName: "Emma",
-                    avatarImagePath: require("../../assets/images/avatar/avatar2.jpg"),
-                    postImagePath: require("../../assets/images/post_img/post_3.jpg"),
-                    spot: "mundaka",
-                },
-                {
-                    likes: 343,
-                    userFirstName: "Jordan",
-                    avatarImagePath: require("../../assets/images/avatar/avatar.jpg"),
-                    postImagePath: require("../../assets/images/post_img/post_1.jpg"),
-                    spot: "ericeira",
-                },
-                {
-                    likes: 215,
-                    userFirstName: "Rick",
-                    avatarImagePath: require("../../assets/images/avatar/avatar3.jpg"),
-                    postImagePath: require("../../assets/images/post_img/post_2.jpg"),
-                    spot: "nazare",
-                },
-
-                {
-                    likes: 430,
-                    userFirstName: "Emma",
-                    avatarImagePath: require("../../assets/images/avatar/avatar2.jpg"),
-                    postImagePath: require("../../assets/images/post_img/post_3.jpg"),
-                    spot: "manduka",
-                },
-            ],
         };
     },
 };
@@ -319,8 +286,10 @@ export default {
             color: $primaryColor;
             font-weight: $textFontWeight;
             position: absolute;
-            bottom: 2em;
-            left: -2.8em;
+            display: inline;
+            bottom: 4em;
+            left: -6em;
+            width: 10em;
             transform: rotate(-90deg);
         }
     }

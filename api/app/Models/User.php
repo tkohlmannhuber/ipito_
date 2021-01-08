@@ -47,4 +47,8 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    public function getImageUrlAttribute() {
+        return $this->image_path ? asset('storage/images/' . $this->image_path) : null;
+    }
+
 }

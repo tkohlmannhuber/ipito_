@@ -20,24 +20,34 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route::resources([
-//     'posts' => \App\Http\Controllers\PostController::class,
-// ]);
 
+
+
+
+//POST ROUTES //
 Route::post('posts/store', [PostController::class, 'store']);
+Route::get('posts/index', [PostController::class, 'index']);
+///////
 
 
+// USER POST ROUTES //
+Route::get('userposts/index', '\App\Http\Controllers\UserPostController@allPosts');
+Route::middleware('auth:sanctum')->get('/userposts/index', '\App\Http\Controllers\UserPostController@allPosts');
 
+////////
+
+
+// USER ROUTES ///
 Route::post('user/register', [AuthController::class, 'register']);
 Route::post('user/login', [AuthController::class, 'login']);
-
 Route::put('/user/{id}', [UserController::class, 'update']);
-
 Route::middleware('auth:sanctum')->get('/user/me', '\App\Http\Controllers\AuthController@me');
-// Route::middleware('auth:sanctum')->put('/user/', '\App\Http\Controllers\');
-
 Route::middleware('auth:sanctum')->put('/user/', '\App\Http\Controllers\UserController@update');
+///////
 
+
+// COUNTRY ROUTES //
 Route::resources([
     'countries' => \App\Http\Controllers\CountryController::class,
 ]);
+///////

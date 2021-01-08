@@ -83,9 +83,9 @@ export default {
             newPost: {
                 title: "",
                 content: "",
-                spotId: "",
+                spot_id: "",
                 image: null,
-                userId: "",
+                user_id: "",
             },
             posts: [],
 
@@ -101,7 +101,7 @@ export default {
         },
         getSpot() {
             const postSpot = this.$route.params.id;
-            this.newPost.spotId = postSpot;
+            this.newPost.spot_id = postSpot;
         },
 
         savePost() {
@@ -109,8 +109,8 @@ export default {
             formData.append("image", this.newPost.image);
             formData.append("title", this.newPost.title);
             formData.append("content", this.newPost.content);
-            formData.append("spotId", this.newPost.spotId);
-            formData.append("userId", this.newPost.userId);
+            formData.append("spot_id", this.newPost.spot_id);
+            formData.append("user_id", this.newPost.user_id);
 
             this.loader = true;
             this.showSubmit = false;
@@ -131,21 +131,19 @@ export default {
 
     created() {
         this.getSpot();
-        console.log(this.newPost);
     },
 
     mounted() {
         this.getSpot();
 
         userDataService.me().then((userData) => {
-            this.newPost.userId = userData.id;
+            this.newPost.user_id = userData.id;
         });
     },
     updated() {
         this.getSpot();
-        console.log(this.newPost);
         userDataService.me().then((userData) => {
-            this.newPost.userId = userData.id;
+            this.newPost.user_id = userData.id;
         });
     },
 };

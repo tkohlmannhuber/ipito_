@@ -1,13 +1,34 @@
 <template>
     <div class="nav-flex">
-        <button class="btn"><img src="@/assets/images/icons/user.svg" alt="user icon"></button>
-        <button class="btn"><img src="@/assets/images/icons/posts.svg" alt="post icon"></button>
+        <router-link
+            class="btn"
+            :to="{ name: 'Account', params: { id: 'dashboard' } }"
+            ><img src="@/assets/images/icons/user.svg" alt="user icon" />
+        </router-link>
+        <router-link
+            class="btn"
+            :to="{ name: 'Account', params: { id: 'posts'} }"
+            ><img src="@/assets/images/icons/posts.svg" alt="post icon" />
+        </router-link>
     </div>
 </template>
 
 <script>
+import userDataService from "@/services/userDataService";
+
 export default {
-    name: "AccountNavList",
+    name: "accountnavlist",
+    data: () => {
+        return {
+            userData: "",
+        };
+    },
+
+    created() {
+        userDataService.me().then((userData) => {
+            this.userData = userData;
+        });
+    },
 };
 </script>
 
@@ -17,12 +38,12 @@ export default {
 @import "@/assets/styles/app.scss";
 @import "@/assets/styles/mediaQueries.scss";
 
-.nav-flex{
+.nav-flex {
     display: flex;
     flex-direction: column;
     gap: 3em;
 
-    .btn{
+    .btn {
         width: 4em;
         height: 4em;
         border-radius: 100%;
@@ -32,18 +53,17 @@ export default {
         display: grid;
         place-items: center;
         cursor: pointer;
-        transition: all .5s;
-        outline:none;
+        transition: all 0.5s;
+        outline: none;
 
-        img{
+        img {
             width: 2em;
             padding: 0;
         }
 
-        &:hover{
+        &:hover {
             transform: scale(1.1);
         }
-
     }
 }
 </style>

@@ -20,4 +20,8 @@ export default {
 @import "@/assets/styles/variables.scss";
 @import "@/assets/styles/app.scss";
 @import "@/assets/styles/mediaQueries.scss";
+div {
+    background-image: url("../assets/images/greenstart-bg.png");
+    background-repeat: repeat;
+}
 </style>

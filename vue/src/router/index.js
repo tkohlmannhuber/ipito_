@@ -51,7 +51,7 @@ const routes = [
     component: AdminDashboard,
   },
   {
-    path: "/account",
+    path: "/account/:id",
     name: "Account",
     component: UserDashboard,
   },

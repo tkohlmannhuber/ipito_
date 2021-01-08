@@ -37,7 +37,7 @@
         <router-link
             v-if="userData"
             class="mobile-menu-item extern-link"
-            :to="{ name: 'Account' }"
+            :to="{ name: 'Account', params: { id: 'dashboard' } }"
             >{{ userData.username }}</router-link
         >
         <button

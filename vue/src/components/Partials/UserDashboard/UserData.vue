@@ -1,10 +1,17 @@
 <template>
     <div class="user-data-container">
-        <div class="user-img-container">
+        <div class="user-img-container" v-if="userData.image_path != null">
             <img
-                src="../../../assets/images/avatar/avatar4.jpg"
+                class="user-image"
+                :src="
+                    'http://api.ipito.local/storage/images/' +
+                        userData.image_path
+                "
                 alt="user image"
             />
+        </div>
+        <div class="user-img-container" v-if="userData.image_path == null">
+            <img src="@/assets/images/icons/user.svg" alt="user image" />
         </div>
         <div class="user-data-flex">
             <span class="user-data-key">Username:</span>
@@ -36,7 +43,6 @@ export default {
     created() {
         userDataService.me().then((userData) => {
             this.userData = userData;
-            console.log(this.userData);
         });
     },
 };
@@ -47,7 +53,6 @@ export default {
 @import "@/assets/styles/variables.scss";
 @import "@/assets/styles/app.scss";
 @import "@/assets/styles/mediaQueries.scss";
-
 
 .user-data-container {
     display: flex;
@@ -61,9 +66,16 @@ export default {
         height: 7em;
         border-radius: 100%;
         overflow: hidden;
-        padding-bottom: 3em;
+        background: $tertiaryColorLight;
+        display: grid;
+        place-items: center;
+        box-shadow: $boxShadow;
 
         img {
+            object-fit: cover;
+            width: 3em;
+        }
+        .user-image {
             object-fit: cover;
             width: 100%;
         }

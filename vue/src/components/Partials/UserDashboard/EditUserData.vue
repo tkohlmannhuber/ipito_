@@ -1,69 +1,165 @@
 <template>
-    <form action="#" class="user-data-container">
-
-        <div class="user-img-container">
-            <img
-                src="../../../assets/images/avatar/avatar4.jpg"
-                alt="user image"
-            />
-        </div>
-        <div class="user-data-flex">
-            <label for="username" class="user-data-key">Username:</label>
-            <input class="user-data-value" id="username" type="text" :placeholder="userData.username" v-model="newUserData.username"/>
-        </div>
-        <div class="user-data-flex">
-            <label for="email" class="user-data-key">Email:</label>
-            <input class="user-data-value" type="email" name="email" id="email" :placeholder="userData.email" v-model="newUserData.email"/>
-        </div>
-        <div class="user-data-flex">
-            <label for="password" class="user-data-key">Password</label>
-            <input class="user-data-value" type="password" name="password" id="password" placeholder="********" v-model="newUserData.password"/>
-        </div>
-        <div class="user-data-flex">
-            <label for="password-rp" class="user-data-key"
-                >Password repeat:</label
+    <div>
+        <form
+            v-if="!userUpdated"
+            action="#"
+            class="user-data-container"
+            enctype="multipart/form-data"
+        >
+            <label
+                for="file-input"
+                class="user-img-container image-upload-label"
             >
-            <input class="user-data-value" type="password" name="password-rp" id="password-rp" placeholder="********" v-model="newUserData.passsword_confirmation"/>
-        </div>
+                <img
+                    v-if="userData.image_path == null"
+                    src="@/assets/images/icons/user.svg"
+                    alt="user image"
+                />
+                <img
+                    v-if="userData.image_path != null"
+                    class="user-image"
+                    :src="
+                        'http://api.ipito.local/storage/images/' +
+                            userData.image_path
+                    "
+                    alt="user image"
+                />
+                <input
+                    type="file"
+                    class="file-input"
+                    id="file-input"
+                    @change="onImageSelected"
+                />
+            </label>
 
-        <button class="btn" type="submit" @click.prevent="editUser()">
-            <img
-                src="@/assets/images/icons/submit_icon.svg"
-                alt="paper plane"
-            />
-            Submit
-        </button>
-    </form>
+            <p v-if="newUserData.image_path != null">
+                <span class="img-name-label">Selected Image: </span>
+                {{ newUserData.image_path.name }}
+            </p>
+
+            <div class="user-data-flex">
+                <label for="username" class="user-data-key">Username:</label>
+                <input
+                    class="user-data-value"
+                    id="username"
+                    type="text"
+                    :placeholder="userData.username"
+                    v-model="newUserData.username"
+                />
+            </div>
+
+            <div class="user-data-flex">
+                <label for="email" class="user-data-key">Email:</label>
+                <input
+                    class="user-data-value"
+                    type="email"
+                    name="email"
+                    id="email"
+                    :placeholder="userData.email"
+                    v-model="newUserData.email"
+                />
+            </div>
+
+            <div class="user-data-flex">
+                <label for="password" class="user-data-key">Password</label>
+                <input
+                    class="user-data-value"
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="********"
+                    v-model="newUserData.password"
+                />
+            </div>
+
+            <div class="user-data-flex">
+                <label for="password-rp" class="user-data-key"
+                    >Password repeat:</label
+                >
+                <input
+                    class="user-data-value"
+                    type="password"
+                    name="password-rp"
+                    id="password-rp"
+                    placeholder="********"
+                    v-model="newUserData.password_confirmation"
+                />
+            </div>
+
+            <button class="btn" type="submit" @click.prevent="editUser()">
+                <img
+                    src="@/assets/images/icons/submit_icon.svg"
+                    alt="paper plane"
+                />
+                Submit
+            </button>
+        </form>
+        <div class="user-edit-success" v-if="userUpdated">
+            <h2>User Successfully Updated!</h2>
+        </div>
+    </div>
 </template>
 
 <script>
 import userDataService from "@/services/userDataService";
-import axiosClient from '@/services/axiosClient';
+// import axiosClient from "@/services/axiosClient";
+import axios from "axios";
 
 export default {
     name: "edituserdata",
     data: () => {
         return {
             userData: "",
-            newUserData:{
+            newUserData: {
                 username: "",
                 email: "",
                 password: "",
                 password_confirmation: "",
+                image_path: null,
             },
-            userId:''
-
+            userId: "",
+            userUpdated: false,
         };
     },
 
     methods: {
-        editUser(){
-            const url = '/user/';
+        onImageSelected(event) {
+            this.newUserData.image_path = event.target.files[0];
+        },
 
-            axiosClient().put(url, this.newUserData).then(() => {
-                console.log('user updated')
-            })
-        }
+        editUser() {
+            // const url = "/user/";
+            let formData = new FormData();
+            formData.append("username", this.newUserData.username);
+            formData.append("email", this.newUserData.email);
+            formData.append("password", this.newUserData.password);
+            formData.append(
+                "password_confirmation",
+                this.newUserData.password_confirmation
+            );
+            formData.append("image_path", this.newUserData.image_path);
+            formData.append("_method", "PUT");
+
+            console.log(this.newUserData);
+
+            // axiosClient()
+            //     .post(url, formData)
+            //     .then(() => {
+            //         console.log("user updated");
+            //     });
+            axios
+                .post("http://api.ipito.local/api/user/", formData, {
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "multipart/form-data",
+                        Authorization:
+                            "Bearer " + localStorage.getItem("token"),
+                    },
+                })
+                .then(() => {
+                    this.userUpdated = true;
+                });
+        },
     },
     created() {
         userDataService.me().then((userData) => {
@@ -71,6 +167,7 @@ export default {
             this.userId = userData.id;
         });
     },
+    updated() {},
 };
 </script>
 
@@ -87,6 +184,14 @@ export default {
     padding-top: 2em;
     gap: 3em;
 
+    .img-name-label {
+        font-family: $headlineFont;
+        text-transform: uppercase;
+        color: $headlineColor;
+        font-weight: $headlineFontWeightBlack;
+        font-size: $h4FontSize;
+    }
+
     .btn {
         display: flex;
         gap: 1em;
@@ -101,17 +206,61 @@ export default {
         img {
             width: 1em;
         }
-        
+    }
+
+    .image-upload-label {
+        cursor: pointer;
+        transition: all 0.5s;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+        .file-input {
+            position: absolute;
+            z-index: -1;
+            opacity: 0;
+        }
     }
 
     .user-img-container {
-        width: 10em;
-        height: 10em;
+        width: 5em;
+        height: 5em;
         border-radius: 100%;
         overflow: hidden;
-        padding-bottom: 3em;
+        display: grid;
+        place-items: center;
+        background: $tertiaryColorLight;
+        box-shadow: $boxShadow;
+        position: relative;
+
+        &::after {
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            transition: all 0.5s;
+        }
+
+        &:hover {
+            &::after {
+                background: rgba(black, .5);
+            }
+        }
+
+        @include media(">=md") {
+            width: 7em;
+            height: 7em;
+        }
 
         img {
+            object-fit: cover;
+            width: 2.5em;
+            @include media(">=md") {
+                width: 3.5em;
+            }
+        }
+        .user-image {
             object-fit: cover;
             width: 100%;
         }
@@ -119,26 +268,31 @@ export default {
 
     .user-data-flex {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        align-items: flex-start;
         width: 100%;
-        gap: 4em;
-        align-items: center;
+        gap: 2em;
+        @include media(">=md") {
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 4em;
+        }
 
         .user-data-key {
             font-family: $headlineFont;
             text-transform: uppercase;
             color: $headlineColor;
             font-weight: $headlineFontWeightBlack;
-            font-size: $h3FontSize;
+            font-size: $h4FontSize;
         }
 
         .user-data-value {
             font-family: $textFont;
             color: $headlineColor;
             font-weight: $textFontWeight;
-            font-size: $h3FontSize;
-            padding:.5rem 1rem;
-            border:none;
+            font-size: $h4FontSize;
+            padding: 0.5rem 1rem;
+            border: none;
             border-bottom: 1px solid $primaryColor;
             outline: none;
         }

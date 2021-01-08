@@ -74,6 +74,7 @@ export default {
                 email: "",
                 password: "",
                 password_confirmation: "",
+                is_admin: '0',
             },
 
             errors: [],
