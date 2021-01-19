@@ -5,12 +5,20 @@ import Moon from "../views/Moon.vue";
 import Login from "../views/Login.vue";
 import Signin from "../views/Signin.vue";
 import Spot from "../views/Spot.vue";
+import NotFound from "../views/NotFound.vue";
+import SinglePost from "../views/SinglePost.vue";
 import AdminDashboard from "../views/AdminDashboard.vue";
 import UserDashboard from "../views/UserDashboard.vue";
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: "*",
+    name: "404",
+    component: NotFound,
+  },
+
   {
     path: "/",
     name: "Home",
@@ -46,7 +54,7 @@ const routes = [
   },
 
   {
-    path: "/admin",
+    path: "/admin/:id",
     name: "Admin",
     component: AdminDashboard,
   },
@@ -54,6 +62,11 @@ const routes = [
     path: "/account/:id",
     name: "Account",
     component: UserDashboard,
+  },
+  {
+    path: "/post/:id",
+    name: "SinglePost",
+    component: SinglePost,
   },
 
 

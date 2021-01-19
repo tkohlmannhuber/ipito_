@@ -1,14 +1,12 @@
 <template>
     <div class="login-form-container">
         <h3 v-if="!success">Login</h3>
-        <div v-if="success">
-            <h3>Login was successfull!</h3>
-        </div>
-        <form
-            action="#"
-            v-if="!success"
-            
-        >
+        <transition name="fade">
+            <div v-if="success">
+                <h3>Login was successfull!</h3>
+            </div>
+        </transition>
+        <form action="#" v-if="!success">
             <div class="input-flex">
                 <label for="login_email">Email:</label>
                 <input
@@ -29,7 +27,7 @@
             </div>
             <div v-if="error" class="error-container">
                 <p class="error-msg">
-                    {{error}}
+                    {{ error }}
                 </p>
             </div>
             <Loader v-if="loading" />
@@ -54,14 +52,13 @@ export default {
         // daten
         credentials: {},
 
-        // hilfsvariablen 
+        // hilfsvariablen
         loading: false,
         error: null,
         token: null,
         success: false,
         editMode: false,
     }),
-
 
     methods: {
         loginUser: function(e) {
@@ -136,5 +133,13 @@ export default {
     .error-container {
         margin-bottom: 1em;
     }
+}
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
 }
 </style>

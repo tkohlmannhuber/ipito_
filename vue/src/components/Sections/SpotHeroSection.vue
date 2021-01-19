@@ -3,10 +3,10 @@
         <div class="content-wrapper">
             <Headline :title="this.$route.params.title" />
             <div class="hero-data-flex">
-                <span>Tide: </span>
-                <span>Swell:</span>
-                <span>Wind: </span>
-                <span>Water:</span>
+                <span>Tide: Low Tide</span>
+                <span>Swell: 2ft</span>
+                <span>Wind: On Shore</span>
+                <span>Water: 17°</span>
             </div>
             <!-- <div class="favorite-btn-flex">
                 <CircleBtn />

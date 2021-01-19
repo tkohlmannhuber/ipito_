@@ -6,6 +6,7 @@
 }
 
 html{
+    scroll-behavior: smooth;
     font-size: 14px;
     @include media(">=xs") {
         font-size: 16px;
@@ -58,6 +59,16 @@ h3 {
     padding: 0;
 
 }
+h4 {
+    font-family: $headlineFont;
+    text-transform: uppercase;
+    color: $headlineColor;
+    font-weight: $headlineFontWeightBlack;
+    font-size: $h4FontSize;
+    margin: 0;
+    padding: 0;
+}
+
 
 p{
     font-weight: $textFontWeight;

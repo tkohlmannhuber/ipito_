@@ -2,7 +2,7 @@
     <div class="forecast-day-flex">
         <div class="slider_controll_container">
             <SliderBtnPrev @click.native="showPrev" class="slider-btn" />
-            <span class="slider-text">22.10 - 29.10</span>
+            <span class="slider-text">1.2.2021 - 7.2.2021</span>
             <SliderBtnNext @click.native="showNext" class="slider-btn" />
         </div>
 

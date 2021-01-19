@@ -33,6 +33,7 @@ export default {
             this.showNav = !this.showNav;
         },
         closeNav() {
+            
             this.showNav = true;
         },
     },

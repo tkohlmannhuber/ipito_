@@ -5,7 +5,8 @@
                 <router-link to="/">
                     <Logo class="dashboard-logo" />
                 </router-link>
-                <AccountNavList />
+                <AccountNavList v-if="!isAdminRoute"/>
+                <AdminNavList v-if="isAdminRoute"/>
             </div>
             <router-link to="/" class="dashboard-back-btn">
                 Back
@@ -17,13 +18,42 @@
 <script>
 import Logo from "../Partials/Logo";
 import AccountNavList from "../Partials/AccountNav/AccountNavList";
+import AdminNavList from "../Partials/AdminNav/AdminNavList";
 
 export default {
-    name: "DashboardHeader",
+    name: "dashboardheader",
     components: {
         Logo,
         AccountNavList,
+        AdminNavList,
     },
+    data: () => {
+        return {
+            isAdminRoute: false,
+        }
+    },
+    // watch: {
+    //     $route() {
+    //         if (this.$route.path == '/admin/dashboard') {
+    //             this.isAdminRoute = true;
+    //         } else{
+    //             this.isAdminRoute = false;
+    //         }
+    //     },
+    // },
+    methods: {
+        getRoute(){
+            if (this.$route.path == '/admin/dashboard') {
+                this.isAdminRoute = true;
+            } else{
+                this.isAdminRoute = false;
+            }
+        }
+    },
+    created(){
+        this.getRoute();
+        console.log(this.$route.path);
+    }
 };
 </script>
 
@@ -46,7 +76,7 @@ export default {
         align-items: center;
         justify-content: space-between;
 
-        .icon-btn-container{
+        .icon-btn-container {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -58,6 +88,15 @@ export default {
 
         .dashboard-back-btn {
             padding: 2em;
+            color: $primaryColor;
+            font-family: $headlineFont;
+            text-transform: uppercase;
+            font-weight: $headlineFontWeightBlack;
+            font-size: 1.5em;
+            transition: all .5s;
+            &:hover{
+                transform: scale(1.1);
+            }
         }
     }
 }

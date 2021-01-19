@@ -1,26 +1,54 @@
 <template>
-    <div class="dashboard-template">
-		
-	</div>
+    <div class="dashboard-template dashboard-wrapper">
+        <div class="dashboard-headline-flex">
+            <h1 class="dashboard-headline">
+                Admin <span class="red">{{ userData.username }}</span>
+            </h1>
+            <div class="user-img-constainer" v-if="userData.image_path != null">
+                <img
+                    class="user-image"
+                    :src="
+                        'http://api.ipito.local/storage/images/' +
+                            userData.image_path
+                    "
+                    alt="user image"
+                />
+            </div>
+            <div class="user-img-constainer" v-if="userData.image_path == null">
+                <img v-if="userData.image_path == null" src="@/assets/images/icons/user.svg" alt="user image" />
+                <img v-if="userData.image_path != null"
+                    :src="
+                        'http://api.ipito.local/storage/images/' +
+                            userData.image_path
+                    "
+                    alt="user image"
+                />
+            </div>
+        </div>
+        <AdminAllUser />
+    </div>
 </template>
 
 <script>
 import userDataService from "@/services/userDataService";
+import AdminAllUser from "../Sections/AdminAllUser";
 
 export default {
-    name: "AdminDashboardTemplate",
-    components: {},
+    name: "admindashboardtemplate",
+    components: { AdminAllUser },
     data: () => {
         return {
-            userData: null,
-        }
+            userData: "",
+        };
+    },
+    watch: {
     },
 
-    created(){
+    created() {
         userDataService.me().then((userData) => {
-                this.userData = userData;
-            });
-}
+            this.userData = userData;
+        });
+    },
 };
 </script>
 
@@ -30,11 +58,39 @@ export default {
 @import "@/assets/styles/app.scss";
 @import "@/assets/styles/mediaQueries.scss";
 
-.dashboard-template{
-    background-image: url("../../assets/images/greenstart-bg.png");
-    background-repeat: no-repeat;
-    background-size: cover;
+.dashboard-template {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3em;
+    .dashboard-headline-flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        .user-img-constainer {
+            width: 4em;
+            height: 4em;
+            border-radius: 100%;
+            margin-left: 1em;
+            display: grid;
+            place-items: center;
+            background: $tertiaryColorLight;
+            box-shadow: $boxShadow;
+            overflow: hidden;
+
+            img {
+                object-fit: cover;
+                width: 2em;
+            }
+            .user-image {
+                object-fit: cover;
+                width: 100%;
+            }
+        }
+    }
 }
 </style>

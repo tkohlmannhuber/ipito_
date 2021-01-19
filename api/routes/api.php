@@ -27,6 +27,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //POST ROUTES //
 Route::post('posts/store', [PostController::class, 'store']);
 Route::get('posts/index', [PostController::class, 'index']);
+Route::get('posts/show/{id}', [PostController::class, 'show']);
 ///////
 
 
@@ -43,6 +44,7 @@ Route::post('user/login', [AuthController::class, 'login']);
 Route::put('/user/{id}', [UserController::class, 'update']);
 Route::middleware('auth:sanctum')->get('/user/me', '\App\Http\Controllers\AuthController@me');
 Route::middleware('auth:sanctum')->put('/user/', '\App\Http\Controllers\UserController@update');
+Route::middleware('auth:sanctum')->get('/user/index', '\App\Http\Controllers\UserController@index');
 ///////
 
 

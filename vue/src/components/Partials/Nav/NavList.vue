@@ -7,12 +7,16 @@
                     <router-link
                         v-for="spot in country.spots"
                         :key="spot.spot_title"
-                        v-on:click="method()"
+                        @click.native="method(); scrollToTop()"
                         class="sub-mobile-menu-item"
                         :to="{
                             name: 'Spot',
-                            params: { title: spot.spot_title, lat: spot.lat, lng: spot.lng, id: spot.id},
-                            
+                            params: {
+                                title: spot.spot_title,
+                                lat: spot.lat,
+                                lng: spot.lng,
+                                id: spot.id,
+                            },
                         }"
                         >{{ spot.spot_title }}</router-link
                     >
@@ -20,30 +24,42 @@
             </div>
         </div>
         <router-link class="mobile-menu-item extern-link" :to="{ name: 'Moon' }"
+        @click.native="method(); scrollToTop()"
             >Moon</router-link
         >
         <router-link
             v-if="!userData"
+            @click.native="method(); scrollToTop()"
             class="mobile-menu-item extern-link"
             :to="{ name: 'Login' }"
             >Login</router-link
         >
         <router-link
             v-if="!userData"
+            @click.native="method(); scrollToTop()"
             class="mobile-menu-item extern-link"
             :to="{ name: 'Signin' }"
             >Sign In</router-link
         >
         <router-link
             v-if="userData"
+            @click.native="method(); scrollToTop()"
             class="mobile-menu-item extern-link"
             :to="{ name: 'Account', params: { id: 'dashboard' } }"
             >{{ userData.username }}</router-link
         >
+        <router-link
+            v-if="isAdmin"
+            @click.native="method(); scrollToTop()"
+            class="mobile-menu-item extern-link"
+            :to="{ name: 'Admin', params: { id: 'dashboard' } }"
+            >Admin Dashboard</router-link
+        >
+
         <button
             v-if="userData"
+            @click="method(); scrollToTop() ;logout()"
             class="mobile-menu-item extern-link"
-            @click="logout()"
         >
             logout
         </button>
@@ -71,6 +87,7 @@ export default {
             mobileView: true,
             userData: null,
             countries: [],
+            isAdmin: "",
         };
     },
 
@@ -79,6 +96,13 @@ export default {
     },
 
     methods: {
+        scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth',
+            });
+        },
         handleView() {
             this.mobileView = window.innerWidth <= 990;
         },
@@ -99,6 +123,7 @@ export default {
 
         userDataService.me().then((userData) => {
             this.userData = userData;
+            this.isAdmin = userData.is_admin;
         });
 
         axios
@@ -140,6 +165,11 @@ export default {
     }
     @include media(">=md") {
         width: 20vw;
+    }
+
+    .extern-link {
+        cursor: pointer;
+        outline: none;
     }
 
     .social-list {

@@ -1,7 +1,9 @@
 <template>
     <div class="signin-form-container">
         <h3 v-if="!succesSignin">Sign In</h3>
-        <h3 v-if="succesSignin">Congrats! Sign In was successfull!</h3>
+        <transition name="fade">
+            <h3 v-if="succesSignin">Congrats! Sign In was successfull!</h3>
+        </transition>
         <form action="#" v-if="!succesSignin">
             <div class="input-flex">
                 <label for="signin_username">Username:</label>
@@ -40,9 +42,9 @@
                 />
             </div>
             <div>
-                <p v-if="errors">{{ errors.username }}</p>
-                <p v-if="errors">{{ errors.email }}</p>
-                <p v-if="errors">{{ errors.password }}</p>
+                <p class="red" v-if="errors">{{ errors.username }}</p>
+                <p class="red" v-if="errors">{{ errors.email }}</p>
+                <p class="red" v-if="errors">{{ errors.password }}</p>
             </div>
             <Loader v-if="loader" />
             <SubmitBtn
@@ -74,7 +76,7 @@ export default {
                 email: "",
                 password: "",
                 password_confirmation: "",
-                is_admin: '0',
+                is_admin: "0",
             },
 
             errors: [],
@@ -96,12 +98,11 @@ export default {
                     this.loader = false;
                     this.showSubmit = true;
                     setTimeout(() => {
-                    window.location.href = "/";
+                        window.location.href = "/";
                     }, 3000);
                 })
                 .catch((err) => {
                     this.errors = err.response.data.errors;
-                    console.log(this.errors);
                     this.loader = false;
                     this.showSubmit = true;
                 });
@@ -147,4 +148,14 @@ export default {
         }
     }
 }
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
 </style>

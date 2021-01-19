@@ -1,5 +1,9 @@
 <template>
     <div>
+        <div class="load-container" v-if="isLoading">
+            <span>Loading!</span>
+            <Loader />
+        </div>
         <VueSlickCarousel v-bind="settings" ref="carousel" v-if="gotPosts">
             <div
                 v-for="post in posts"
@@ -9,15 +13,15 @@
                 <div class="single_post_container">
                     <div class="post_top_flex">
                         <div class="like_flex">
-                            <img
+                            <!-- <img
                                 src="@/assets/images/icons/shaka.svg"
                                 alt="Shaka hand"
                                 width="100"
-                            />
+                            /> -->
                             <span></span>
                         </div>
                         <div class="avatar_flex">
-                            <span>{{ post.user.username }}</span>
+                            <span class="post-usernae">{{ post.user.username }}</span>
                             <img
                                 :src="
                                     'http://api.ipito.local/storage/images/' +
@@ -39,20 +43,21 @@
                                 width="200"
                             />
                         </div>
-                        <button class="like_btn">
+                        <!-- <button class="like_btn">
                             <img
                                 src="@/assets/images/icons/shaka.svg"
                                 alt="shaka hand"
                                 width="100"
                             />
-                        </button>
+                        </button> -->
                         <span class="post_spot">
                             {{ post.spot.spot_title }}
                         </span>
                     </div>
-                    <button class="read-btn" @click="setCurrentPost()">
+                    <router-link class="read-btn"
+                        :to="{ name: 'SinglePost', params: { id: post.id } }">
                         Read <span class="red">the </span>Post
-                    </button>
+                    </router-link>
                 </div>
             </div>
         </VueSlickCarousel>
@@ -61,8 +66,6 @@
             <span class="slider-text">next</span>
             <SliderBtnNext @click.native="showNext" class="slider-btn" />
         </div>
-
-        <ReadPost v-if="currentPost" v-bind="currentPost" />
     </div>
 </template>
 
@@ -72,6 +75,7 @@ import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 import "vue-slick-carousel/dist/vue-slick-carousel.css";
 import SliderBtnPrev from "../Partials/SliderBtnPrev";
 import SliderBtnNext from "../Partials/SliderBtnNext";
+import Loader from "../Partials/Loader";
 import axios from "axios";
 
 export default {
@@ -80,41 +84,7 @@ export default {
         VueSlickCarousel,
         SliderBtnPrev,
         SliderBtnNext,
-    },
-
-    methods: {
-        setCurrentPost: (currentPost) => {
-            this.currentPost = currentPost;
-        },
-        showNext() {
-            this.$refs.carousel.next();
-        },
-        showPrev() {
-            this.$refs.carousel.prev();
-        },
-
-        getCurrentRoute(currentRoute) {
-            this.currentRoute = currentRoute;
-        },
-
-        getHomeRoute(homeRoute) {
-            this.homeRoute = homeRoute;
-        },
-
-        getAllPosts() {
-            axios.get("http://api.ipito.local/api/posts/index").then((res) => {
-                this.posts = res.data;
-                this.gotPosts = true;
-            });
-        },
-    },
-
-    mounted() {
-        this.currentRoute = this.$route.params.id;
-    },
-    created() {
-        this.homeRoute = this.$route;
-        this.getAllPosts();
+        Loader,
     },
 
     data: () => {
@@ -124,6 +94,7 @@ export default {
             homeRoute: null,
             posts: [],
             gotPosts: false,
+            isLoading: true,
 
             settings: {
                 slidesToShow: 4,
@@ -158,6 +129,40 @@ export default {
             },
         };
     },
+    methods: {
+
+
+        showNext() {
+            this.$refs.carousel.next();
+        },
+        showPrev() {
+            this.$refs.carousel.prev();
+        },
+
+        getCurrentRoute(currentRoute) {
+            this.currentRoute = currentRoute;
+        },
+
+        getHomeRoute(homeRoute) {
+            this.homeRoute = homeRoute;
+        },
+
+        getAllPosts() {
+            axios.get("http://api.ipito.local/api/posts/index").then((res) => {
+                this.posts = res.data;
+                this.gotPosts = true;
+                this.isLoading= false;
+            });
+        },
+    },
+
+    mounted() {
+        this.currentRoute = this.$route.params.id;
+    },
+    created() {
+        this.homeRoute = this.$route;
+        this.getAllPosts();
+    },
 };
 </script>
 
@@ -166,6 +171,21 @@ export default {
 @import "@/assets/styles/variables.scss";
 @import "@/assets/styles/app.scss";
 @import "@/assets/styles/mediaQueries.scss";
+
+.load-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    span{
+        font-size: 2em;
+        font-family: $headlineFont;
+        font-weight: $headlineFontWeightBlack;
+        text-transform: uppercase;
+
+    }
+
+}
 
 .slider_controll_container {
     margin-top: 2em;
@@ -201,6 +221,8 @@ export default {
     max-width: 19em;
     border-radius: $borderRadius;
     margin: 2em 0;
+    display: flex; 
+    flex-direction: column;
 
     .post_top_flex {
         display: flex;
@@ -236,6 +258,8 @@ export default {
             span {
                 color: $primaryColor;
                 font-weight: $textFontWeight;
+                font-family: $headlineFont;
+                text-transform: uppercase;
             }
         }
     }
@@ -325,4 +349,5 @@ export default {
         }
     }
 }
+
 </style>

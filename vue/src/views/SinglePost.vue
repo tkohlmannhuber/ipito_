@@ -1,16 +1,15 @@
 <template>
-    <div>
-        <UserDashboardTemplate />
+    <div class="single-post">
+        <SinglePostTemplate />
     </div>
 </template>
 
 <script>
-import UserDashboardTemplate from "../components/Templates/UserDashboardTemplate.vue";
-
+import SinglePostTemplate from "../components/Templates/SinglePostTemplate.vue";
 export default {
-    name: "userdashboard",
+    name: "singlepost",
     components: {
-        UserDashboardTemplate,
+        SinglePostTemplate
     },
 };
 </script>
@@ -20,8 +19,12 @@ export default {
 @import "@/assets/styles/variables.scss";
 @import "@/assets/styles/app.scss";
 @import "@/assets/styles/mediaQueries.scss";
-div {
-    background-image: url("../assets/images/greenstart-bg.png");
-    background-repeat: repeat;
+
+.single-post{
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    place-items: center;
 }
+
 </style>

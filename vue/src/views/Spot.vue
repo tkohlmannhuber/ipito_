@@ -1,6 +1,8 @@
 <template>
     <div class="spot">
-        <SpotTemplate />
+        <transition name="fade">
+            <SpotTemplate />
+        </transition>
     </div>
 </template>
 
@@ -22,4 +24,11 @@ export default {
 @import "@/assets/styles/variables.scss";
 @import "@/assets/styles/app.scss";
 @import "@/assets/styles/mediaQueries.scss";
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>

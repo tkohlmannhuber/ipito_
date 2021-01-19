@@ -78,7 +78,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $Post = Post::findOrFail($id);
+        $Post = Post::where('id',$id)->with('User','Spot')->first();       //toSql();
 
         return response()->json($Post);
     }

@@ -1,15 +1,21 @@
 <template>
     <div class="user-data-section-container">
+        <div class="loading-container" v-if="loading">
+            <h3>Loading...</h3>
+            <Loader />
+        </div>
+
         <div
-            v-if="isEditMode"
+            v-if="isEditMode && !loading"
             @click="isEditMode = false"
             class="close-container"
         >
             <div class="close"></div>
         </div>
-        <EditUserData v-if="isEditMode" />
-        <UserData v-if="!isEditMode" />
-        <div class="user-data-btn-container">
+
+        <EditUserData v-if="isEditMode && !loading" />
+        <UserData v-if="!isEditMode && !loading" />
+        <div class="user-data-btn-container" v-if="!loading">
             <button
                 class="btn user-data-edit-btn"
                 @click="isEditMode = true"
@@ -36,17 +42,21 @@
 import userDataService from "@/services/userDataService";
 import UserData from "../Partials/UserDashboard/UserData";
 import EditUserData from "../Partials/UserDashboard/EditUserData";
+import Loader from "../Partials/Loader";
+
 
 export default {
     name: "userdatasection",
     components: {
         UserData,
         EditUserData,
+        Loader
     },
     data: () => {
         return {
             userData: "",
             isEditMode: false,
+            loading: true,
         };
     },
 
@@ -54,6 +64,7 @@ export default {
     created() {
         userDataService.me().then((userData) => {
             this.userData = userData;
+            this.loading = false;
         });
     },
 };
@@ -68,6 +79,7 @@ export default {
 .user-data-section-container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     background: white;
     padding: 3em;
     padding-top: 0;
@@ -76,6 +88,13 @@ export default {
     align-items: center;
     gap: 3em;
     position: relative;
+
+    .loading-container{
+        padding: 2em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
     .user-data-btn-container {
         display: flex;
         gap: 2em;
@@ -114,7 +133,7 @@ export default {
         margin: 2em;
         cursor: pointer;
         &:hover {
-            .close{
+            .close {
                 transform: rotate(135deg);
             }
         }
