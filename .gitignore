@@ -1,6 +1,8 @@
 .DS_Store
 node_modules
 /dist
+design
+marketing
 
 
 # local env files
