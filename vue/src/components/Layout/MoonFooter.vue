@@ -6,7 +6,7 @@
                 <a href="#">Im<span class="red">p</span>ressum</a>
                 <a href="#">A<span class="red">g</span>bs</a>
             </div>
-            <div>IPITO 20<span class="red">20</span></div>
+            <div>IPITO 20<span class="red">21</span></div>
         </div>
     </footer>
 </template>

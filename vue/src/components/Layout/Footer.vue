@@ -9,7 +9,7 @@
                 <a href="#">Impressum</a>
                 <a href="#">Agbs</a>
             </div>
-            <div>IP<span class="red">I</span>TO 2020</div>
+            <div>IP<span class="red">I</span>TO 2021</div>
         </div>
     </footer>
 </template>

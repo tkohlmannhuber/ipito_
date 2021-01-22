@@ -1,56 +1,78 @@
 <template>
     <div class="mobile-menu-list">
-        <div v-for="country in countries" :key="country.country_title">
+        <div
+            v-for="country in countries"
+            :key="country.country_title"
+            class="menu-item-container"
+        >
             <span class="mobile-menu-item">{{ country.country_title }}</span>
             <div class="mobile-menu-item-flex">
-                <div class="sub-mobile-menu-flex">
-                    <router-link
-                        v-for="spot in country.spots"
-                        :key="spot.spot_title"
-                        @click.native="method(); scrollToTop()"
-                        class="sub-mobile-menu-item"
-                        :to="{
-                            name: 'Spot',
-                            params: {
-                                title: spot.spot_title,
-                                lat: spot.lat,
-                                lng: spot.lng,
-                                id: spot.id,
-                            },
-                        }"
-                        >{{ spot.spot_title }}</router-link
-                    >
-                </div>
+                <router-link
+                    v-for="spot in country.spots"
+                    :key="spot.spot_title"
+                    @click.native="
+                        method();
+                        scrollToTop();
+                    "
+                    class="sub-mobile-menu-item"
+                    :to="{
+                        name: 'Spot',
+                        params: {
+                            title: spot.spot_title,
+                            lat: spot.lat,
+                            lng: spot.lng,
+                            id: spot.id,
+                        },
+                    }"
+                    >{{ spot.spot_title }}</router-link
+                >
             </div>
         </div>
-        <router-link class="mobile-menu-item extern-link" :to="{ name: 'Moon' }"
-        @click.native="method(); scrollToTop()"
+        <router-link
+            class="mobile-menu-item extern-link"
+            :to="{ name: 'Moon' }"
+            @click.native="
+                method();
+                scrollToTop();
+            "
             >Moon</router-link
         >
         <router-link
             v-if="!userData"
-            @click.native="method(); scrollToTop()"
+            @click.native="
+                method();
+                scrollToTop();
+            "
             class="mobile-menu-item extern-link"
             :to="{ name: 'Login' }"
             >Login</router-link
         >
         <router-link
             v-if="!userData"
-            @click.native="method(); scrollToTop()"
+            @click.native="
+                method();
+                scrollToTop();
+            "
             class="mobile-menu-item extern-link"
             :to="{ name: 'Signin' }"
             >Sign In</router-link
         >
         <router-link
             v-if="userData"
-            @click.native="method(); scrollToTop()"
+            @click.native="
+                method();
+                scrollToTop();
+            "
             class="mobile-menu-item extern-link"
             :to="{ name: 'Account', params: { id: 'dashboard' } }"
             >{{ userData.username }}</router-link
         >
         <router-link
             v-if="isAdmin"
-            @click.native="method(); scrollToTop()"
+            @click.native="
+                method();
+                scrollToTop();
+            "
             class="mobile-menu-item extern-link"
             :to="{ name: 'Admin', params: { id: 'dashboard' } }"
             >Admin Dashboard</router-link
@@ -58,7 +80,11 @@
 
         <button
             v-if="userData"
-            @click="method(); scrollToTop() ;logout()"
+            @click="
+                method();
+                scrollToTop();
+                logout();
+            "
             class="mobile-menu-item extern-link"
         >
             logout
@@ -100,7 +126,7 @@ export default {
             window.scrollTo({
                 top: 0,
                 left: 0,
-                behavior: 'smooth',
+                behavior: "smooth",
             });
         },
         handleView() {
@@ -127,7 +153,7 @@ export default {
         });
 
         axios
-            .get("http://api.ipito.local/api/countries")
+            .get("https://api.ipito.surf/api/countries")
             .then((res) => {
                 this.countries = res.data;
             })
@@ -150,21 +176,37 @@ export default {
     height: 100vh;
     width: 100vw;
     right: 0;
-    padding: 5em 2em;
+    padding: 3em 2em 1em;
     background: white;
-    display: grid;
-    place-items: center start;
     transition: all 0.5s ease;
     box-shadow: $boxShadow;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 
     @include media(">=xs") {
         width: 50vw;
+        align-items: flex-start;
     }
     @include media(">=sm") {
-        width: 30vw;
+        width: 40vw;
+        
     }
     @include media(">=md") {
+        width: 30vw;
+    }
+    @include media(">=xl") {
         width: 20vw;
+        padding: 2em 2em;
+    }
+    @include media(">=xxl") {
+        width: 20vw;
+        padding: 3em 2em;
+    }
+    @include media(">=max-width") {
+        width: 15vw;
+        padding: 10em 2em;
     }
 
     .extern-link {
@@ -176,7 +218,7 @@ export default {
         width: 100%;
         display: flex;
         justify-content: space-around;
-        padding-bottom: 3em;
+        padding-bottom: 1em;
 
         a {
             background: $tertiaryColor;
@@ -188,20 +230,35 @@ export default {
             color: $primaryColor;
         }
     }
-
-    .mobile-menu-item-flex {
+    .menu-item-container {
         display: flex;
+        justify-content: center;
         flex-direction: column;
+        align-items: center;
+        gap: 1em;
 
-        .sub-mobile-menu-flex {
+        @include media(">=xs") {
+            align-items: flex-start;
+        }
+
+        .mobile-menu-item-flex {
             display: flex;
             flex-direction: column;
-            gap: 1em;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5em;
+
+            @include media(">=xs") {
+                align-items: flex-start;
+            }
+            @include media(">=lg") {
+                gap: .8em;
+            }
 
             .sub-mobile-menu-item {
                 position: relative;
-                display: inline;
                 color: $textColor;
+                font-size: 1.4em;
 
                 &::after {
                     content: "";
@@ -223,6 +280,7 @@ export default {
             }
         }
     }
+
     .mobile-menu-item {
         color: $primaryColor;
         font-weight: $textFontWeight;

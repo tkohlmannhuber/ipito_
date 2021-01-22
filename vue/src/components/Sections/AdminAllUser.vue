@@ -67,7 +67,7 @@ export default {
     methods: {
         getAllUser() {
             axios
-                .get("http://api.ipito.local/api/user/index", {
+                .get("https://api.ipito.surf/api/user/index", {
                     headers: {
                         Accept: "application/json",
                         "Content-Type": "multipart/form-data",

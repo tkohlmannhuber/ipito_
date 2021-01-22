@@ -18,7 +18,7 @@
                     <span>{{ post.user.username }}</span>
                     <img
                         :src="
-                            'http://api.ipito.local/storage/images/' +
+                            'https://api.ipito.surf/storage/images/' +
                                 post.user.image_path
                         "
                         alt="User Bild"
@@ -30,7 +30,7 @@
                 <div class="post-img-container">
                     <img
                         :src="
-                            'http://api.ipito.local/storage/images/' +
+                            'https://api.ipito.surf/storage/images/' +
                                 post.image_path
                         "
                         alt="surfer"
@@ -77,7 +77,7 @@ export default {
         getPost() {
             axios
                 .get(
-                    "http://api.ipito.local/api/posts/show/" +
+                    "https://api.ipito.surf/api/posts/show/" +
                         this.$route.params.id
                 )
                 .then((res) => {
@@ -166,20 +166,24 @@ export default {
         justify-content: center;
         flex-direction: column;
         align-items: center;
+        gap: 2em;
+
+        .text-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+        }
 
         .post-img-container {
             object-fit: cover;
+            max-height: 25em;
+            max-width: 25em;
+            overflow: hidden;
+            border-radius: $borderRadius;
+            box-shadow: $boxShadow;
 
             img {
                 width: 100%;
-                overflow: hidden;
-                border-radius: $borderRadius;
-                box-shadow: $boxShadow;
-            }
-
-            @include media(">=xs") {
-                max-width: 25em;
-                margin-bottom: 0;
             }
         }
 

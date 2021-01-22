@@ -2,7 +2,7 @@
     <div class="forecast-day-flex">
         <div class="slider_controll_container">
             <SliderBtnPrev @click.native="showPrev" class="slider-btn" />
-            <span class="slider-text">1.2.2021 - 7.2.2021</span>
+            <span class="slider-text">01.02 - 07.02</span>
             <SliderBtnNext @click.native="showNext" class="slider-btn" />
         </div>
 
@@ -13,13 +13,43 @@
                 class="forecast-slide"
             >
                 <div class="single-day-container">
-                    <h3>{{ weekday.day }}</h3>
-                    <p>{{ weekday.wave }}</p>
-                    <p>Low Tide: {{ weekday.lTide }}</p>
-                    <p>High Tide: {{ weekday.hTide }}</p>
-                    <p>{{ weekday.moon }}</p>
-                    <p>{{ weekday.wind }}</p>
-                    <p>{{ weekday.temp }}</p>
+                    <h3 class="day-head">{{ weekday.day }}</h3>
+                    <div class="data-flex">
+                        <h4 class="data-head">
+                            Swell:
+                        </h4>
+                        <span class="data">{{ weekday.wave }}</span>
+                    </div>
+                    <div class="data-flex">
+                        <h4 class="data-head">
+                            Low Tide:
+                        </h4>
+                        <span class="data">{{ weekday.lTide }}</span>
+                    </div>
+                    <div class="data-flex">
+                        <h4 class="data-head">
+                            High Tide:
+                        </h4>
+                        <span class="data">{{ weekday.hTide }}</span>
+                    </div>
+                    <div class="data-flex">
+                        <h4 class="data-head">
+                            Moon:
+                        </h4>
+                        <span class="data">{{ weekday.moon }}</span>
+                    </div>
+                    <div class="data-flex">
+                        <h4 class="data-head">
+                            Wind:
+                        </h4>
+                        <span class="data">{{ weekday.wind }}</span>
+                    </div>
+                    <div class="data-flex">
+                        <h4 class="data-head">
+                            Water Temp:
+                        </h4>
+                        <span class="data">{{ weekday.temp }}</span>
+                    </div>
                 </div>
             </div>
         </VueSlickCarousel>
@@ -43,38 +73,34 @@ export default {
     data: () => {
         return {
             settings: {
-                slidesToShow: 5,
+                slidesToShow: 4,
                 speed: 500,
                 centerPadding: "20px",
                 slidesToScroll: 1,
                 responsive: [
-                                      {
+                    {
                         breakpoint: 1440,
                         settings: {
                             slidesToShow: 3,
-                            
                         },
                     },
 
                     {
                         breakpoint: 1024,
                         settings: {
-                            slidesToShow: 3,
-                            
+                            slidesToShow: 2,
                         },
                     },
                     {
                         breakpoint: 600,
                         settings: {
                             slidesToShow: 1,
-                            
                         },
                     },
                     {
                         breakpoint: 480,
                         settings: {
                             slidesToShow: 1,
-                            
                         },
                     },
                 ],
@@ -171,8 +197,9 @@ export default {
 @import "@/assets/styles/mediaQueries.scss";
 
 .forecast-slide {
+    display: flex !important; // ich weis das das sehr schlecht ist aba das display inline block kommt von der library und wird dort inline gestyled!
+    justify-content: center;
     outline: none;
-    overflow: hidden;
 }
 
 .slider_controll_container {
@@ -199,17 +226,34 @@ export default {
 .forecast-day-flex {
     .single-day-container {
         padding: 2em;
-        margin: 2em;
+        margin: 2em 0;
         background-image: url("../../assets/images/greenstart-bg.png");
         display: flex;
         flex-direction: column;
-        gap: 0.8em;
+        gap: 1.5em;
         justify-content: center;
         text-align: center;
         border-radius: $borderRadius;
         box-shadow: $boxShadow;
         min-width: 15em;
         outline: none;
+
+        .day-head{
+            font-size: 1.8em;
+        }
+
+        .data-flex {
+            display: flex;
+            justify-content: space-between;
+            gap: 5em;
+            .data-head {
+                font-size: 1.3em;
+            }
+            .data {
+                font-size: 1.3em;
+                font-weight: $textFontWeight;
+            }
+        }
     }
 }
 </style>

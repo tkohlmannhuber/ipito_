@@ -34,10 +34,10 @@ export default {
     &::after {
         content: "";
         position: absolute;
-        top: 0;
+        top: 10em;
         left: 0;
         width: 10%;
-        height: 110%;
+        height: 80%;
         background: linear-gradient(
             270deg,
             rgba(255, 255, 255, 0) 0%,
@@ -45,6 +45,23 @@ export default {
             rgba(255, 255, 255, 1) 100%
         );
         z-index: 1;
+    }
+    @include media(">=xs") {
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 10%;
+            height: 110%;
+            background: linear-gradient(
+                270deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 1) 50%,
+                rgba(255, 255, 255, 1) 100%
+            );
+            z-index: 1;
+        }
     }
     &::before {
         content: "";
@@ -64,7 +81,7 @@ export default {
 
     .forecast-text {
         position: absolute;
-        top: 55%;
+        top: 50%;
         left: -3.5em;
         transform: rotate(-90deg);
         font-size: $h2FontSize;
@@ -72,8 +89,13 @@ export default {
         padding: 0;
         z-index: 10;
 
-        @include media(">=xs") {
+        @include media(">=sm") {
             left: -3em;
+            top: 52%;
+        }
+
+        @include media('>=md'){
+            top: 55%;
         }
     }
 }
