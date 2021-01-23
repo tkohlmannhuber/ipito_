@@ -14,6 +14,9 @@
                     />
                     <span></span>
                 </div>
+                <div>
+                    <p class="post-date">{{ post.created_at | formatDate }}</p>
+                </div>
                 <div class="avatar_flex">
                     <span>{{ post.user.username }}</span>
                     <img
@@ -130,6 +133,14 @@ export default {
         justify-content: space-between;
         align-items: center;
 
+        .post-date{
+            font-family: $headlineFont;
+            
+            @include media('>=sm'){
+                font-size: 1.3em;
+            }
+        }
+
         .like_flex {
             display: flex;
             align-items: center;
@@ -215,6 +226,8 @@ export default {
             color: $textColor;
             cursor: pointer;
             outline: none;
+            font-family: $headlineFont;
+            text-transform: uppercase;
 
             &::after {
                 content: "";

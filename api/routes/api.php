@@ -42,6 +42,7 @@ Route::middleware('auth:sanctum')->get('/userposts/index', '\App\Http\Controller
 Route::post('user/register', [AuthController::class, 'register']);
 Route::post('user/login', [AuthController::class, 'login']);
 Route::put('/user/{id}', [UserController::class, 'update']);
+Route::delete('/user/{id}', [UserController::class, 'destroy']);
 Route::middleware('auth:sanctum')->get('/user/me', '\App\Http\Controllers\AuthController@me');
 Route::middleware('auth:sanctum')->put('/user/', '\App\Http\Controllers\UserController@update');
 Route::middleware('auth:sanctum')->get('/user/index', '\App\Http\Controllers\UserController@index');

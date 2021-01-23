@@ -22,6 +22,7 @@
                             lat: spot.lat,
                             lng: spot.lng,
                             id: spot.id,
+                            country: country.country_title,
                         },
                     }"
                     >{{ spot.spot_title }}</router-link
@@ -35,8 +36,9 @@
                 method();
                 scrollToTop();
             "
-            >Moon</router-link
         >
+            Moon
+        </router-link>
         <router-link
             v-if="!userData"
             @click.native="
@@ -156,6 +158,7 @@ export default {
             .get("https://api.ipito.surf/api/countries")
             .then((res) => {
                 this.countries = res.data;
+                console.log(this.countries);
             })
             .catch(() => {
                 console.log("no data");
@@ -191,7 +194,6 @@ export default {
     }
     @include media(">=sm") {
         width: 40vw;
-        
     }
     @include media(">=md") {
         width: 30vw;
@@ -201,8 +203,9 @@ export default {
         padding: 2em 2em;
     }
     @include media(">=xxl") {
-        width: 20vw;
+        width: 22vw;
         padding: 3em 2em;
+        gap: 1em;
     }
     @include media(">=max-width") {
         width: 15vw;
@@ -212,6 +215,25 @@ export default {
     .extern-link {
         cursor: pointer;
         outline: none;
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: $tertiaryColor;
+            visibility: hidden;
+            transform: scaleX(0);
+            transition: all 0.3s ease-in-out 0s;
+        }
+
+        &:hover::after {
+            visibility: visible;
+            transform: scaleX(1);
+        }
     }
 
     .social-list {
@@ -241,6 +263,10 @@ export default {
             align-items: flex-start;
         }
 
+        @include media(">=xxl") {
+            gap: 0;
+        }
+
         .mobile-menu-item-flex {
             display: flex;
             flex-direction: column;
@@ -252,7 +278,7 @@ export default {
                 align-items: flex-start;
             }
             @include media(">=lg") {
-                gap: .8em;
+                gap: 0.8em;
             }
 
             .sub-mobile-menu-item {

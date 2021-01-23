@@ -117,7 +117,7 @@ export default {
                     temp: "20°",
                 },
                 {
-                    day: "thuesday",
+                    day: "tuesday",
                     date: "21.10.2020",
                     wave: "2ft - 3ft",
                     lTide: "13:30",
@@ -237,6 +237,7 @@ export default {
         box-shadow: $boxShadow;
         min-width: 15em;
         outline: none;
+        
 
         .day-head{
             font-size: 1.8em;

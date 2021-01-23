@@ -80,8 +80,12 @@ export default {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 3em;
         }
+
+        .icon-btn-container > * + * {
+            margin-top: 3em;
+        }
+
         .dashboard-logo {
             padding: 2em;
         }

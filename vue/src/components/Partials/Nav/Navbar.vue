@@ -6,7 +6,13 @@
 
         <NavList :class="{ open: showNav }" :method="closeNav" />
 
-        <button :class="{ close_btn: !showNav }" @click="toggleNav()"></button>
+        <div class="btn-flex">
+            <span>Menu</span>
+            <button
+                :class="{ close_btn: !showNav }"
+                @click="toggleNav()"
+            ></button>
+        </div>
     </nav>
 </template>
 
@@ -33,7 +39,6 @@ export default {
             this.showNav = !this.showNav;
         },
         closeNav() {
-            
             this.showNav = true;
         },
     },
@@ -57,46 +62,56 @@ nav {
     transform: translateX(100%);
 }
 
-button {
-    background: $tertiaryColor;
+.btn-flex {
     display: flex;
-    justify-content: center;
     align-items: center;
-    width: 2.5em;
-    height: 2.5em;
-    border-radius: 100%;
-    box-shadow: $boxShadow;
-    transition: all 0.5s ease;
-    border: none;
-    outline: none;
-    z-index: 1;
-    position: relative;
+    gap: 1em;
 
-    &::after {
-        content: "";
-        width: 0.1em;
-        height: 1.2em;
-        position: absolute;
-        background: $primaryColor;
-        border-radius: 1em;
+    span{
+        font-family: $headlineFont;
+        text-transform: uppercase;
     }
-    &::before {
-        content: "";
-        width: 0.1em;
-        height: 1.2em;
-        position: absolute;
-        background: $primaryColor;
-        border-radius: 1em;
-        transform: rotate(90deg);
-    }
+    button {
+        background: $tertiaryColor;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2.5em;
+        height: 2.5em;
+        border-radius: 100%;
+        box-shadow: $boxShadow;
+        transition: all 0.5s ease;
+        border: none;
+        outline: none;
+        z-index: 1;
+        position: relative;
 
-    @include media(">=xs") {
-        width: 3em;
-        height: 3em;
-        cursor: pointer;
+        &::after {
+            content: "";
+            width: 0.1em;
+            height: 1.2em;
+            position: absolute;
+            background: $primaryColor;
+            border-radius: 1em;
+        }
+        &::before {
+            content: "";
+            width: 0.1em;
+            height: 1.2em;
+            position: absolute;
+            background: $primaryColor;
+            border-radius: 1em;
+            transform: rotate(90deg);
+        }
 
-        &:hover {
-            transform: scale(1.1) rotate(90deg);
+        @include media(">=xs") {
+            width: 3em;
+            height: 3em;
+            cursor: pointer;
+
+            &:hover {
+                transform: scale(1.1) rotate(90deg);
+            }
         }
     }
 }

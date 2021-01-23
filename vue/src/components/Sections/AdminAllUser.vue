@@ -33,7 +33,7 @@
                 <div>
                     <p>{{ user.created_at | formatDate }}</p>
                 </div>
-                <button class="delete-btn">
+                <button class="delete-btn" >
                     Delete <i class="far fa-trash-alt"></i>
                 </button>
                 <!-- <button class="edit-btn">
@@ -85,6 +85,16 @@ export default {
                     this.gotUsers = false;
                 });
         },
+        // deleteUser() {
+        //     axios
+        //         .delete("https://api.ipito.surf/api/user/"+ $id,)
+        //         .then((res) => {
+        //             console.log(res);
+        //         })
+        //         .catch(() => {
+        //             console.log('no data');
+        //         });
+        // },
     },
 
     created() {

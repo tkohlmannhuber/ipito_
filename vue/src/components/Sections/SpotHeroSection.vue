@@ -3,10 +3,22 @@
         <div class="content-wrapper">
             <Headline :title="this.$route.params.title" />
             <div class="hero-data-flex">
-                <span>Tide: Low Tide</span>
-                <span>Swell: 2ft</span>
-                <span>Wind: On Shore</span>
-                <span>Water: 17°</span>
+                <div class="hero-data-container">
+                    <span class="hero-data-head">Tide:</span>
+                    <span class="hero-data">Low Tide</span>
+                </div>
+                <div class="hero-data-container">
+                    <span class="hero-data-head">Swell:</span>
+                    <span class="hero-data">2ft</span>
+                </div>
+                <div class="hero-data-container">
+                    <span class="hero-data-head">Wind:</span>
+                    <span class="hero-data">On Shore</span>
+                </div>
+                <div class="hero-data-container">
+                    <span class="hero-data-head">Water:</span>
+                    <span class="hero-data">17°</span>
+                </div>
             </div>
             <!-- <div class="favorite-btn-flex">
                 <CircleBtn />
@@ -129,9 +141,21 @@ export default {
             flex-direction: column;
             gap: 1em;
 
-            span {
-                color: $primaryColor;
-                font-weight: $textFontWeight;
+            .hero-data-container {
+                display: flex;
+                align-items: center;
+                gap: 2em;
+                
+                .hero-data-head{
+                    font-family: $headlineFont;
+                    text-transform: uppercase;
+                    font-size: 1.5em;
+                }
+
+                .hero-data{
+                    font-weight: $textFontWeight;
+                    font-size: 1.3em;
+                }
             }
         }
         .favorite-btn-flex {
