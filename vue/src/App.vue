@@ -6,7 +6,9 @@
 
             <SocialBar v-if="!showCompsOnMobile" />
         </div>
-        <router-view></router-view>
+        <transition name="fade" mode="out-in">
+            <router-view></router-view>
+        </transition>
     </div>
 </template>
 
@@ -14,6 +16,7 @@
 import SocialBar from "./components/Partials/SocialBar";
 import TopHeaderBright from "./components/Layout/TopHeaderBright";
 import DashboardHeader from "./components/Layout/DashboardHeader";
+
 
 export default {
     name: "app",
@@ -58,5 +61,13 @@ export default {
 
 #app {
     position: absolute;
+}
+
+.fade-enter , .fade-leave-to{
+    opacity: 0;
+}
+
+.fade-enter-active, .fade-leave-active{
+    transition: all .8s ease;
 }
 </style>

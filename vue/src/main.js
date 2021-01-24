@@ -4,6 +4,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import moment from 'moment'
+import 'animate.css';
 
 
 Vue.config.productionTip = false

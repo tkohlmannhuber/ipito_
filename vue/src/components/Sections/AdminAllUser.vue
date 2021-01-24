@@ -1,5 +1,5 @@
 <template>
-    <div class="all-users-container">
+    <div class="all-users-container" :key="componentKey">
         <h2 v-if="allUsers.length > 0">
             List of all U<span class="red">s</span>ers
         </h2>
@@ -10,14 +10,7 @@
         <div v-if="allUsers.length < 1 && gotUsers" class="user-post-error">
             <h3>Somthing went wrong or there no Users right now!</h3>
         </div>
-        <div class="user-container" v-if="gotUsers">
-            <!-- <div class="delete-box">
-                <h2>Delete this User?</h2>
-                <div>
-                  <button>Yes</button>
-                  <button>No</button>
-                </div>
-            </div> -->
+        <div class="user-container" v-if="gotUsers" >
             <div class="single-user-label">
                 <h4>Em<span class="red">a</span>il:</h4>
                 <h4>U<span class="red">s</span>ername:</h4>
@@ -33,13 +26,15 @@
                 <div>
                     <p>{{ user.created_at | formatDate }}</p>
                 </div>
-                <button class="delete-btn" >
+                <button class="delete-btn" @click="deleteUser(user.id)">
                     Delete <i class="far fa-trash-alt"></i>
                 </button>
-                <!-- <button class="edit-btn">
-                    Update <i class="far fa-edit"></i>
-                </button> -->
             </div>
+            <transition name="fade">
+                <div v-if="deleteBox" class="delete-box">
+                    <h3>User sucessfully deleted!</h3>
+                </div>
+            </transition>
         </div>
     </div>
 </template>
@@ -61,13 +56,15 @@ export default {
             gotUsers: false,
             isAdmin: "",
             userId: null,
+            componentKey: 0,
+            deleteBox: false,
         };
     },
 
     methods: {
         getAllUser() {
             axios
-                .get("https://api.ipito.surf/api/user/index", {
+                .get("http://api.ipito.local/api/user/index", {
                     headers: {
                         Accept: "application/json",
                         "Content-Type": "multipart/form-data",
@@ -85,22 +82,26 @@ export default {
                     this.gotUsers = false;
                 });
         },
-        // deleteUser() {
-        //     axios
-        //         .delete("https://api.ipito.surf/api/user/"+ $id,)
-        //         .then((res) => {
-        //             console.log(res);
-        //         })
-        //         .catch(() => {
-        //             console.log('no data');
-        //         });
-        // },
+        deleteUser(id) {
+            axios
+                .delete(`http://api.ipito.local/api/user/${id}`)
+                .then((res) => {
+                    console.log(res);
+                    this.deleteBox = true;
+                    this.allUsers = res.data;
+                    setTimeout(() => {
+                        this.deleteBox = false;
+                    }, 6000);
+                })
+                .catch(() => {
+                    console.log("no data");
+                });
+        },
     },
 
     created() {
         this.getAllUser();
     },
-    
 };
 </script>
 
@@ -122,13 +123,16 @@ export default {
         gap: 1em;
         width: 100%;
         padding: 3em 0;
+        position: relative;
 
-        .delete-box{
-          position: absolute;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
+        .delete-box {
+            display: grid;
+            place-items: center;
+            width: 100%;
+            height: 100%;
+            background: $tertiaryColorLight;
+            padding: 1em;
+            border-radius: $borderRadius;
         }
 
         .single-user-label {
@@ -155,12 +159,22 @@ export default {
                 width: 7em;
                 cursor: pointer;
                 outline: none;
-                transition: all .5s;
-                &:hover{
-                  transform: scale(1.1);
+                transition: all 0.5s;
+                &:hover {
+                    transform: scale(1.1);
                 }
             }
         }
     }
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: all 0.8s ease;
 }
 </style>

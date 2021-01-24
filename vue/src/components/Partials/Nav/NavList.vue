@@ -155,7 +155,7 @@ export default {
         });
 
         axios
-            .get("https://api.ipito.surf/api/countries")
+            .get("http://api.ipito.local/api/countries")
             .then((res) => {
                 this.countries = res.data;
                 console.log(this.countries);

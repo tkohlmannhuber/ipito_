@@ -21,7 +21,7 @@
                     <span>{{ post.user.username }}</span>
                     <img
                         :src="
-                            'https://api.ipito.surf/storage/images/' +
+                            'http://api.ipito.local/storage/images/' +
                                 post.user.image_path
                         "
                         alt="User Bild"
@@ -33,7 +33,7 @@
                 <div class="post-img-container">
                     <img
                         :src="
-                            'https://api.ipito.surf/storage/images/' +
+                            'http://api.ipito.local/storage/images/' +
                                 post.image_path
                         "
                         alt="surfer"
@@ -80,7 +80,7 @@ export default {
         getPost() {
             axios
                 .get(
-                    "https://api.ipito.surf/api/posts/show/" +
+                    "http://api.ipito.local/api/posts/show/" +
                         this.$route.params.id
                 )
                 .then((res) => {

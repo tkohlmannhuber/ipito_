@@ -47,7 +47,7 @@ export default {
             impressionsText: {
                 title: "Spot Impressions!",
                 text:
-                    "Got some good impressions of this spot? Take some time and create an Article or just look for other cool posts!",
+                    "Got some good impressions of this spot? Take some time and create a post or just look for other cool posts!",
             },
             userData: null,
         };

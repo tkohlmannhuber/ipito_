@@ -107,13 +107,11 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        if ($user->image_path) {
 
-            Storage::delete('public/images/'.$user->image_path);
-        }
 
         $user->delete();
 
-        return response()->json(['User Successfully Deleted!']);
+        $Users = User::all();
+        return response()->json($Users);
     }
 }
