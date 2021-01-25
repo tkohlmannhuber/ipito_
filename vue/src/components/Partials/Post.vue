@@ -24,7 +24,7 @@
                             <span class="post-usernae">{{ post.user.username }}</span>
                             <img
                                 :src="
-                                    'http://api.ipito.local/storage/images/' +
+                                    'https://api.ipito.surf/storage/images/' +
                                         post.user.image_path
                                 "
                                 alt="User Bild"
@@ -36,7 +36,7 @@
                         <div class="img_container">
                             <img
                                 :src="
-                                    'http://api.ipito.local/storage/images/' +
+                                    'https://api.ipito.surf/storage/images/' +
                                         post.image_path
                                 "
                                 alt="Surfer"
@@ -148,7 +148,7 @@ export default {
         },
 
         getAllPosts() {
-            axios.get("http://api.ipito.local/api/posts/index").then((res) => {
+            axios.get("https://api.ipito.surf/api/posts/index").then((res) => {
                 this.posts = res.data;
                 this.gotPosts = true;
                 this.isLoading= false;

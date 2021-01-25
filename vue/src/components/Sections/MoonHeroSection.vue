@@ -15,8 +15,6 @@
 <script>
 import Headline from "../Partials/Headline";
 import MoonBg from "../Partials/MoonBg";
-// import MoonPhaseControll from "../Partials/MoonPhaseControll";
-// import axios from "axios";
 
 
 
@@ -26,7 +24,6 @@ export default {
     components: {
         Headline,
         MoonBg,
-        // MoonPhaseControll,
     },
 };
 </script>
@@ -39,7 +36,7 @@ export default {
 
 .moon-hero-section {
     height: 130vh;
-    width: 100vw;
+    width: 100%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;

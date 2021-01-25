@@ -27,7 +27,7 @@ export default {
       background-repeat: no-repeat;
       background-size: cover;
       height: 100vh;
-      width: 100vw;
+      width: 100%;
       display: grid;
       place-items: center;
   }

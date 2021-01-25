@@ -43,7 +43,7 @@ export default {
   @import '@/assets/styles/mediaQueries.scss';
 
   .test{
-    width: 100vw;
+    width: 100%;
 
 
     @include media('>=md'){

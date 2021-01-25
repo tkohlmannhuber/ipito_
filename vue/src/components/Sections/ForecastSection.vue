@@ -27,7 +27,7 @@ export default {
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    width: 100vw;
+    width: 100%;
     position: relative;
     overflow: hidden;
 

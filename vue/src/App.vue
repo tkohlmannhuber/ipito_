@@ -59,10 +59,6 @@ export default {
 <style lang="scss">
 @import "@/assets/styles/variables.scss";
 
-#app {
-    position: absolute;
-}
-
 .fade-enter , .fade-leave-to{
     opacity: 0;
 }

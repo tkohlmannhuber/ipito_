@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="38.132" height="60.995" viewBox="0 0 38.132 60.995">
+  <g id="Gruppe_5" data-name="Gruppe 5" transform="translate(-40.188 -25.556)">
+    <g id="Gruppe_2" data-name="Gruppe 2" transform="translate(40.188 25.556)">
+      <g id="Gruppe_1" data-name="Gruppe 1">
+        <path id="Pfad_1" data-name="Pfad 1" d="M60.672,78.887,42.355,60.571l2.5-11.53L62.39,66.577Z" transform="translate(-40.846 -32.685)" fill="#64e6d3"/>
+        <path id="Pfad_2" data-name="Pfad 2" d="M51.941,25.556a1.389,1.389,0,0,0-1.07.5A47.734,47.734,0,0,0,45.5,34.67c-8.949,16.916-4.968,38.016.125,51.067a1.418,1.418,0,0,0,2.348.322l3.968-4.824,3.968,4.824a1.406,1.406,0,0,0,2.348-.322c8.6-22.989,7.214-43.636-5.246-59.681a1.39,1.39,0,0,0-1.07-.5Zm8.912,34.361a82.227,82.227,0,0,1-.952,9.159L43.14,52.315a44.719,44.719,0,0,1,1.688-8.423ZM58.329,76.6c-.644,2.481-1.293,4.47-1.784,5.845l-3.53-4.289a1.425,1.425,0,0,0-2.15,0l-3.527,4.288a80.708,80.708,0,0,1-4.394-26.392L59.3,72.409C58.978,73.978,58.646,75.386,58.329,76.6Zm-2.4-40.622a46.569,46.569,0,0,1,5.012,20.083L45.815,40.944a53.355,53.355,0,0,1,6.126-11.679,50.721,50.721,0,0,1,3.985,6.718Z" transform="translate(-40.188 -25.556)" fill="#0b3d39"/>
+      </g>
+    </g>
+    <g id="Gruppe_4" data-name="Gruppe 4" transform="translate(66.102 32.998)">
+      <g id="Gruppe_3" data-name="Gruppe 3" transform="translate(0 0)">
+        <path id="Pfad_3" data-name="Pfad 3" d="M80.494,78.125a58.758,58.758,0,0,1-3.1,12.034" transform="translate(-77.397 -48.956)" fill="none" stroke="#64e6d3" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3.925"/>
+        <path id="Pfad_4" data-name="Pfad 4" d="M77.537,36.242a59.136,59.136,0,0,1,3.628,19.674,59.7,59.7,0,0,1-.628,9.5" transform="translate(-77.439 -36.242)" fill="none" stroke="#64e6d3" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3.925"/>
+      </g>
+      <path id="Pfad_5" data-name="Pfad 5" d="M88.872,44.131a59.216,59.216,0,0,1,.522,17.805A59.814,59.814,0,0,1,87.875,69.9" transform="translate(-79.578 -35.637)" fill="none" stroke="#64e6d3" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3.925" opacity="0.5"/>
+    </g>
+  </g>
+</svg>

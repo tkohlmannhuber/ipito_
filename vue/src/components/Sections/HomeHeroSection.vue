@@ -83,6 +83,9 @@ export default {
             z-index: -1;
             overflow: hidden;
 
+            @include media(">=md") {
+                transform: translate(53em, -5em);
+            }
             @include media(">max-width") {
                 transform: translate(90em, 15em);
             }
@@ -102,12 +105,4 @@ export default {
         }
     }
 }
-// &::before{
-//     content: '';
-//     position: absolute;
-//     width: 100vw;
-//     height: 100vh;
-//     background-image: url('../../assets/images/hero-overlay.svg');
-//     z-index : 1;
-// }
 </style>

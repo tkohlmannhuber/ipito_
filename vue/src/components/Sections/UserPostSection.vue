@@ -22,7 +22,7 @@
                         <div class="img_container">
                             <img
                                 :src="
-                                    'http://api.ipito.local/storage/images/' +
+                                    'https://api.ipito.surf/storage/images/' +
                                         post.image_path
                                 "
                                 alt="Surfer"
@@ -62,7 +62,7 @@ export default {
     methods: {
         getAllPosts() {
             axios
-                .get("http://api.ipito.local/api/userposts/index", {
+                .get("https://api.ipito.surf/api/userposts/index", {
                     headers: {
                         Accept: "application/json",
                         "Content-Type": "multipart/form-data",

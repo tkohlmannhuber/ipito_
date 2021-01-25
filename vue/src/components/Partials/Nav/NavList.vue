@@ -155,7 +155,7 @@ export default {
         });
 
         axios
-            .get("http://api.ipito.local/api/countries")
+            .get("https://api.ipito.surf/api/countries")
             .then((res) => {
                 this.countries = res.data;
                 console.log(this.countries);
@@ -262,20 +262,24 @@ export default {
         @include media(">=xs") {
             align-items: flex-start;
         }
-
-        @include media(">=xxl") {
+        @include media(">=md") {
             gap: 0;
         }
+
 
         .mobile-menu-item-flex {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 1.5em;
+            gap: .5em;
 
             @include media(">=xs") {
                 align-items: flex-start;
+                gap: 1.5em;
+            }
+            @include media(">=sm") {
+                gap: .7em;
             }
             @include media(">=lg") {
                 gap: 0.8em;

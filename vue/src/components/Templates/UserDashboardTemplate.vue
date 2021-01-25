@@ -8,7 +8,7 @@
                 <img
                     class="user-image"
                     :src="
-                        'http://api.ipito.local/storage/images/' +
+                        'https://api.ipito.surf/storage/images/' +
                             userData.image_path
                     "
                     alt="user image"
@@ -18,7 +18,7 @@
                 <img v-if="userData.image_path == null" src="@/assets/images/icons/user.svg" alt="user image" />
                 <img v-if="userData.image_path != null"
                     :src="
-                        'http://api.ipito.local/storage/images/' +
+                        'https://api.ipito.surf/storage/images/' +
                             userData.image_path
                     "
                     alt="user image"
@@ -69,7 +69,7 @@ export default {
 @import "@/assets/styles/mediaQueries.scss";
 
 .dashboard-template {
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
     height: 100%;
     display: flex;

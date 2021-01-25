@@ -109,7 +109,7 @@ export default {
     position: absolute;
     top: 0;
     height: 100vh;
-    width: 100vw;
+    width: 100%;
     right: 0;
     padding: 5em 2em;
     background: black;

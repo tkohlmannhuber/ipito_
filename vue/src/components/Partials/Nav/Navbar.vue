@@ -7,7 +7,9 @@
         <NavList :class="{ open: showNav }" :method="closeNav" />
 
         <div class="btn-flex">
-            <span>Menu</span>
+            <transition name="fade">
+                <span>{{navText}}</span>
+            </transition>
             <button
                 :class="{ close_btn: !showNav }"
                 @click="toggleNav()"
@@ -31,6 +33,7 @@ export default {
     data: () => {
         return {
             showNav: true,
+            navText: 'Menu'
         };
     },
 
@@ -41,7 +44,15 @@ export default {
         closeNav() {
             this.showNav = true;
         },
+
     },
+    updated(){
+        if(this.showNav){
+                this.navText = 'Menu'
+            } else {
+                this.navText = 'Close'
+            }
+    }
 };
 </script>
 
@@ -66,6 +77,7 @@ nav {
     display: flex;
     align-items: center;
     gap: 1em;
+    z-index: 1;
 
     span{
         font-family: $headlineFont;
