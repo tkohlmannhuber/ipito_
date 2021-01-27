@@ -16,6 +16,12 @@
                     <h3 class="day-head">{{ weekday.day }}</h3>
                     <div class="data-flex">
                         <h4 class="data-head">
+                            Date:
+                        </h4>
+                        <span class="data">{{ weekday.date }}</span>
+                    </div>
+                    <div class="data-flex">
+                        <h4 class="data-head">
                             Swell:
                         </h4>
                         <span class="data">{{ weekday.wave }}</span>
@@ -108,7 +114,7 @@ export default {
             weekdays: [
                 {
                     day: "monday",
-                    date: "20.10.2020",
+                    date: "01.02.2021",
                     wave: "3ft - 4ft",
                     lTide: "12:30",
                     hTide: "0:30",
@@ -118,7 +124,7 @@ export default {
                 },
                 {
                     day: "tuesday",
-                    date: "21.10.2020",
+                    date: "02.02.2021",
                     wave: "2ft - 3ft",
                     lTide: "13:30",
                     hTide: "1:30",
@@ -128,7 +134,7 @@ export default {
                 },
                 {
                     day: "wednesday",
-                    date: "22.10.2020",
+                    date: "03.02.2021",
                     wave: "3.5ft - 4ft",
                     lTide: "14:30",
                     hTide: "2:30",
@@ -138,7 +144,7 @@ export default {
                 },
                 {
                     day: "thursday",
-                    date: "23.10.2020",
+                    date: "04.02.2021",
                     wave: "1ft - 2ft",
                     lTide: "15:30",
                     hTide: "3:30",
@@ -148,7 +154,7 @@ export default {
                 },
                 {
                     day: "friday",
-                    date: "24.10.2020",
+                    date: "05.02.2021",
                     wave: "0.5ft - 2ft",
                     lTide: "16:30",
                     hTide: "4:30",
@@ -158,7 +164,7 @@ export default {
                 },
                 {
                     day: "saturday",
-                    date: "25.10.2020",
+                    date: "06.02.2021",
                     wave: "5ft - 6ft",
                     lTide: "17:30",
                     hTide: "5:30",
@@ -168,7 +174,7 @@ export default {
                 },
                 {
                     day: "sunday",
-                    date: "26.10.2020",
+                    date: "07.02.2021",
                     wave: "2ft - 4ft",
                     lTide: "18:30",
                     hTide: "6:30",

@@ -2,7 +2,7 @@
     <section class="moon-detail-section">
         <Headline class="moon-headline" title="Full Moon" />
         <div class="moon-text-flex">
-            <img src="../../assets/images/moon.png" alt="" />
+            <img src="../../assets/images/moon.png" alt="Full Moon" />
             <p>
                 Sand bottom jumbled shorebreak send it monsters. Wave kook in da
                 wa spit Nat Young, hollow pose on the nose, sets keyhole big
@@ -55,10 +55,15 @@ export default {
 
     .moon-text-flex {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: space-around;
         gap: 5em;
         margin: 3em;
+
+        @include media('>=md'){
+            flex-direction: row;
+        }
     }
 
     img {

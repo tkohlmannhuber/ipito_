@@ -31,24 +31,6 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
-
-        // $validatedData = $request->validate([
-        //     'title' => 'required',
-        //     'content' => 'required',
-        //     'image' => 'required',
-        //     'spot_id' => 'required',
-        //     'user_id' => 'required',
-        // ]);
-
-
-
-
-        // $request->file('image')->store('images');
-        // Post::create($validatedData);
-        // return ['message' => 'Post Created'];
-
-
-
         $Post = new Post();
         $Post->title = $request->get('title');
         $Post->spot_id = $request->get('spot_id');
@@ -120,5 +102,21 @@ class PostController extends Controller
         // Nun geben wir alle Posts ohne diesen Post zurück
         $AllPosts = Post::all();
         return response()->json($AllPosts);
+    }
+
+
+    public function like($id)
+    {
+
+        $Post = Post::findOrFail($id);
+        $Value = $Post->like_count;
+        $Post->like_count = $Value+1;
+        $Post->save();
+
+        $AllPosts = Post::with('User','Spot')->get();
+
+        return response()->json($AllPosts);
+
+
     }
 }

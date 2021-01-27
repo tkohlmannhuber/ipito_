@@ -1,5 +1,5 @@
 const appConfig = {
-    apiUrl: 'https://api.ipito.surf/api',
+    apiUrl: 'http://api.ipito.local/api',
 }
 
 export default appConfig;

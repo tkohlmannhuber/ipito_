@@ -13,49 +13,66 @@
                 <div class="single_post_container">
                     <div class="post_top_flex">
                         <div class="like_flex">
-                            <!-- <img
+                            <img
                                 src="@/assets/images/icons/shaka.svg"
                                 alt="Shaka hand"
                                 width="100"
-                            /> -->
-                            <span></span>
+                            />
+                            <span>{{ post.like_count }}</span>
                         </div>
                         <div class="avatar_flex">
-                            <span class="post-usernae">{{ post.user.username }}</span>
+                            <span class="post-usernae">{{
+                                post.user.username
+                            }}</span>
                             <img
+                                class="user-img"
+                                v-if="post.user.image_path"
                                 :src="
-                                    'https://api.ipito.surf/storage/images/' +
+                                    'http://api.ipito.local/storage/images/' +
                                         post.user.image_path
                                 "
                                 alt="User Bild"
                                 width="200"
                             />
+                            <div
+                                class="no-user-img-container"
+                                v-if="!post.user.image_path"
+                            >
+                                <img
+                                    class="no-user-img"
+                                    src="@/assets/images/icons/users.svg"
+                                    alt="user image"
+                                />
+                            </div>
                         </div>
                     </div>
                     <div class="img_flex">
                         <div class="img_container">
                             <img
+                                v-if="post.image_path"
                                 :src="
-                                    'https://api.ipito.surf/storage/images/' +
+                                    'http://api.ipito.local/storage/images/' +
                                         post.image_path
                                 "
                                 alt="Surfer"
                                 width="200"
                             />
                         </div>
-                        <!-- <button class="like_btn">
+                        <button class="like_btn" @click="likePost(post.id)">
                             <img
                                 src="@/assets/images/icons/shaka.svg"
                                 alt="shaka hand"
                                 width="100"
                             />
-                        </button> -->
+                        </button>
                         <span class="post_spot">
                             {{ post.spot.spot_title }}
                         </span>
                     </div>
-                    <router-link class="read-btn"
-                        :to="{ name: 'SinglePost', params: { id: post.id } }">
+                    <router-link
+                        class="read-btn"
+                        :to="{ name: 'SinglePost', params: { id: post.id } }"
+                    >
                         Read <span class="red">the </span>Post
                     </router-link>
                 </div>
@@ -130,8 +147,6 @@ export default {
         };
     },
     methods: {
-
-
         showNext() {
             this.$refs.carousel.next();
         },
@@ -148,10 +163,19 @@ export default {
         },
 
         getAllPosts() {
-            axios.get("https://api.ipito.surf/api/posts/index").then((res) => {
+            axios.get("http://api.ipito.local/api/posts/index").then((res) => {
                 this.posts = res.data;
                 this.gotPosts = true;
-                this.isLoading= false;
+                this.isLoading = false;
+            });
+        },
+
+        likePost(id) {
+            axios.post(`http://api.ipito.local/api/posts/like/${id}`).then((res) => {
+                this.posts = res.data;
+            })
+            .catch(() => {
+                console.log('no like')
             });
         },
     },
@@ -172,19 +196,17 @@ export default {
 @import "@/assets/styles/app.scss";
 @import "@/assets/styles/mediaQueries.scss";
 
-.load-container{
+.load-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    span{
+    span {
         font-size: 2em;
         font-family: $headlineFont;
         font-weight: $headlineFontWeightBlack;
         text-transform: uppercase;
-
     }
-
 }
 
 .slider_controll_container {
@@ -221,7 +243,7 @@ export default {
     max-width: 19em;
     border-radius: $borderRadius;
     margin: 2em 0;
-    display: flex; 
+    display: flex;
     flex-direction: column;
 
     .post_top_flex {
@@ -248,7 +270,7 @@ export default {
             display: flex;
             align-items: center;
 
-            img {
+            .user-img {
                 width: 3em;
                 height: 3em;
                 object-fit: cover;
@@ -260,6 +282,21 @@ export default {
                 font-weight: $textFontWeight;
                 font-family: $headlineFont;
                 text-transform: uppercase;
+            }
+
+            .no-user-img-container {
+                width: 3em;
+                height: 3em;
+                background: $tertiaryColorLight;
+                border-radius: 100%;
+                display: grid;
+                place-items: center;
+                margin-left: 1em;
+                img {
+                    object-fit: contain;
+                    width: 1.5em;
+                    height: 1.5em;
+                }
             }
         }
     }
@@ -349,5 +386,4 @@ export default {
         }
     }
 }
-
 </style>

@@ -22,4 +22,5 @@ class UserPostController extends Controller
 
 
     }
+
 }

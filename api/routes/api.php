@@ -28,6 +28,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('posts/store', [PostController::class, 'store']);
 Route::get('posts/index', [PostController::class, 'index']);
 Route::get('posts/show/{id}', [PostController::class, 'show']);
+Route::get('posts/delete/{id}', [PostController::class, 'destroy']);
+Route::post('posts/like/{id}',  '\App\Http\Controllers\PostController@like');
 ///////
 
 

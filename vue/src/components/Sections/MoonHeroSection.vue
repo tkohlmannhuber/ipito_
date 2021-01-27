@@ -35,13 +35,17 @@ export default {
 @import "@/assets/styles/mediaQueries.scss";
 
 .moon-hero-section {
-    height: 130vh;
+    height: 100vh;
     width: 100%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     position: relative;
     overflow: hidden;
+
+    @include media('>=md'){
+        height: 130vh;
+    }
 
     img {
         object-fit: cover;
@@ -68,12 +72,23 @@ export default {
 
     .headline-container {
         width: 100%;
-        margin-top: 6em;
+        margin-top: 10em;
         z-index: 1;
         .moon-headline {
             color: rgba(white, 0.95);
             max-width: 20ch;
         }
     }
+
+    //     .headline-container {
+    //     width: 100%;
+    //     margin-top: 6em;
+    //     z-index: 1;
+    //     .moon-headline {
+    //         color: rgba(white, 0.95);
+    //         max-width: 20ch;
+    //     }
+    // }
+
 }
 </style>

@@ -19,21 +19,32 @@
                 </div>
                 <div class="avatar_flex">
                     <span>{{ post.user.username }}</span>
-                    <img
+                    <img class="single-post-user-img"
+                        v-if="post.user.image_path"
                         :src="
-                            'https://api.ipito.surf/storage/images/' +
+                            'http://api.ipito.local/storage/images/' +
                                 post.user.image_path
                         "
                         alt="User Bild"
                         width="200"
                     />
+                    <div
+                        class="no-user-img-container"
+                        v-if="!post.user.image_path"
+                    >
+                        <img
+                            class="no-user-img"
+                            src="@/assets/images/icons/users.svg"
+                            alt="user image"
+                        />
+                    </div>
                 </div>
             </div>
             <div class="read-post-content">
                 <div class="post-img-container">
                     <img
                         :src="
-                            'https://api.ipito.surf/storage/images/' +
+                            'http://api.ipito.local/storage/images/' +
                                 post.image_path
                         "
                         alt="surfer"
@@ -80,7 +91,7 @@ export default {
         getPost() {
             axios
                 .get(
-                    "https://api.ipito.surf/api/posts/show/" +
+                    "http://api.ipito.local/api/posts/show/" +
                         this.$route.params.id
                 )
                 .then((res) => {
@@ -133,10 +144,10 @@ export default {
         justify-content: space-between;
         align-items: center;
 
-        .post-date{
+        .post-date {
             font-family: $headlineFont;
-            
-            @include media('>=sm'){
+
+            @include media(">=sm") {
                 font-size: 1.3em;
             }
         }
@@ -157,7 +168,7 @@ export default {
             align-items: center;
             justify-content: space-between;
 
-            img {
+            .single-post-user-img {
                 width: 3em;
                 height: 3em;
                 object-fit: cover;
@@ -167,6 +178,21 @@ export default {
             span {
                 color: $primaryColor;
                 font-weight: $textFontWeight;
+            }
+
+            .no-user-img-container {
+                width: 3em;
+                height: 3em;
+                background: $tertiaryColorLight;
+                border-radius: 100%;
+                display: grid;
+                place-items: center;
+                margin-left: 1em;
+                img {
+                    object-fit: contain;
+                    width: 1.5em;
+                    height: 1.5em;
+                }
             }
         }
     }
@@ -194,6 +220,7 @@ export default {
             box-shadow: $boxShadow;
 
             img {
+                display: flex;
                 width: 100%;
             }
         }

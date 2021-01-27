@@ -15,14 +15,16 @@
                     v-for="post in allPosts"
                     :key="post.id"
                 >
-                    <span class="post-spot">
-                        {{ post.spot.spot_title }}
-                    </span>
+                    <div class="post-head-flex">
+                        <span class="post-spot">
+                            {{ post.spot.spot_title }}
+                        </span>
+                    </div>
                     <div class="img_flex">
                         <div class="img_container">
                             <img
                                 :src="
-                                    'https://api.ipito.surf/storage/images/' +
+                                    'http://api.ipito.local/storage/images/' +
                                         post.image_path
                                 "
                                 alt="Surfer"
@@ -36,6 +38,9 @@
                     <div class="post-text">
                         <p>{{ post.content }}</p>
                     </div>
+                    <button class="delete-btn" @click="deletePost(post.id)">
+                        Delete <i class="far fa-trash-alt"></i>
+                    </button>
                 </div>
             </div>
         </transition>
@@ -62,7 +67,7 @@ export default {
     methods: {
         getAllPosts() {
             axios
-                .get("https://api.ipito.surf/api/userposts/index", {
+                .get("http://api.ipito.local/api/userposts/index", {
                     headers: {
                         Accept: "application/json",
                         "Content-Type": "multipart/form-data",
@@ -75,9 +80,24 @@ export default {
                     this.loading = false;
                     this.gotPosts = true;
                 })
-                .catch(()=> {
+                .catch(() => {
                     this.gotPosts = false;
+                });
+        },
+        deletePost(id) {
+            axios
+                .delete(`http://api.ipito.local/api/posts/delete/${id}`)
+                .then((res) => {
+                    console.log(res);
+                    this.deleteBox = true;
+                    this.allPosts = res.data;
+                    setTimeout(() => {
+                        this.deleteBox = false;
+                    }, 6000);
                 })
+                .catch(() => {
+                    console.log("no data");
+                });
         },
     },
     created() {
@@ -98,7 +118,7 @@ export default {
     box-shadow: $boxShadow;
     background: white;
 
-    .loading-container{
+    .loading-container {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -110,11 +130,9 @@ export default {
         justify-content: center;
         flex-wrap: wrap;
         gap: 4em;
-        @include media('>=sm'){
+        @include media(">=sm") {
             gap: 5em;
         }
-
-
 
         .single-post-container {
             padding: 2em;
@@ -127,10 +145,31 @@ export default {
             flex-direction: column;
             gap: 1em;
 
-            .post-spot{
-                font-family: $headlineFont;
-                text-transform: uppercase;
-                font-weight: $headlineFontWeightBlack;
+            .delete-btn {
+                border: none;
+                background: $secondaryColor;
+                border-radius: $borderRadius;
+                box-shadow: $boxShadow;
+                padding: 0.8em;
+                width: 100%;
+                cursor: pointer;
+                outline: none;
+                transition: all 0.5s;
+                font-size: 1em;
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+
+            .post-head-flex {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .post-spot {
+                    font-family: $headlineFont;
+                    text-transform: uppercase;
+                    font-weight: $headlineFontWeightBlack;
+                }
             }
 
             .img_flex {

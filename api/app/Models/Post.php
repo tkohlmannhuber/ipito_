@@ -20,7 +20,7 @@ class Post extends Model
     }
 
     protected $fillable = [
-        'title', 'spot_id', 'user_id',
+        'title', 'spot_id', 'user_id','like_count'
 
     ];
 

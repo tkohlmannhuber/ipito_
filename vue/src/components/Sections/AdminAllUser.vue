@@ -64,7 +64,7 @@ export default {
     methods: {
         getAllUser() {
             axios
-                .get("https://api.ipito.surf/api/user/index", {
+                .get("http://api.ipito.local/api/user/index", {
                     headers: {
                         Accept: "application/json",
                         "Content-Type": "multipart/form-data",
@@ -84,7 +84,7 @@ export default {
         },
         deleteUser(id) {
             axios
-                .delete(`https://api.ipito.surf/api/user/${id}`)
+                .delete(`http://api.ipito.local/api/user/${id}`)
                 .then((res) => {
                     console.log(res);
                     this.deleteBox = true;

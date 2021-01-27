@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddUserImagePathTable extends Migration
+class AddLikeCountTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddUserImagePathTable extends Migration
      */
     public function up()
     {
-        Schema::table('user', function (Blueprint $table) {
-            $table->string('user_image_path')->nullable();
+        Schema::table('posts', function (Blueprint $table) {
+            $table->unsignedBigInteger('like_count')->default(0);
         });
     }
 
@@ -25,7 +25,7 @@ class AddUserImagePathTable extends Migration
      */
     public function down()
     {
-        Schema::table('user', function (Blueprint $table) {
+        Schema::table('posts', function (Blueprint $table) {
             //
         });
     }
