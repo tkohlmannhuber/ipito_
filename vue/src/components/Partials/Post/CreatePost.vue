@@ -10,20 +10,21 @@
             class="create-post-container"
             enctype="multipart/form-data"
         >
-            <div class="drop-zone">
+            <label for="img-upload" class="drop-zone">
                 <div class="drop-zone-text-container">
                     <img
                         src="@/assets/images/icons/upload_icon.svg"
                         alt="Drag and Drop Icon"
                     />
                     <input
+                        id="img-upload"
                         class="file-input"
                         type="file"
                         @change="onImageSelected"
                     />
-                    <span class="drop-zone-text">Drag and Drop A Pic</span>
+                    <span class="drop-zone-text">Click and select a pic</span>
                 </div>
-            </div>
+            </label>
 
             <h2>Create <span class="red">A</span> Post</h2>
 
@@ -183,9 +184,11 @@ export default {
         border: 4px dashed $tertiaryColor;
         border-radius: $borderRadius;
         position: relative;
+        cursor: pointer;
 
         .file-input {
-            z-index: 1;
+            z-index: -1;
+            opacity: 0;
         }
 
         &::after {
@@ -201,7 +204,7 @@ export default {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1em;
+            gap: 0em;
 
             img {
                 width: 3em;

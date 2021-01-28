@@ -10,7 +10,7 @@
         <div v-if="allUsers.length < 1 && gotUsers" class="user-post-error">
             <h3>Somthing went wrong or there no Users right now!</h3>
         </div>
-        <div class="user-container" v-if="gotUsers" >
+        <div class="user-container" v-if="gotUsers">
             <div class="single-user-label">
                 <h4>Em<span class="red">a</span>il:</h4>
                 <h4>U<span class="red">s</span>ername:</h4>
@@ -32,7 +32,9 @@
             </div>
             <transition name="fade">
                 <div v-if="deleteBox" class="delete-box">
-                    <h3>User sucessfully deleted!</h3>
+                    <h3>
+                        user deleted successfully!
+                    </h3>
                 </div>
             </transition>
         </div>

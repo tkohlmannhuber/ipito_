@@ -85,6 +85,11 @@ button{
     font-size: $textFontSize;
     font-family: $textFont;
     font-weight: $textFontWeight;
+    outline: none;
+    &:active{
+        outline: none;
+    }
+
 }
 
 ol,

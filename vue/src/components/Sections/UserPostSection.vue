@@ -9,6 +9,13 @@
             <h3>Somthing went wrong or there no Posts right now!</h3>
         </div>
         <transition name="fade">
+            <div v-if="deleteBox" class="delete-box">
+                <h3>
+                    Post deleted successfully!
+                </h3>
+            </div>
+        </transition>
+        <transition name="fade">
             <div class="post-container">
                 <div
                     class="single-post-container"
@@ -61,6 +68,7 @@ export default {
             allPosts: "",
             loading: true,
             gotPosts: false,
+            deleteBox: false,
         };
     },
 
@@ -88,9 +96,10 @@ export default {
             axios
                 .delete(`http://api.ipito.local/api/posts/delete/${id}`)
                 .then((res) => {
-                    console.log(res);
+                    console.log("Post deleted");
                     this.deleteBox = true;
                     this.allPosts = res.data;
+
                     setTimeout(() => {
                         this.deleteBox = false;
                     }, 6000);
@@ -117,6 +126,7 @@ export default {
     border-radius: $borderRadius;
     box-shadow: $boxShadow;
     background: white;
+    position: relative;
 
     .loading-container {
         display: flex;
@@ -191,14 +201,26 @@ export default {
             }
         }
     }
+    .delete-box {
+        display: grid;
+        place-items: center;
+        position: fixed;
+        z-index: 1;
+        right: 2em;
+        background: $tertiaryColor;
+        padding: 1em;
+        border-radius: $borderRadius;
+        box-shadow: $boxShadow;
+    }
 }
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.5s;
+    transition: all 0.5s;
 }
 .fade-enter,
 .fade-leave-to {
     opacity: 0;
+    transform: translateX(2em);
 }
 </style>

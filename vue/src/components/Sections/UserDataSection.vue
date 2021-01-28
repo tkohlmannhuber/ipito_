@@ -24,16 +24,6 @@
                 <img src="../../assets/images/icons/pen.svg" alt="edit image" />
                 <span>Edit</span>
             </button>
-            <button
-                class="btn user-data-delete-btn"
-                v-if="userData.is_admin !== 1"
-            >
-                <img
-                    src="../../assets/images/icons/delete.svg"
-                    alt="delete image"
-                />
-                <span>Delete</span>
-            </button>
         </div>
     </div>
 </template>
@@ -115,6 +105,10 @@ export default {
 
     .user-data-edit-btn {
         background: $tertiaryColor;
+        transition: all .5s;
+        &:hover{
+            transform: scale(1.1);
+        }
     }
     .user-data-delete-btn {
         background: $secondaryColor;

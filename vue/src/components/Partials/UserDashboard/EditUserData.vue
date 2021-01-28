@@ -86,7 +86,7 @@
                 />
             </div>
 
-            <button class="btn" type="submit" @click.prevent="editUser()">
+            <button class="submit-btn" type="submit" @click.prevent="editUser()">
                 <img
                     src="@/assets/images/icons/submit_icon.svg"
                     alt="paper plane"
@@ -192,7 +192,7 @@ export default {
         font-size: $h4FontSize;
     }
 
-    .btn {
+    .submit-btn {
         display: flex;
         gap: 1em;
         padding: 0.6em 1.5em;
@@ -202,9 +202,13 @@ export default {
         cursor: pointer;
         background: $tertiaryColor;
         color: $primaryColor;
+        transition: all .5s;
 
         img {
             width: 1em;
+        }
+        &:hover{
+            transform: scale(1.1);
         }
     }
 

@@ -16,10 +16,18 @@ class PostController extends Controller
      */
     public function index()
     {
-        $AllPosts = Post::with('User','Spot')->get();
+        $AllPosts = Post::with('User','Spot')->orderBy('like_count', 'desc')->get();
 
         return response()->json($AllPosts);
     }
+
+    public function spotIndex($id)
+    {
+        $AllPosts = Post::with('User','Spot')->where('spot_id', '=', $id) ->orderBy('like_count', 'desc')->get();
+
+        return response()->json($AllPosts);
+    }
+
 
 
     /**
@@ -100,7 +108,7 @@ class PostController extends Controller
         $Post->delete();
 
         // Nun geben wir alle Posts ohne diesen Post zurück
-        $AllPosts = Post::all();
+        $AllPosts = Post::with('User','Spot')->get();
         return response()->json($AllPosts);
     }
 

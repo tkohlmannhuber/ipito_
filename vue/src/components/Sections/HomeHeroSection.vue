@@ -84,7 +84,7 @@ export default {
             overflow: hidden;
 
             @include media(">=md") {
-                transform: translate(53em, -5em);
+                transform: translate(56em, 3em);
             }
             @include media(">max-width") {
                 transform: translate(90em, 15em);

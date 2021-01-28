@@ -4,7 +4,14 @@
             <span>Loading!</span>
             <Loader />
         </div>
-        <VueSlickCarousel v-bind="settings" ref="carousel" v-if="gotPosts">
+        <div v-if="noPosts" class="no-posts-container">
+            <h2>There are currently no posts created!</h2>
+        </div>
+        <VueSlickCarousel
+            v-bind="settings"
+            ref="carousel"
+            v-if="gotPosts && !noPosts"
+        >
             <div
                 v-for="post in posts"
                 :key="post.id"
@@ -78,7 +85,7 @@
                 </div>
             </div>
         </VueSlickCarousel>
-        <div class="slider_controll_container" v-if="gotPosts">
+        <div class="slider_controll_container" v-if="gotPosts && !noPosts">
             <SliderBtnPrev @click.native="showPrev" class="slider-btn" />
             <span class="slider-text">next</span>
             <SliderBtnNext @click.native="showNext" class="slider-btn" />
@@ -112,6 +119,7 @@ export default {
             posts: [],
             gotPosts: false,
             isLoading: true,
+            noPosts: null,
 
             settings: {
                 slidesToShow: 4,
@@ -158,33 +166,47 @@ export default {
             this.currentRoute = currentRoute;
         },
 
-        getHomeRoute(homeRoute) {
-            this.homeRoute = homeRoute;
-        },
-
         getAllPosts() {
-            axios.get("http://api.ipito.local/api/posts/index").then((res) => {
-                this.posts = res.data;
-                this.gotPosts = true;
-                this.isLoading = false;
-            });
+            if (this.$route.fullPath === "/") {
+                axios
+                    .get("http://api.ipito.local/api/posts/index/")
+                    .then((res) => {
+                        if (res.data.length < 1) {
+                            this.noPosts = true;
+                        }
+                        this.posts = res.data;
+                        this.gotPosts = true;
+                        this.isLoading = false;
+                    });
+            } else {
+                axios
+                    .get(
+                        "http://api.ipito.local/api/posts/spotIndex/" +
+                            this.currentRoute
+                    )
+                    .then((res) => {
+                        if (res.data.length < 1) {
+                            this.noPosts = true;
+                        }
+                        this.posts = res.data;
+                        this.gotPosts = true;
+                        this.isLoading = false;
+                    });
+            }
         },
 
         likePost(id) {
-            axios.post(`http://api.ipito.local/api/posts/like/${id}`).then((res) => {
-                this.posts = res.data;
-            })
-            .catch(() => {
-                console.log('no like')
-            });
+            axios
+                .post(`http://api.ipito.local/api/posts/like/${id}`)
+                .then((res) => {
+                    this.posts = res.data;
+                })
+                .catch(() => {});
         },
     },
 
     mounted() {
         this.currentRoute = this.$route.params.id;
-    },
-    created() {
-        this.homeRoute = this.$route;
         this.getAllPosts();
     },
 };
@@ -207,6 +229,16 @@ export default {
         font-weight: $headlineFontWeightBlack;
         text-transform: uppercase;
     }
+}
+
+.no-posts-container {
+    padding: 2em;
+    background: $tertiaryColorLight;
+    border-radius: $borderRadius;
+    display: grid;
+    place-items: center;
+    box-shadow: $boxShadow;
+    margin: 4em;
 }
 
 .slider_controll_container {

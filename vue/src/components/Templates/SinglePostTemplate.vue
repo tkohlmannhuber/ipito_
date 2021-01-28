@@ -4,65 +4,70 @@
             <h1>Loading!</h1>
             <Loader />
         </div>
-        <div class="read-post-container" v-if="!isLoading">
-            <div class="post_top_flex">
-                <div class="like_flex">
-                    <img
-                        src="@/assets/images/icons/shaka.svg"
-                        alt="Shaka hand"
-                        width="100"
-                    />
-                    <span></span>
-                </div>
-                <div>
-                    <p class="post-date">{{ post.created_at | formatDate }}</p>
-                </div>
-                <div class="avatar_flex">
-                    <span>{{ post.user.username }}</span>
-                    <img class="single-post-user-img"
-                        v-if="post.user.image_path"
-                        :src="
-                            'http://api.ipito.local/storage/images/' +
-                                post.user.image_path
-                        "
-                        alt="User Bild"
-                        width="200"
-                    />
-                    <div
-                        class="no-user-img-container"
-                        v-if="!post.user.image_path"
-                    >
+        <transition name="post">
+            <div class="read-post-container" v-if="!isLoading">
+                <div class="post_top_flex">
+                    <div class="like_flex">
                         <img
-                            class="no-user-img"
-                            src="@/assets/images/icons/users.svg"
-                            alt="user image"
+                            src="@/assets/images/icons/shaka.svg"
+                            alt="Shaka hand"
+                            width="100"
                         />
+                        <span></span>
+                    </div>
+                    <div>
+                        <p class="post-date">
+                            {{ post.created_at | formatDate }}
+                        </p>
+                    </div>
+                    <div class="avatar_flex">
+                        <span>{{ post.user.username }}</span>
+                        <img
+                            class="single-post-user-img"
+                            v-if="post.user.image_path"
+                            :src="
+                                'http://api.ipito.local/storage/images/' +
+                                    post.user.image_path
+                            "
+                            alt="User Bild"
+                            width="200"
+                        />
+                        <div
+                            class="no-user-img-container"
+                            v-if="!post.user.image_path"
+                        >
+                            <img
+                                class="no-user-img"
+                                src="@/assets/images/icons/users.svg"
+                                alt="user image"
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="read-post-content">
-                <div class="post-img-container">
-                    <img
-                        :src="
-                            'http://api.ipito.local/storage/images/' +
-                                post.image_path
-                        "
-                        alt="surfer"
-                        width="100"
-                    />
+                <div class="read-post-content">
+                    <div class="post-img-container">
+                        <img
+                            :src="
+                                'http://api.ipito.local/storage/images/' +
+                                    post.image_path
+                            "
+                            alt="surfer"
+                            width="100"
+                        />
+                    </div>
+                    <div class="text-container">
+                        <h3>{{ post.title }}</h3>
+                        <h4>{{ post.spot.spot_title }}</h4>
+                        <p>
+                            {{ post.content }}
+                        </p>
+                    </div>
                 </div>
-                <div class="text-container">
-                    <h3>{{ post.title }}</h3>
-                    <h4>{{ post.spot.spot_title }}</h4>
-                    <p>
-                        {{ post.content }}
-                    </p>
+                <div class="back-btn-flex">
+                    <button class="back-btn" @click="goBack()">Back</button>
                 </div>
             </div>
-            <div class="back-btn-flex">
-                <button class="back-btn" @click="goBack()">Back</button>
-            </div>
-        </div>
+        </transition>
     </div>
 </template>
 
@@ -269,5 +274,15 @@ export default {
             }
         }
     }
+}
+
+.post-enter,
+.post-leave-to {
+    opacity: 0;
+}
+
+.post-enter-active,
+.post-leave-active {
+    transition: all 0.5s ease;
 }
 </style>
