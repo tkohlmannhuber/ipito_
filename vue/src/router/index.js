@@ -9,6 +9,8 @@ import NotFound from "../views/NotFound.vue";
 import SinglePost from "../views/SinglePost.vue";
 import AdminDashboard from "../views/AdminDashboard.vue";
 import UserDashboard from "../views/UserDashboard.vue";
+import TermsOfCondition from "../views/TermsOfCondition.vue";
+import PrivacyPolicy from "../views/PrivacyPolicy.vue";
 
 Vue.use(VueRouter)
 
@@ -67,6 +69,16 @@ const routes = [
     path: "/post/:id",
     name: "SinglePost",
     component: SinglePost,
+  },
+  {
+    path: "/terms",
+    name: "TermsOfCondition",
+    component: TermsOfCondition,
+  },
+  {
+    path: "/privacy",
+    name: "PrivacyPolicy",
+    component: PrivacyPolicy,
   },
 
 

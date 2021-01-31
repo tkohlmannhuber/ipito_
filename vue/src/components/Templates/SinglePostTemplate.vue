@@ -26,7 +26,7 @@
                             class="single-post-user-img"
                             v-if="post.user.image_path"
                             :src="
-                                'http://api.ipito.local/storage/images/' +
+                                'https://api.ipito.surf/storage/images/' +
                                     post.user.image_path
                             "
                             alt="User Bild"
@@ -48,7 +48,7 @@
                     <div class="post-img-container">
                         <img
                             :src="
-                                'http://api.ipito.local/storage/images/' +
+                                'https://api.ipito.surf/storage/images/' +
                                     post.image_path
                             "
                             alt="surfer"
@@ -96,12 +96,11 @@ export default {
         getPost() {
             axios
                 .get(
-                    "http://api.ipito.local/api/posts/show/" +
+                    "https://api.ipito.surf/api/posts/show/" +
                         this.$route.params.id
                 )
                 .then((res) => {
                     this.post = res.data;
-                    console.log(this.post);
                     this.isLoading = false;
                 });
         },

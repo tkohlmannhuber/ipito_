@@ -1,6 +1,6 @@
 <template>
   <section class="spot-post-container">
-    <Headline2 :title="this.$route.params.title"/>
+    <Headline2 :title="headlineText.text + ' ' + this.$route.params.title"/>
     <PostList />
     
   </section>

@@ -52,7 +52,6 @@ export default {
     },
     created(){
         this.getRoute();
-        console.log(this.$route.path);
     }
 };
 </script>

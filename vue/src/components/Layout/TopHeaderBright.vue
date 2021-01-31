@@ -1,7 +1,7 @@
 <template>
-    <div :class="{ sticky: scrollPosition > 0 , stickyDark: isMoon && scrollPosition > 0}">
+    <header :class="{ sticky: scrollPosition > 0 , stickyDark: isMoon && scrollPosition > 0}">
         <Navbar />
-    </div>
+    </header>
 </template>
 
 <script>
@@ -46,7 +46,7 @@ export default {
 @import "@/assets/styles/app.scss";
 @import "@/assets/styles/mediaQueries.scss";
 
-div {
+header {
     position: fixed;
     z-index: 100;
 

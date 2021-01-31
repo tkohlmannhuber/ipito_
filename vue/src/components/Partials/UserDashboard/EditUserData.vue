@@ -19,7 +19,7 @@
                     v-if="userData.image_path != null"
                     class="user-image"
                     :src="
-                        'http://api.ipito.local/storage/images/' +
+                        'https://api.ipito.surf/storage/images/' +
                             userData.image_path
                     "
                     alt="user image"
@@ -102,7 +102,6 @@
 
 <script>
 import userDataService from "@/services/userDataService";
-// import axiosClient from "@/services/axiosClient";
 import axios from "axios";
 
 export default {
@@ -140,15 +139,8 @@ export default {
             formData.append("image_path", this.newUserData.image_path);
             formData.append("_method", "PUT");
 
-            console.log(this.newUserData);
-
-            // axiosClient()
-            //     .post(url, formData)
-            //     .then(() => {
-            //         console.log("user updated");
-            //     });
             axios
-                .post("http://api.ipito.local/api/user/", formData, {
+                .post("https://api.ipito.surf/api/user", formData, {
                     headers: {
                         Accept: "application/json",
                         "Content-Type": "multipart/form-data",

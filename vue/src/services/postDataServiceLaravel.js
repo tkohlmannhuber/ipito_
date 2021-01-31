@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const laravelUrl = "http://api.ipito.local/api";
+const laravelUrl = "https://api.ipito.surf/api";
 
 const postDataService = {
   /**
@@ -23,7 +23,6 @@ const postDataService = {
 
     // da wir hier nun einen Request an eine api machen, verwenden wir "axios" um die Daten zu holen
     return axios.post(requestUrl, postData).then((res) => {
-      console.log(res);
       // wir bekommen hier von axios ein Objekt mit allen möglichen Infos zum Request + den Daten unter "data" zurück. Da uns nur die Daten interessieren, geben wir nur diese weiter.
       return res.data;
     });

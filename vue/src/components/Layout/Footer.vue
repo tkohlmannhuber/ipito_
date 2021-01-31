@@ -5,9 +5,8 @@
         </video>
         <div class="footer-text-flex footer-wrapper">
             <div class="dia-flex">
-                <a href="#">Datenschutz</a>
-                <a href="#">Impressum</a>
-                <a href="#">Agbs</a>
+                <router-link :to="{name: 'TermsOfCondition' }" >Terms Of Condition</router-link>
+                <router-link :to="{name: 'PrivacyPolicy' }" >Privacy Policy</router-link>
             </div>
             <div>IP<span class="red">I</span>TO 2021</div>
         </div>
@@ -95,13 +94,11 @@ footer {
                     visibility: hidden;
                     transform: scaleX(0);
                     transition: all 0.3s ease-in-out 0s;
-
-                   
                 }
-                 &:hover::before {
-                        visibility: visible;
-                        transform: scaleX(1);
-                    }
+                &:hover::before {
+                    visibility: visible;
+                    transform: scaleX(1);
+                }
             }
         }
     }

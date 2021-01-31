@@ -9,7 +9,7 @@
                 <img
                     class="user-image"
                     :src="
-                        'http://api.ipito.local/storage/images/' +
+                        'https://api.ipito.surf/storage/images/' +
                             userData.image_path
                     "
                     alt="user image"

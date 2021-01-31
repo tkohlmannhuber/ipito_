@@ -31,7 +31,7 @@
                         <div class="img_container">
                             <img
                                 :src="
-                                    'http://api.ipito.local/storage/images/' +
+                                    'https://api.ipito.surf/storage/images/' +
                                         post.image_path
                                 "
                                 alt="Surfer"
@@ -75,7 +75,7 @@ export default {
     methods: {
         getAllPosts() {
             axios
-                .get("http://api.ipito.local/api/userposts/index", {
+                .get("https://api.ipito.surf/api/userposts/index", {
                     headers: {
                         Accept: "application/json",
                         "Content-Type": "multipart/form-data",
@@ -94,9 +94,8 @@ export default {
         },
         deletePost(id) {
             axios
-                .delete(`http://api.ipito.local/api/posts/delete/${id}`)
+                .delete(`https://api.ipito.surf/api/posts/delete/${id}`)
                 .then((res) => {
-                    console.log("Post deleted");
                     this.deleteBox = true;
                     this.allPosts = res.data;
 
@@ -104,9 +103,6 @@ export default {
                         this.deleteBox = false;
                     }, 6000);
                 })
-                .catch(() => {
-                    console.log("no data");
-                });
         },
     },
     created() {

@@ -35,7 +35,7 @@
                                 class="user-img"
                                 v-if="post.user.image_path"
                                 :src="
-                                    'http://api.ipito.local/storage/images/' +
+                                    'https://api.ipito.surf/storage/images/' +
                                         post.user.image_path
                                 "
                                 alt="User Bild"
@@ -58,7 +58,7 @@
                             <img
                                 v-if="post.image_path"
                                 :src="
-                                    'http://api.ipito.local/storage/images/' +
+                                    'https://api.ipito.surf/storage/images/' +
                                         post.image_path
                                 "
                                 alt="Surfer"
@@ -169,7 +169,9 @@ export default {
         getAllPosts() {
             if (this.$route.fullPath === "/") {
                 axios
-                    .get("http://api.ipito.local/api/posts/index/")
+                    .get("https://api.ipito.surf/api/posts/index",{
+                        
+                    })
                     .then((res) => {
                         if (res.data.length < 1) {
                             this.noPosts = true;
@@ -181,7 +183,7 @@ export default {
             } else {
                 axios
                     .get(
-                        "http://api.ipito.local/api/posts/spotIndex/" +
+                        "https://api.ipito.surf/api/posts/spotIndex/" +
                             this.currentRoute
                     )
                     .then((res) => {
@@ -197,7 +199,7 @@ export default {
 
         likePost(id) {
             axios
-                .post(`http://api.ipito.local/api/posts/like/${id}`)
+                .post(`https://api.ipito.surf/api/posts/like/${id}`)
                 .then((res) => {
                     this.posts = res.data;
                 })

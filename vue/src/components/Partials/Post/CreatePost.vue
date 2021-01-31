@@ -116,9 +116,8 @@ export default {
             this.loader = true;
             this.showSubmit = false;
             axios
-                .post("http://api.ipito.local/api/posts/store",formData)
-                .then((response) => {
-                    console.log(response);
+                .post("https://api.ipito.surf/api/posts/store",formData)
+                .then(() => {
                     this.loader = false;
                     this.showSubmit = true;
                     this.createSuccess = true;

@@ -155,14 +155,10 @@ export default {
         });
 
         axios
-            .get("http://api.ipito.local/api/countries")
+            .get("https://api.ipito.surf/api/countries")
             .then((res) => {
                 this.countries = res.data;
-                console.log(this.countries);
             })
-            .catch(() => {
-                console.log("no data");
-            });
     },
 };
 </script>

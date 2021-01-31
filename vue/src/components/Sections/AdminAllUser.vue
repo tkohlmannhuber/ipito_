@@ -66,7 +66,7 @@ export default {
     methods: {
         getAllUser() {
             axios
-                .get("http://api.ipito.local/api/user/index", {
+                .get("https://api.ipito.surf/api/user/index", {
                     headers: {
                         Accept: "application/json",
                         "Content-Type": "multipart/form-data",
@@ -78,7 +78,6 @@ export default {
                     this.allUsers = res.data;
                     this.loading = false;
                     this.gotUsers = true;
-                    console.log(this.allUsers);
                 })
                 .catch(() => {
                     this.gotUsers = false;
@@ -86,18 +85,14 @@ export default {
         },
         deleteUser(id) {
             axios
-                .delete(`http://api.ipito.local/api/user/${id}`)
+                .delete(`https://api.ipito.surf/api/user/${id}`)
                 .then((res) => {
-                    console.log(res);
                     this.deleteBox = true;
                     this.allUsers = res.data;
                     setTimeout(() => {
                         this.deleteBox = false;
                     }, 6000);
                 })
-                .catch(() => {
-                    console.log("no data");
-                });
         },
     },
 
