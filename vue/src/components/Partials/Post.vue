@@ -65,13 +65,6 @@
                                 width="200"
                             />
                         </div>
-                        <button class="like_btn" @click="likePost(post.id)">
-                            <img
-                                src="@/assets/images/icons/shaka.svg"
-                                alt="shaka hand"
-                                width="100"
-                            />
-                        </button>
                         <span class="post_spot">
                             {{ post.spot.spot_title }}
                         </span>
@@ -197,14 +190,6 @@ export default {
             }
         },
 
-        likePost(id) {
-            axios
-                .post(`https://api.ipito.surf/api/posts/like/${id}`)
-                .then((res) => {
-                    this.posts = res.data;
-                })
-                .catch(() => {});
-        },
     },
 
     mounted() {

@@ -2,9 +2,8 @@
     <footer>
         <div class="footer-text-flex footer-wrapper">
             <div class="dia-flex">
-                <a href="#">Daten<span class="red">s</span>chutz</a>
-                <a href="#">Im<span class="red">p</span>ressum</a>
-                <a href="#">A<span class="red">g</span>bs</a>
+                <router-link :to="{name: 'TermsOfCondition' }" >Terms <spa class="red">of</spa> Condition</router-link>
+                <router-link :to="{name: 'PrivacyPolicy' }" >Privacy <span class="red">P</span>olicy</router-link>
             </div>
             <div>IPITO 20<span class="red">21</span></div>
         </div>

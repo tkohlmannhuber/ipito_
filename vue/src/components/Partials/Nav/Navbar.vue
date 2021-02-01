@@ -8,9 +8,9 @@
 
         <div class="btn-flex">
             <transition name="fade">
-                <span>{{navText}}</span>
+                <span :class="{ white: isMoon }">{{navText}}</span>
             </transition>
-            <button
+            <button aria-label="Menu Button"
                 :class="{ close_btn: !showNav }"
                 @click="toggleNav()"
             ></button>
@@ -33,7 +33,8 @@ export default {
     data: () => {
         return {
             showNav: true,
-            navText: 'Menu'
+            navText: 'Menu',
+            isMoon: false,
         };
     },
 
@@ -52,7 +53,15 @@ export default {
             } else {
                 this.navText = 'Close'
             }
-    }
+    },
+    watch: {
+        $route() {
+            if (this.$route.path === "/moon") {
+                this.isMoon = true;
+            } 
+        },
+    },
+
 };
 </script>
 
@@ -71,6 +80,10 @@ nav {
 }
 .open {
     transform: translateX(100%);
+}
+
+.white{
+    color: white;
 }
 
 .btn-flex {

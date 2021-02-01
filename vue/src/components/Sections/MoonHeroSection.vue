@@ -80,15 +80,6 @@ export default {
         }
     }
 
-    //     .headline-container {
-    //     width: 100%;
-    //     margin-top: 6em;
-    //     z-index: 1;
-    //     .moon-headline {
-    //         color: rgba(white, 0.95);
-    //         max-width: 20ch;
-    //     }
-    // }
 
 }
 </style>

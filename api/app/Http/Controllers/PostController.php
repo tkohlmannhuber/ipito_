@@ -16,14 +16,14 @@ class PostController extends Controller
      */
     public function index()
     {
-        $AllPosts = Post::with('User','Spot')->orderBy('like_count', 'desc')->get();
+        $AllPosts = Post::with('User', 'Spot')->orderBy('like_count', 'desc')->get();
 
         return response()->json($AllPosts);
     }
 
     public function spotIndex($id)
     {
-        $AllPosts = Post::with('User','Spot')->where('spot_id', '=', $id) ->orderBy('like_count', 'desc')->get();
+        $AllPosts = Post::with('User', 'Spot')->where('spot_id', '=', $id)->orderBy('like_count', 'desc')->get();
 
         return response()->json($AllPosts);
     }
@@ -63,7 +63,6 @@ class PostController extends Controller
         $AllPosts = Post::all();
 
         return response()->json($AllPosts);
-
     }
 
     /**
@@ -74,7 +73,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $Post = Post::where('id',$id)->with('User','Spot')->first();       //toSql();
+        $Post = Post::where('id', $id)->with('User', 'Spot')->first();       //toSql();
 
         return response()->json($Post);
     }
@@ -114,7 +113,7 @@ class PostController extends Controller
         $Post->delete();
 
         // Nun geben wir alle Posts ohne diesen Post zurück
-        $AllPosts = Post::with('User','Spot')->get();
+        $AllPosts = Post::with('User', 'Spot')->get();
         return response()->json($AllPosts);
     }
 
@@ -124,13 +123,10 @@ class PostController extends Controller
 
         $Post = Post::findOrFail($id);
         $Value = $Post->like_count;
-        $Post->like_count = $Value+1;
+        $Post->like_count = $Value + 1;
         $Post->save();
 
-        $AllPosts = Post::with('User','Spot')->get();
-
-        return response()->json($AllPosts);
-
-
+        $Post = Post::where('id', $id)->with('User', 'Spot')->first();       //toSql();
+        return response()->json($Post);
     }
 }

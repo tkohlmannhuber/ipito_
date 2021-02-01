@@ -13,7 +13,7 @@
                             alt="Shaka hand"
                             width="100"
                         />
-                        <span></span>
+                        <span class="like-count">{{ post.like_count }}</span>
                     </div>
                     <div>
                         <p class="post-date">
@@ -63,7 +63,16 @@
                         </p>
                     </div>
                 </div>
-                <div class="back-btn-flex">
+                <div class="btn-flex">
+                    <button class="like-btn-container" @click="likePost(post.id)">
+                        <img
+                            class="shaka"
+                            src="@/assets/images/icons/shaka.svg"
+                            alt="Shaka hand"
+                            width="100"
+                        />
+                        <span>Yeah I like!</span> 
+                    </button>
                     <button class="back-btn" @click="goBack()">Back</button>
                 </div>
             </div>
@@ -106,6 +115,14 @@ export default {
         },
         goBack() {
             window.history.back();
+        },
+        likePost(id) {
+            axios
+                .post(`https://api.ipito.surf/api/posts/like/${id}`)
+                .then((res) => {
+                    this.post = res.data;
+                })
+                .catch(() => {});
         },
     },
     created() {
@@ -164,6 +181,10 @@ export default {
                 width: 2.5em;
                 transform: rotate(45deg);
                 margin-right: 0.5em;
+            }
+
+            .like-count{
+                font-weight: $textFontWeight;
             }
         }
 
@@ -239,37 +260,48 @@ export default {
             }
         }
     }
-    .back-btn-flex {
+    .btn-flex {
         display: flex;
-        justify-content: flex-end;
-        margin-right: 3em;
-        &:hover {
-            .back-btn {
-                &::after {
-                    transform: translateX(1em);
-                }
+        justify-content: space-between;
+        align-items: center;
+
+        .like-btn-container {
+            display: flex;
+            align-items: center;
+            box-shadow: $boxShadow;
+            background: $tertiaryColor;
+            border-radius: $borderRadius;
+            padding: 0.5em 1em;
+            cursor: pointer;
+            font-weight: $textFontWeight;
+            border: none;
+            gap: 1em;
+            transition: all 0.5s;
+
+            img {
+                width: 2em;
+                transform: rotate(45deg);
+            }
+
+            &:hover {
+                transform: scale(1.1);
             }
         }
         .back-btn {
             border: none;
             background: none;
             position: relative;
+            font-size: 1.2em;
             color: $textColor;
             cursor: pointer;
             outline: none;
             font-family: $headlineFont;
             text-transform: uppercase;
+            transition: all .5s;
 
-            &::after {
-                content: "";
-                position: absolute;
-                background-image: url("../../assets/images/arrow_next.svg");
-                background-repeat: no-repeat;
-                width: 3em;
-                height: 100%;
-                top: 0.2em;
-                transform: translateX(0.5em);
-                transition: all 0.5s;
+
+            &:hover {
+                transform: scale(1.1);
             }
         }
     }

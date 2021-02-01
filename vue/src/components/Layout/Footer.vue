@@ -5,8 +5,8 @@
         </video>
         <div class="footer-text-flex footer-wrapper">
             <div class="dia-flex">
-                <router-link :to="{name: 'TermsOfCondition' }" >Terms Of Condition</router-link>
-                <router-link :to="{name: 'PrivacyPolicy' }" >Privacy Policy</router-link>
+                <router-link :to="{name: 'TermsOfCondition' }" >Terms <spa class="red">of</spa> Condition</router-link>
+                <router-link :to="{name: 'PrivacyPolicy' }" >Privacy <span class="red">P</span>olicy</router-link>
             </div>
             <div>IP<span class="red">I</span>TO 2021</div>
         </div>

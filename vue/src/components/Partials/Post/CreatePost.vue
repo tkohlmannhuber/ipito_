@@ -47,7 +47,7 @@
                     />
                 </div>
                 <div class="post-input-flex textarea-flex">
-                    <label for="postheadline">Text:</label>
+                    <label for="text">Text:</label>
                     <textarea
                         required
                         name="text"
