@@ -39,6 +39,12 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
+        $this->validate($request, [
+            'content' => 'required',
+            'title' => 'required',
+        ]);
+
+
         $Post = new Post();
         $Post->title = $request->get('title');
         $Post->spot_id = $request->get('spot_id');

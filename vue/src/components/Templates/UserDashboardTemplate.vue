@@ -15,8 +15,13 @@
                 />
             </div>
             <div class="user-img-constainer" v-if="userData.image_path == null">
-                <img v-if="userData.image_path == null" src="@/assets/images/icons/user.svg" alt="user image" />
-                <img v-if="userData.image_path != null"
+                <img
+                    v-if="userData.image_path == null"
+                    src="@/assets/images/icons/user.svg"
+                    alt="user image"
+                />
+                <img
+                    v-if="userData.image_path != null"
                     :src="
                         'https://api.ipito.surf/storage/images/' +
                             userData.image_path
@@ -25,8 +30,9 @@
                 />
             </div>
         </div>
-        <UserDataSection v-if="!showPosts" />
+        <UserDataSection v-if="showData" />
         <UserPostSection v-if="showPosts" />
+        <UserEditSection v-if="showEdit" />
     </div>
 </template>
 
@@ -34,22 +40,33 @@
 import userDataService from "@/services/userDataService";
 import UserDataSection from "../Sections/UserDataSection.vue";
 import UserPostSection from "../Sections/UserPostSection.vue";
+import UserEditSection from "../Sections/UserEditSection.vue";
 
 export default {
     name: "userdashboardtemplate",
-    components: { UserDataSection, UserPostSection },
+    components: { UserDataSection, UserPostSection, UserEditSection },
     data: () => {
         return {
             userData: "",
             showPosts: false,
+            showData: true,
+            showEdit: false,
         };
     },
     watch: {
         $route() {
             if (this.$route.path === "/account/posts") {
                 this.showPosts = true;
+                this.showEdit = false;
+                this.showData = false;
             } else if (this.$route.path === "/account/dashboard") {
+                this.showData = true;
+                this.showEdit = false;
                 this.showPosts = false;
+            } else if (this.$route.path === "/account/edit") {
+                this.showEdit = true;
+                this.showPosts = false;
+                this.showData = false;
             }
         },
     },

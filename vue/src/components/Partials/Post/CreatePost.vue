@@ -23,6 +23,10 @@
                         @change="onImageSelected"
                     />
                     <span class="drop-zone-text">Click and select a pic</span>
+                    <p v-if="newPost.image != null" class="selected-img-text">
+                        <span class="img-name">Selected Image: </span>
+                        {{ newPost.image.name }}
+                    </p>
                 </div>
             </label>
 
@@ -50,6 +54,9 @@
                     ></textarea>
                 </div>
                 <Loader v-if="loader" />
+                <p class="red" v-if="error">
+                    Something went wrong, please try again!
+                </p>
 
                 <button
                     type="submit"
@@ -94,6 +101,7 @@ export default {
             createSuccess: false,
 
             loader: false,
+            error: false,
         };
     },
     methods: {
@@ -116,15 +124,17 @@ export default {
             this.loader = true;
             this.showSubmit = false;
             axios
-                .post("https://api.ipito.surf/api/posts/store",formData)
+                .post("https://api.ipito.surf/api/posts/store", formData)
                 .then(() => {
                     this.loader = false;
                     this.showSubmit = true;
                     this.createSuccess = true;
+                    this.error = false;
                 })
                 .catch(() => {
                     this.loader = false;
                     this.showSubmit = true;
+                    this.error = true;
                 });
         },
     },
@@ -185,6 +195,10 @@ export default {
         position: relative;
         cursor: pointer;
 
+        &:hover{
+            border-style: solid;
+        }
+
         .file-input {
             z-index: -1;
             opacity: 0;
@@ -214,6 +228,7 @@ export default {
             }
         }
     }
+
     .post-input-container {
         display: flex;
         flex-direction: column;

@@ -1,51 +1,67 @@
 <template>
-    <div class="user-data-section-container">
+    <div class="user-data-container">
         <div class="loading-container" v-if="loading">
             <h3>Loading...</h3>
             <Loader />
         </div>
-
-        <div
-            v-if="isEditMode && !loading"
-            @click="isEditMode = false"
-            class="close-container"
-        >
-            <div class="close"></div>
+        <div class="data-container" v-if="!loading">
+            <div class="user-img-container" v-if="userData.image_path != null">
+                <img
+                    class="user-image"
+                    :src="
+                        'https://api.ipito.surf/storage/images/' +
+                            userData.image_path
+                    "
+                    alt="user image"
+                />
+            </div>
+            <div class="user-img-container" v-if="userData.image_path == null">
+                <img src="@/assets/images/icons/user.svg" alt="user image" />
+            </div>
+            <div class="user-data-flex">
+                <span class="user-data-key">Username:</span>
+                <span class="user-data-value">{{ userData.username }}</span>
+            </div>
+            <div class="user-data-flex">
+                <span class="user-data-key">Email:</span>
+                <span class="user-data-value">{{ userData.email }}</span>
+            </div>
+            <div class="user-data-flex">
+                <span class="user-data-key">Posts:</span>
+                <span class="user-data-value">20 Posts </span>
+            </div>
         </div>
-
-        <EditUserData v-if="isEditMode && !loading" />
-        <UserData v-if="!isEditMode && !loading" />
         <div class="user-data-btn-container" v-if="!loading">
-            <button
+            <!-- <button
                 class="btn user-data-edit-btn"
                 @click="isEditMode = true"
                 v-if="!isEditMode"
             >
                 <img src="../../assets/images/icons/pen.svg" alt="edit image" />
                 <span>Edit</span>
-            </button>
+            </button> -->
+            <router-link
+                :to="{ name: 'Account', params: { id: 'edit' } }"
+                class="user-data-edit-btn btn"
+            >
+                Edit
+            </router-link>
         </div>
     </div>
 </template>
 
 <script>
 import userDataService from "@/services/userDataService";
-import UserData from "../Partials/UserDashboard/UserData";
-import EditUserData from "../Partials/UserDashboard/EditUserData";
 import Loader from "../Partials/Loader";
-
 
 export default {
     name: "userdatasection",
     components: {
-        UserData,
-        EditUserData,
-        Loader
+        Loader,
     },
     data: () => {
         return {
             userData: "",
-            isEditMode: false,
             loading: true,
         };
     },
@@ -66,7 +82,7 @@ export default {
 @import "@/assets/styles/app.scss";
 @import "@/assets/styles/mediaQueries.scss";
 
-.user-data-section-container {
+.user-data-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -79,7 +95,56 @@ export default {
     gap: 3em;
     position: relative;
 
-    .loading-container{
+    .data-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 2em;
+        gap: 3em;
+        .user-img-container {
+            width: 7em;
+            height: 7em;
+            border-radius: 100%;
+            overflow: hidden;
+            background: $tertiaryColorLight;
+            display: grid;
+            place-items: center;
+            box-shadow: $boxShadow;
+
+            img {
+                object-fit: cover;
+                width: 3em;
+            }
+            .user-image {
+                object-fit: cover;
+                width: 100%;
+            }
+        }
+
+        .user-data-flex {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 4em;
+
+            .user-data-key {
+                font-family: $headlineFont;
+                text-transform: uppercase;
+                color: $headlineColor;
+                font-weight: $headlineFontWeightBlack;
+                font-size: $h3FontSize;
+            }
+
+            .user-data-value {
+                font-family: $textFont;
+                color: $headlineColor;
+                font-weight: $textFontWeight;
+                font-size: $h3FontSize;
+            }
+        }
+    }
+
+    .loading-container {
         padding: 2em;
         display: flex;
         flex-direction: column;
@@ -88,65 +153,18 @@ export default {
     .user-data-btn-container {
         display: flex;
         gap: 2em;
-        .btn {
-            display: flex;
-            gap: 1em;
-            padding: 0.6em 1.5em;
-            border-radius: $borderRadius;
-            border: none;
-            box-shadow: $boxShadow;
-            cursor: pointer;
-
-            img {
-                width: 1em;
-            }
-        }
     }
 
     .user-data-edit-btn {
         background: $tertiaryColor;
-        transition: all .5s;
-        &:hover{
-            transform: scale(1.1);
-        }
-    }
-    .user-data-delete-btn {
-        background: $secondaryColor;
-        color: white;
-    }
-    .close-container {
-        position: absolute;
-        background: $tertiaryColor;
-        width: 3em;
-        height: 3em;
-        display: grid;
-        place-items: center;
-        border-radius: 100%;
-        top: 0;
-        right: 0;
-        margin: 2em;
-        cursor: pointer;
-        &:hover {
-            .close {
-                transform: rotate(135deg);
-            }
-        }
-        .close {
-            position: relative;
-            height: 2px;
-            width: 1.5em;
-            background: $primaryColor;
-            transform: rotate(45deg);
-            transition: all 0.5s;
+        transition: all 0.5s;
+        padding: 0.6em 1.5em;
+        font-weight: $textFontWeight;
+        font-size: 1em;
+        border-radius: $borderRadius;
 
-            &::after {
-                content: "";
-                position: absolute;
-                height: 2px;
-                width: 1.5em;
-                background: $primaryColor;
-                transform: rotate(-90deg);
-            }
+        &:hover {
+            transform: scale(1.1);
         }
     }
 }
