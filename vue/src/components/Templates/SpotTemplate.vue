@@ -42,7 +42,7 @@ export default {
             spotCenterText: {
                 title: "Surf Capital of Portugal",
                 text:
-                    "Sand bottom jumbled shorebreak send it monsters. Wave kook in da wa spit Nat Young, hollow pose on the nose, sets keyhole big finner? Back dooring reef kook of the day pitter dredging, double-up longboard smooth quad fin the OB. Line-up grommet spit goin’ mad air section? ",
+                    "Ericeira is Portugal’s surfing capital and arguably one of Europe’s best surf town. In 2011, it was named as a World Surfing Reserve and it still is to this date, the only one in Europe out of a total of 9 reserves around the globe.",
             },
             impressionsText: {
                 title: "Spot Impressions!",

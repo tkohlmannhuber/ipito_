@@ -3,10 +3,8 @@
         <div class="content-wrapper">
             <Headline class="hero-head" title="yey dude, wanna surf" />
             <p>
-                Sand bottom jumbled shorebreak send it monsters. Wave kook in da
-                wa spit Nat Young, hollow pose on the nose, sets keyhole big
-                finner? Back dooring reef kook of the day pitter dredging,
-                double-up longboard smooth quad fin the OB.
+                Stay always up to date with Ipito, your favorite weather forecast application. Never Miss a wave again. Make your next surftrip unforgettable. 
+                
             </p>
         </div>
         <TeaserCard />

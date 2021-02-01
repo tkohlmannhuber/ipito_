@@ -13,19 +13,23 @@
             <label for="img-upload" class="drop-zone">
                 <div class="drop-zone-text-container">
                     <img
+                        v-if="!newPost.image"
                         src="@/assets/images/icons/upload_icon.svg"
                         alt="Drag and Drop Icon"
                     />
                     <input
+                        v-if="!newPost.image"
                         id="img-upload"
                         class="file-input"
                         type="file"
                         @change="onImageSelected"
                     />
-                    <span class="drop-zone-text">Click and select a pic</span>
+                    <span class="drop-zone-text" v-if="!newPost.image"
+                        >Click and select a pic</span
+                    >
                     <p v-if="newPost.image != null" class="selected-img-text">
-                        <span class="img-name">Selected Image: </span>
-                        {{ newPost.image.name }}
+                        <span class="img-name-label">Selected Image: </span>
+                        <span>{{ newPost.image.name }}</span>
                     </p>
                 </div>
             </label>
@@ -195,7 +199,7 @@ export default {
         position: relative;
         cursor: pointer;
 
-        &:hover{
+        &:hover {
             border-style: solid;
         }
 
@@ -225,6 +229,18 @@ export default {
             span {
                 text-transform: uppercase;
                 font-weight: $textFontWeight;
+            }
+
+            .selected-img-text {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                .img-name-label{
+                    font-family: $headlineFont;
+                    font-size: 1.2em;
+                }
             }
         }
     }

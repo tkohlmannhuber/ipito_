@@ -2,23 +2,23 @@
     <div class="teaser_card_container">
         <h3>Ericeira</h3>
         <p>
-            Sand bottom jumbled shorebreak send it monsters. Wave kook in da wa
-            spit Nat Young, hollow pose on the
+            The Surf Capital of Portugal and one of the most famous surf Spot in
+            the World!
         </p>
         <span class="coordinates">38° 58′ N , 9° 25′ Wv</span>
         <span class="wave">Wave Alert</span>
         <div class="info-container">
             <div class="info-item">
-                <button class="wave-btn">
+                <div class="wave-btn">
                     <img src="@/assets/images/icons/wave.svg" alt="wave icon" />
-                </button>
+                </div>
                 <div class="btn-text">1.5ft</div>
             </div>
 
             <div class="info-item">
-                <button class="wave-btn">
+                <div class="wave-btn">
                     <img src="@/assets/images/icons/temp.svg" alt="wave icon" />
-                </button>
+                </div>
                 <div class="btn-text">15° Water</div>
             </div>
         </div>
@@ -32,7 +32,7 @@ export default {
     data: () => {
         return {
             weatherData: "",
-            waterTemp: '',
+            waterTemp: "",
         };
     },
 
@@ -41,10 +41,8 @@ export default {
         //     const params = "waterTemperature,windSpeed,swellHeight";
         //     const lat = 38.988218;
         //     const lng = -9.421071;
-
         //     let utcDate = new Date();
         //     let startTime = Math.floor(utcDate.getTime() / 1000);
-
         //     axios
         //         .get(
         //             `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=${params}&start=${startTime}&end=${startTime}`,
@@ -65,12 +63,10 @@ export default {
         //         });
         // },
     },
-    created(){
+    created() {
         // this.getWeather();
-    }
-
+    },
 };
-
 </script>
 
 <style lang="scss" src="@/assets/styles/app.scss"></style>
@@ -121,31 +117,12 @@ export default {
         text-transform: uppercase;
         font-family: $headlineFont;
     }
-
-    button {
-        width: 3em;
-        height: 3em;
-        border: none;
-        border-radius: 50%;
-        background: $tertiaryColor;
-    }
-
-    .btn-text {
-        position: absolute;
-        right: 0;
-        display: flex;
-        font-family: $textFont;
-        font-weight: $textFontWeight;
-        white-space: nowrap;
-        transform: translate(100%, 1.5em) rotate(45deg);
-        transform-origin: left center;
-    }
 }
 
 .info-container {
     position: relative;
     display: flex;
-    flex-wrap: wrap;
+    gap: 1em;
     margin-right: 1em;
     transform: translateY(1.5em);
 
@@ -155,6 +132,28 @@ export default {
         align-items: center;
         justify-content: center;
         margin-right: 2em;
+        background: $tertiaryColor;
+        width: 3em;
+        height: 3em;
+        border-radius: 50%;
+        box-shadow: $boxShadow;
+
+        img{
+            width: 1.5em;
+        }
+
+        
+
+        .btn-text {
+            position: absolute;
+            right: 0;
+            display: flex;
+            font-family: $textFont;
+            font-weight: $textFontWeight;
+            white-space: nowrap;
+            transform: translate(100%, 1.5em) rotate(45deg);
+            transform-origin: left center;
+        }
     }
 }
 </style>
