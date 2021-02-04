@@ -35,7 +35,7 @@
                                 class="user-img"
                                 v-if="post.user.image_path"
                                 :src="
-                                    'https://api.ipito.surf/storage/images/' +
+                                    'http://api.ipito.local/storage/images/' +
                                         post.user.image_path
                                 "
                                 alt="User Bild"
@@ -58,7 +58,7 @@
                             <img
                                 v-if="post.image_path"
                                 :src="
-                                    'https://api.ipito.surf/storage/images/' +
+                                    'http://api.ipito.local/storage/images/' +
                                         post.image_path
                                 "
                                 alt="Surfer"
@@ -162,7 +162,7 @@ export default {
         getAllPosts() {
             if (this.$route.fullPath === "/") {
                 axios
-                    .get("https://api.ipito.surf/api/posts/index",{
+                    .get("http://api.ipito.local/api/posts/index",{
                         
                     })
                     .then((res) => {
@@ -176,7 +176,7 @@ export default {
             } else {
                 axios
                     .get(
-                        "https://api.ipito.surf/api/posts/spotIndex/" +
+                        "http://api.ipito.local/api/posts/spotIndex/" +
                             this.currentRoute
                     )
                     .then((res) => {

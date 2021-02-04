@@ -8,7 +8,7 @@
                 <img
                     class="user-image"
                     :src="
-                        'https://api.ipito.surf/storage/images/' +
+                        'http://api.ipito.local/storage/images/' +
                             userData.image_path
                     "
                     alt="user image"
@@ -23,7 +23,7 @@
                 <img
                     v-if="userData.image_path != null"
                     :src="
-                        'https://api.ipito.surf/storage/images/' +
+                        'http://api.ipito.local/storage/images/' +
                             userData.image_path
                     "
                     alt="user image"

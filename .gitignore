@@ -4,6 +4,7 @@ node_modules
 design
 marketing
 präsentation
+vendor
 
 
 # local env files
@@ -24,3 +25,4 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+*.sql

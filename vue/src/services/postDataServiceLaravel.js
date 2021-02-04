@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const laravelUrl = "https://api.ipito.surf/api";
+const laravelUrl = "http://api.ipito.local/api";
 
 const postDataService = {
   /**

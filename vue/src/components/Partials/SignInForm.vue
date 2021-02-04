@@ -92,7 +92,7 @@ export default {
     methods: {
         saveUser() {
             axios
-                .post("https://api.ipito.surf/api/user/register", this.newUser)
+                .post("http://api.ipito.local/api/user/register", this.newUser)
                 .then(() => {
                     this.succesSignin = true;
                     this.loader = false;

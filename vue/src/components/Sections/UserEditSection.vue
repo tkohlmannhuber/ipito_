@@ -24,7 +24,7 @@
                     v-if="userData.image_path != null"
                     class="user-image"
                     :src="
-                        'https://api.ipito.surf/storage/images/' +
+                        'http://api.ipito.local/storage/images/' +
                             userData.image_path
                     "
                     alt="user image"
@@ -152,7 +152,7 @@ export default {
             formData.append("_method", "PUT");
 
             axios
-                .post("https://api.ipito.surf/api/user", formData, {
+                .post("http://api.ipito.local/api/user", formData, {
                     headers: {
                         Accept: "application/json",
                         "Content-Type": "multipart/form-data",
